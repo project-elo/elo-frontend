@@ -1,10 +1,16 @@
 import { View, StyleSheet } from "react-native";
 import CubeButton from "../components/cube/CubeButton";
+import { colors } from "../utils/objects/styles";
 
 export default function Home() {
   return (
     <View style={styles.container}>
-      <CubeButton height={100} width={100} />
+      <CubeButton
+        height={200}
+        width={200}
+        backgroundColor={colors.white}
+        depth={10}
+      />
     </View>
   );
 }

@@ -1,97 +1,92 @@
-import { StyleSheet, Pressable, LayoutAnimation } from "react-native";
-import { colors, fontSizes } from "@/src/utils/objects/styles";
-import { useState } from "react";
-import { Shadow } from "react-native-shadow-2";
+import { StyleSheet, Pressable, View, Animated, Text } from "react-native";
+import { colors } from "@/src/utils/objects/styles";
+import { useRef } from "react";
+import Color from "color";
 
 export default function CubeButton({
   width,
   height,
+  depth = 2,
+  speed = 150,
+  backgroundColor = colors.white,
 }: {
   width: number;
   height: number;
+  depth?: number;
+  speed?: number;
+  backgroundColor?: string;
 }) {
-  const BORDER_RAD = Math.min(width, height) * 0.15;
-  const [pressed, setPressed] = useState(false);
-  const constantStyles = {
-    borderRadius: Math.round(BORDER_RAD),
-  };
-  const sizeStyle = pressed
-    ? { width: width - 2, height: height - 2 }
-    : { width, height };
+  const BORDER_RAD = Math.round(Math.min(width, height) * 0.15);
+  const anim = useRef(new Animated.Value(0)).current;
+  const shadowColor = Color(backgroundColor).darken(0.35).string();
+
+  const pressIn = () =>
+    Animated.timing(anim, {
+      toValue: 1,
+      duration: speed,
+      useNativeDriver: true,
+    }).start();
+
+  const pressOut = () =>
+    Animated.timing(anim, {
+      toValue: 0,
+      duration: speed,
+      useNativeDriver: true,
+    }).start();
+
+  const buttonTranslate = anim.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, depth],
+  });
+  const shadowTranslate = anim.interpolate({
+    inputRange: [0, 1],
+    outputRange: [depth, 0],
+  });
+
   return (
-    <Shadow
-      distance={4}
-      offset={[2, 2]}
-      startColor="rgba(0,0,0,0.35)"
-      style={{ borderRadius: BORDER_RAD }}
-    >
-      <Pressable
-        onPressIn={() => {
-          LayoutAnimation.easeInEaseOut();
-          setPressed(true);
-        }}
-        onPressOut={() => {
-          LayoutAnimation.easeInEaseOut();
-          setPressed(false);
-        }}
+    <View style={{ width: width + depth, height: height + depth }}>
+      <Animated.View
         style={[
-          styles.button,
-          constantStyles,
-          sizeStyle,
-          pressed && styles.buttonActive,
+          styles.shadow,
+          {
+            width,
+            height,
+            borderRadius: BORDER_RAD,
+            backgroundColor: shadowColor,
+            transform: [
+              { translateX: shadowTranslate },
+              { translateY: shadowTranslate },
+            ],
+          },
         ]}
       />
-    </Shadow>
+      <Animated.View
+        style={{
+          position: "absolute",
+          transform: [
+            { translateX: buttonTranslate },
+            { translateY: buttonTranslate },
+          ],
+        }}
+      >
+        <Pressable
+          onPressIn={pressIn}
+          onPressOut={pressOut}
+          style={[
+            styles.button,
+            { width, height, borderRadius: BORDER_RAD, backgroundColor },
+          ]}
+        >
+          <Text></Text>
+        </Pressable>
+      </Animated.View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  button: {
-    backgroundColor: colors.white,
-    padding: 4,
-    paddingBottom: 6,
-    paddingRight: 6,
-    marginLeft: -2,
-    marginTop: -2,
+  shadow: {
+    position: "absolute",
   },
-  buttonActive: {
-    margin: 0,
-    padding: 4,
-    paddingTop: 6,
-    paddingLeft: 6,
-  },
+  button: {},
 });
-
-/* 
-.button {
-  border-radius: 15%;
-  width: 34px;
-  height: 34px;
-  border: none;
-  padding: 4px;
-  padding-bottom: 6px;
-  padding-right: 6px;
-  cursor: pointer;
-
-  box-shadow: inset -2px -2px 0 rgba(0, 0, 0, 0.35);
-  transition: 0.25s ease;
-  margin-left: -2px;
-  margin-top: -2px;
-}
-
-.button.active {
-  margin: 0px;
-  width: 32px;
-  height: 32px;
-  box-shadow: inset 2px 2px 0 rgba(0, 0, 0, 0.35);
-  padding: 4px;
-  padding-top: 6px;
-  padding-left: 6px;
-}
-
-img {
-  width: 100%;
-  height: 100%;
-}
-
-*/
