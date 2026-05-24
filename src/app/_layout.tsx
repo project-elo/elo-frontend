@@ -35,6 +35,19 @@ export default function RootLayout() {
         }}
       />
       <Tabs.Screen
+        name="Example"
+        options={{
+          title: "Example",
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons
+              name="clipboard-edit"
+              size={24}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="Settings"
         options={{
           title: "Settings",
