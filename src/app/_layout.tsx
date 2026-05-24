@@ -22,33 +22,15 @@ export default function RootLayout() {
       }}
     >
       <Tabs.Screen
-        name="Observations"
+        name="Home"
         options={{
-          title: "Observations",
+          title: "Home",
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
               name="clipboard-edit"
               size={24}
               color={color}
             />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="Students"
-        options={{
-          title: "Students",
-          tabBarIcon: ({ color }) => (
-            <FontAwesome6 name="graduation-cap" size={24} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="Reports"
-        options={{
-          title: "Reports",
-          tabBarIcon: ({ color }) => (
-            <Entypo name="bar-graph" size={24} color={color} />
           ),
         }}
       />
