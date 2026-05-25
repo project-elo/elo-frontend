@@ -6,21 +6,22 @@ import Animated, {
   Easing,
 } from "react-native-reanimated";
 import Color from "color";
+import { colors } from "@/src/utils/objects/styles";
 
-export default function Toggle({
+export default function SolidToggle({
   value,
   onChange,
   width = 56,
   height = 32,
   depth = 2,
   offColor = "#d4d4d4",
-  onColor = "#7cc47c",
+  onColor = colors.green,
 }: {
   value: boolean;
   onChange: (value: boolean) => void;
   width?: number;
   height?: number;
-  depth?: 2;
+  depth?: number;
   offColor?: string;
   onColor?: string;
 }) {
@@ -64,7 +65,7 @@ export default function Toggle({
               height: thumbSize,
               borderRadius: thumbSize / 2,
               backgroundColor: "#f5f5f5",
-              boxShadow: ` ${depth}px ${depth}px 0 ${Color("#f5f5f5").darken(0.3).string()}`,
+              boxShadow: `${depth}px ${depth}px 0 ${Color("#f5f5f5").darken(0.3).string()}`,
             },
             thumbStyle,
           ]}

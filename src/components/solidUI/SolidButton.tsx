@@ -6,7 +6,7 @@ import Animated, {
   Easing,
 } from "react-native-reanimated";
 
-export default function Button({
+export default function SolidButton({
   backgroundColor,
   height,
   width,
