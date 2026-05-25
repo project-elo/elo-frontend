@@ -6,7 +6,12 @@ import Example from "./Example";
 export default function Home() {
   return (
     <View style={styles.container}>
-      <CubeButton width={100} height={100} />
+      <CubeButton
+        width={100}
+        height={100}
+        backgroundColor={colors.white}
+        onPress={() => {}}
+      />
     </View>
   );
 }
