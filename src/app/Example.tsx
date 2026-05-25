@@ -75,6 +75,7 @@ function Example(): React.JSX.Element {
           activeColor={COLORS.accent}
           onPress={handleTogglePress}
           isReflectedLightEnabled={false}
+          shadowOffset={{ width: -4, height: -4 }}
         >
           <Text style={styles.grayText}>{isToggleActive ? "ON" : "OFF"}</Text>
         </ShadowToggle>
@@ -85,7 +86,7 @@ function Example(): React.JSX.Element {
         isReflectedLightEnabled={false}
         shadowBlur={0}
       >
-        <Text style={styles.grayText}>{"New"}</Text>
+        <Text style={styles.grayText}>{isToggleActive ? "ON" : "OFF"}</Text>
       </ShadowPressable>
 
       {/* Inset Shadow View Section */}
