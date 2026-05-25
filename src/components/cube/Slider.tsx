@@ -5,6 +5,7 @@ import Animated, {
   withTiming,
   Easing,
 } from "react-native-reanimated";
+import Color from "color";
 
 export default function Toggle({
   value,
@@ -51,6 +52,7 @@ export default function Toggle({
             borderRadius: height / 2,
             padding: depth,
             boxShadow: `inset ${depth}px ${depth}px 0 rgba(0,0,0,0.35)`,
+            overflow: "hidden",
           },
           trackStyle,
         ]}
@@ -62,7 +64,7 @@ export default function Toggle({
               height: thumbSize,
               borderRadius: thumbSize / 2,
               backgroundColor: "#f5f5f5",
-              boxShadow: ` ${depth}px ${depth}px 0 rgba(0,0,0,0.35)`,
+              boxShadow: ` ${depth}px ${depth}px 0 ${Color("#f5f5f5").darken(0.3).string()}`,
             },
             thumbStyle,
           ]}
