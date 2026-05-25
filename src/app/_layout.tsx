@@ -6,11 +6,13 @@ import { useEffect } from "react";
 import { colors } from "../utils/objects/styles";
 
 import { Tabs } from "expo-router";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function RootLayout() {
   const { settings, loadSettings } = useSettingsStore();
 
   return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
     <Tabs
       screenOptions={{
         headerShown: false,
@@ -58,5 +60,6 @@ export default function RootLayout() {
       />
       <Tabs.Screen name="index" options={{ href: null }} />
     </Tabs>
+    </GestureHandlerRootView>
   );
 }

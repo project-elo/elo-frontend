@@ -11,7 +11,8 @@ export default function Button({
   height,
   width,
   depth = 2,
-  borderRadius = 5,
+  borderRadius = 10,
+  padding = 4,
   onPress,
 }: {
   backgroundColor: string;
@@ -19,23 +20,24 @@ export default function Button({
   width: number;
   depth?: number;
   borderRadius?: number;
+  padding?: number;
   onPress: () => void;
 }) {
   const p = useSharedValue(0); // 0 = idle, 1 = active
 
   const style = useAnimatedStyle(() => {
-    const shadow = -2 + p.value * 4; // -2 to 2
+    const shadow = -depth + p.value * depth * 2;
     return {
-      width: width - p.value * 2,
-      height: height - p.value * 2,
-      marginTop: -2 + p.value * 2,
-      marginLeft: -2 + p.value * 2,
+      width: width - p.value * depth,
+      height: height - p.value * depth,
+      marginTop: -depth + p.value * depth,
+      marginLeft: -depth + p.value * depth,
       marginRight: 0,
       marginBottom: 0,
-      paddingTop: 4 + p.value * 2,
-      paddingLeft: 4 + p.value * 2,
-      paddingBottom: 6 - p.value * 2,
-      paddingRight: 6 - p.value * 2,
+      paddingTop: padding + p.value * depth,
+      paddingLeft: padding + p.value * depth,
+      paddingBottom: padding + depth - p.value * depth,
+      paddingRight: padding + depth - p.value * depth,
       boxShadow: `inset ${shadow}px ${shadow}px 0 rgba(0,0,0,0.35)`,
     };
   });
