@@ -25,5 +25,6 @@ export const fontSizes = {
 };
 
 export const styleConsts = {
-  opacity: 0.7,
+  pressDuration: 200, // ms
+  shadowOpacity: 0.3,
 };

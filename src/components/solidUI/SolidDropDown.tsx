@@ -15,7 +15,7 @@ export default function SolidDropDown<T extends string | number>({
   options,
   value,
   setValue,
-  backgroundColor = colors.offWhite,
+  backgroundColor = colors.white,
 }: {
   title: string;
   options: Option<T>[];
@@ -40,13 +40,14 @@ export default function SolidDropDown<T extends string | number>({
         backgroundStyle={{ backgroundColor: "transparent" }}
         popoverStyle={styles.popover}
         arrowSize={{ width: 0, height: 0 }}
+        offset={10}
         from={
           <View style={styles.button}>
-            <Text style={[styles.buttonText, { color: colors.blue }]}>
+            <Text style={[styles.buttonText, { color: colors.theme }]}>
               {selectedOption?.label ?? "Select"}
             </Text>
             <Entypo
-              style={[styles.icon, { color: colors.blue }]}
+              style={[styles.icon, { color: colors.theme }]}
               name="select-arrows"
             />
           </View>
@@ -68,7 +69,7 @@ export default function SolidDropDown<T extends string | number>({
               <Text style={styles.text}>{opt.label}</Text>
               {opt.value === value && (
                 <Entypo
-                  style={[styles.icon, { color: colors.blue }]}
+                  style={[styles.icon, { color: colors.theme }]}
                   name="check"
                 />
               )}
@@ -82,7 +83,6 @@ export default function SolidDropDown<T extends string | number>({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.offWhite,
     paddingVertical: 10,
     flexDirection: "row",
     justifyContent: "space-between",

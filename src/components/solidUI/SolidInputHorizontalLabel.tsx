@@ -6,9 +6,8 @@ import {
   View,
   Text,
 } from "react-native";
-import { useSettingsStore } from "@/src/state/settings/useSettingsStore";
 
-export default function InputWithLabel({
+export default function SolidInputHorizontalLabel({
   defaultValue,
   placeholder,
   onChangeText,
@@ -23,16 +22,11 @@ export default function InputWithLabel({
   label: string;
   backgroundColor?: string;
 }) {
-  const { settings } = useSettingsStore();
   return (
     <View style={styles.container}>
       <Text style={[styles.label, { backgroundColor }]}>{label}</Text>
       <TextInput
-        style={[
-          styles.input,
-          { backgroundColor },
-          { color: settings.themeColor },
-        ]}
+        style={[styles.input, { backgroundColor }, { color: colors.theme }]}
         defaultValue={defaultValue}
         placeholder={placeholder}
         placeholderTextColor={colors.gray}
