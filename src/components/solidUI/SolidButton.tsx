@@ -23,7 +23,7 @@ export default function SolidButton({
   padding?: number;
   onPress: () => void;
 }) {
-  const p = useSharedValue(0); // 0 = idle, 1 = active
+  const p = useSharedValue(0);
 
   const style = useAnimatedStyle(() => {
     const shadow = -depth + p.value * depth * 2;

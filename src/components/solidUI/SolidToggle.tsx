@@ -29,7 +29,6 @@ export default function SolidToggle({
   const thumbSize = height - depth * 2;
   const range = width - height;
 
-  // sync if parent flips it
   t.value = withTiming(value ? 1 : 0, {
     duration: 200,
     easing: Easing.inOut(Easing.ease),
