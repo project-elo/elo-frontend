@@ -1,10 +1,22 @@
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import Entypo from "@expo/vector-icons/Entypo";
-import { colors, fontSizes, styleConsts } from "@/src/utils/styles";
+import {
+  colors,
+  fontSizes,
+  styleConsts,
+  shadowEquivalent,
+} from "@/src/utils/styles";
 import Popover from "react-native-popover-view";
 import { useState } from "react";
 import { useSettingsStore } from "@/src/state/settings/useSettingsStore";
-import { shadowEquivalent } from "@/src/utils/styles";
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  Easing,
+} from "react-native-reanimated";
+
+const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 export type Option<T = string> = {
   label: string;
@@ -27,6 +39,34 @@ export default function SolidDropDown<T extends string | number>({
   const [open, setOpen] = useState(false);
   const { settings } = useSettingsStore();
   const selectedOption = options.find((o) => o.value === value);
+
+  const width = 200;
+  const padding = 10;
+  const depth = 2;
+  const height = 50;
+
+  const p = useSharedValue(0);
+
+  const menuItemStyle = useAnimatedStyle(() => {
+    const shadow = -depth + p.value * depth * 2;
+    return {
+      width: width - p.value * depth,
+      height: height - p.value * depth,
+      marginTop: -depth + p.value * depth,
+      marginLeft: -depth + p.value * depth,
+      paddingTop: padding + p.value * depth,
+      paddingLeft: padding + p.value * depth,
+      paddingBottom: padding + depth - p.value * depth,
+      paddingRight: padding + depth - p.value * depth,
+      boxShadow: `inset ${shadow}px ${shadow}px 0 rgba(0,0,0,${styleConsts.shadowOpacity})`,
+    };
+  });
+
+  const press = (v: number) =>
+    (p.value = withTiming(v, {
+      duration: styleConsts.pressDuration,
+      easing: Easing.inOut(Easing.ease),
+    }));
 
   return (
     <Pressable
@@ -56,12 +96,15 @@ export default function SolidDropDown<T extends string | number>({
       >
         <View style={styles.menu}>
           {options.map((opt) => (
-            <Pressable
+            <AnimatedPressable
               key={opt.value}
-              style={({ pressed }) => [
-                styles.menuItem,
-                pressed && styles.menuItemPressed,
-              ]}
+              style={[styles.menuItem, menuItemStyle]}
+              onPressIn={() => {
+                press(1);
+              }}
+              onPressOut={() => {
+                press(0);
+              }}
               onPress={() => {
                 setValue(opt.value);
                 setOpen(false);
@@ -74,7 +117,7 @@ export default function SolidDropDown<T extends string | number>({
                   name="check"
                 />
               )}
-            </Pressable>
+            </AnimatedPressable>
           ))}
         </View>
       </Popover>
@@ -105,27 +148,21 @@ const styles = StyleSheet.create({
     fontSize: fontSizes.text - 4,
   },
   menu: {
-    backgroundColor: colors.lighterGray,
+    backgroundColor: shadowEquivalent(colors.white),
     borderRadius: 12,
     minWidth: 200,
-    gap: 1,
-    overflow: "hidden",
+    gap: 3,
   },
   menuItem: {
-    paddingVertical: 8,
-    paddingHorizontal: 12,
     backgroundColor: colors.white,
     flexDirection: "row",
     justifyContent: "space-between",
-  },
-  menuItemPressed: {
-    backgroundColor: colors.offWhite,
   },
   popover: {
     backgroundColor: "transparent",
     borderRadius: 12,
     marginHorizontal: -10,
-    boxShadow: `${2}px ${2}px 0 ${shadowEquivalent(colors.white)}`,
     elevation: 6,
+    overflow: "visible",
   },
 });
