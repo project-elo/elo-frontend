@@ -1,16 +1,16 @@
 {
   "expo": {
-    "name": "BehaviorLens",
-    "slug": "BehaviorLens",
+    "name": "elo",
+    "slug": "elo",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "scheme": "behaviorlens",
+    "scheme": "elo",
     "newArchEnabled": true,
     "userInterfaceStyle": "light",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.jeremyellis.BehaviorLens",
+      "bundleIdentifier": "com.jeremyellis.elo",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
@@ -24,7 +24,7 @@
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "package": "com.jeremyellis.BehaviorLens"
+      "package": "com.jeremyellis.elo"
     },
     "web": {
       "output": "static",

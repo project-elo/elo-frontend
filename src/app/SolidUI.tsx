@@ -15,7 +15,7 @@ export default function SolidUI() {
       <SolidButton
         width={50}
         height={50}
-        backgroundColor={colors.green}
+        backgroundColor={colors.white}
         onPress={() => {}}
       />
       <Slider onChange={setValue} value={value} />

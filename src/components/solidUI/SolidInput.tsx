@@ -14,27 +14,21 @@ export default function SolidInput({
   keyboardType?: KeyboardTypeOptions;
 }) {
   return (
-    <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        defaultValue={defaultValue}
-        placeholder={placeholder}
-        onChangeText={onChangeText}
-        keyboardType={keyboardType ? keyboardType : "default"}
-        placeholderTextColor={colors.gray}
-      />
-    </View>
+    <TextInput
+      style={styles.input}
+      defaultValue={defaultValue}
+      placeholder={placeholder}
+      onChangeText={onChangeText}
+      keyboardType={keyboardType ? keyboardType : "default"}
+      placeholderTextColor={colors.gray}
+    />
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    boxShadow: `inset ${2}px ${2}px 0 rgba(0,0,0,0.35)`,
-    padding: 3,
-    borderRadius: 10,
-    backgroundColor: colors.white,
-  },
   input: {
+    boxShadow: `inset ${2}px ${2}px 0 rgba(0,0,0,0.35)`,
+    backgroundColor: colors.white,
     padding: 10,
     fontSize: fontSizes.text,
     borderRadius: 10,

@@ -15,7 +15,7 @@ export default function SolidToggle({
   height = 32,
   depth = 2,
   offColor = "#d4d4d4",
-  onColor = colors.green,
+  onColor = colors.theme,
 }: {
   value: boolean;
   onChange: (value: boolean) => void;
