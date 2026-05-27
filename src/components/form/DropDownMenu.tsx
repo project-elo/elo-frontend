@@ -1,9 +1,10 @@
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import Entypo from "@expo/vector-icons/Entypo";
-import { colors, fontSizes, styleConsts } from "@/src/utils/styles";
+import { colors, fontSizes } from "@/src/utils/styles";
 import Popover from "react-native-popover-view";
 import { useState } from "react";
 import { useSettingsStore } from "@/src/state/settings/useSettingsStore";
+import Color from "color";
 
 export type Option<T = string> = {
   label: string;
@@ -42,11 +43,11 @@ export default function DropDownMenu<T extends string | number>({
         arrowSize={{ width: 0, height: 0 }}
         from={
           <View style={styles.button}>
-            <Text style={[styles.buttonText, { color: settings.themeColor }]}>
+            <Text style={[styles.buttonText, { color: colors.theme }]}>
               {selectedOption?.label ?? "Select"}
             </Text>
             <Entypo
-              style={[styles.icon, { color: settings.themeColor }]}
+              style={[styles.icon, { color: colors.theme }]}
               name="select-arrows"
             />
           </View>
@@ -68,7 +69,7 @@ export default function DropDownMenu<T extends string | number>({
               <Text style={styles.text}>{opt.label}</Text>
               {opt.value === value && (
                 <Entypo
-                  style={[styles.icon, { color: settings.themeColor }]}
+                  style={[styles.icon, { color: colors.theme }]}
                   name="check"
                 />
               )}
