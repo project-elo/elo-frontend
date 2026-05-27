@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { loadObject, saveObject } from "../../utils/storage/storage";
+import { loadObject, saveObject } from "../../utils/storage";
 import { SettingsType } from "@/src/types/settingsType";
 
 type SettingsStore = {

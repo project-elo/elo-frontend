@@ -9,7 +9,7 @@ import {
   useWindowDimensions,
 } from "react-native";
 import Modal from "react-native-modal";
-import { fontSizes, colors, styleConsts } from "@/src/utils/objects/styles";
+import { fontSizes, colors, styleConsts } from "@/src/utils/styles";
 import { useSettingsStore } from "@/src/state/settings/useSettingsStore";
 import { useDeviceClass } from "@/src/hooks/useDeviceClass";
 

@@ -2,7 +2,7 @@ import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { useSettingsStore } from "../state/settings/useSettingsStore";
 import { useEffect } from "react";
-import { colors } from "../utils/objects/styles";
+import { colors } from "../utils/styles";
 import * as SplashScreen from "expo-splash-screen";
 
 import { Tabs } from "expo-router";

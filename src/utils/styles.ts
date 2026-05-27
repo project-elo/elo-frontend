@@ -1,3 +1,5 @@
+import Color from "color";
+
 export const colors = {
   theme: "#94cee4",
 
@@ -25,6 +27,16 @@ export const fontSizes = {
 };
 
 export const styleConsts = {
-  pressDuration: 200, // ms
+  pressDuration: 200,
   shadowOpacity: 0.3,
+  modalDelay: 400,
 };
+
+export function shadowEquivalent(backgroundColor: string): string {
+  const c = Color(backgroundColor);
+  return Color.rgb(
+    c.red() * (1 - styleConsts.shadowOpacity),
+    c.green() * (1 - styleConsts.shadowOpacity),
+    c.blue() * (1 - styleConsts.shadowOpacity),
+  ).string();
+}

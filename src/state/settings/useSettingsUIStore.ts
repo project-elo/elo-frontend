@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { ThemeColor } from "@/src/utils/objects/styles";
+import { ThemeColor } from "@/src/utils/styles";
 
 type SettingsUIStore = {
   username: string;

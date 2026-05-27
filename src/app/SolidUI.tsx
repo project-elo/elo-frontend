@@ -1,6 +1,6 @@
 import { View, StyleSheet, Text } from "react-native";
 import SolidButton from "../components/solidUI/SolidButton";
-import { colors } from "../utils/objects/styles";
+import { colors } from "../utils/styles";
 import Slider from "../components/solidUI/SolidToggle";
 import { useState } from "react";
 import SolidInput from "../components/solidUI/SolidInput";
@@ -33,7 +33,6 @@ export default function SolidUI() {
           setValue3(!value3);
         }}
       />
-      <Text style={{ color: "black" }}>{value3 ? "on" : "off"}</Text>
       <Slider onChange={setValue} value={value} />
       <SolidInput
         defaultValue=""

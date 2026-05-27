@@ -1,4 +1,4 @@
-import { colors, fontSizes } from "@/src/utils/objects/styles";
+import { colors, fontSizes } from "@/src/utils/styles";
 import { BoxShadow } from "@shopify/react-native-skia";
 import { StyleSheet, TextInput, KeyboardTypeOptions, View } from "react-native";
 

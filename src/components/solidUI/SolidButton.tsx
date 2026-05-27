@@ -6,7 +6,8 @@ import Animated, {
   Easing,
 } from "react-native-reanimated";
 import { ReactNode, useEffect } from "react";
-import { styleConsts } from "@/src/utils/objects/styles";
+import { styleConsts } from "@/src/utils/styles";
+import * as Haptics from "expo-haptics";
 
 export default function SolidButton({
   backgroundColor,
@@ -44,7 +45,7 @@ export default function SolidButton({
       paddingLeft: padding + p.value * depth,
       paddingBottom: padding + depth - p.value * depth,
       paddingRight: padding + depth - p.value * depth,
-      boxShadow: `inset ${shadow}px ${shadow}px 0 rgba(0,0,0,0.3)`,
+      boxShadow: `inset ${shadow}px ${shadow}px 0 rgba(0,0,0,${styleConsts.shadowOpacity})`,
       justifyContent: "center",
       alignItems: "center",
     };
@@ -63,12 +64,21 @@ export default function SolidButton({
   return (
     <Pressable
       onPressIn={() => {
-        !isToggle && press(1);
+        !isToggle &&
+          press(1) &&
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
       }}
       onPressOut={() => {
         !isToggle && press(0);
       }}
-      onPress={onPress}
+      onPress={() => {
+        onPress();
+        if (!isToggle || toggleValue) {
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+        } else {
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
+        }
+      }}
     >
       <Animated.View
         style={[{ backgroundColor, borderRadius, overflow: "hidden" }, style]}

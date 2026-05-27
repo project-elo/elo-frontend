@@ -2,11 +2,11 @@ import { Pressable } from "react-native";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
-  withTiming,
-  Easing,
+  withSpring,
 } from "react-native-reanimated";
 import Color from "color";
-import { colors } from "@/src/utils/objects/styles";
+import { colors, styleConsts, shadowEquivalent } from "@/src/utils/styles";
+import * as Haptics from "expo-haptics";
 
 export default function SolidToggle({
   value,
@@ -28,10 +28,12 @@ export default function SolidToggle({
   const t = useSharedValue(value ? 1 : 0);
   const thumbSize = height - depth * 2;
   const range = width - height;
+  const speed = 150;
 
-  t.value = withTiming(value ? 1 : 0, {
-    duration: 200,
-    easing: Easing.inOut(Easing.ease),
+  t.value = withSpring(value ? 1 : 0, {
+    damping: 12,
+    stiffness: speed,
+    mass: 0.5,
   });
 
   const trackStyle = useAnimatedStyle(() => ({
@@ -43,7 +45,15 @@ export default function SolidToggle({
   }));
 
   return (
-    <Pressable onPress={() => onChange(!value)}>
+    <Pressable
+      onPress={() => {
+        onChange(!value);
+
+        setTimeout(() => {
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+        }, speed * 0.66);
+      }}
+    >
       <Animated.View
         style={[
           {
@@ -51,7 +61,7 @@ export default function SolidToggle({
             height,
             borderRadius: height / 2,
             padding: depth,
-            boxShadow: `inset ${depth}px ${depth}px 0 rgba(0,0,0,0.35)`,
+            boxShadow: `inset ${depth}px ${depth}px 0 rgba(0,0,0,${styleConsts.shadowOpacity})`,
             overflow: "hidden",
           },
           trackStyle,
@@ -63,8 +73,8 @@ export default function SolidToggle({
               width: thumbSize,
               height: thumbSize,
               borderRadius: thumbSize / 2,
-              backgroundColor: "#f5f5f5",
-              boxShadow: `${depth}px ${depth}px 0 ${Color("#f5f5f5").darken(0.3).string()}`,
+              backgroundColor: colors.offWhite,
+              boxShadow: `${depth}px ${depth}px 0 ${shadowEquivalent(colors.offWhite)}`,
             },
             thumbStyle,
           ]}

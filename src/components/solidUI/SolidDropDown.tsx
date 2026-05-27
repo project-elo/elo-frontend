@@ -1,9 +1,10 @@
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import Entypo from "@expo/vector-icons/Entypo";
-import { colors, fontSizes, styleConsts } from "@/src/utils/objects/styles";
+import { colors, fontSizes, styleConsts } from "@/src/utils/styles";
 import Popover from "react-native-popover-view";
 import { useState } from "react";
 import { useSettingsStore } from "@/src/state/settings/useSettingsStore";
+import { shadowEquivalent } from "@/src/utils/styles";
 
 export type Option<T = string> = {
   label: string;
@@ -124,7 +125,7 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     borderRadius: 12,
     marginHorizontal: -10,
-    boxShadow: `${2}px ${2}px 0 rgba(0,0,0,0.35)`,
+    boxShadow: `${2}px ${2}px 0 ${shadowEquivalent(colors.white)}`,
     elevation: 6,
   },
 });

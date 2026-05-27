@@ -1,4 +1,4 @@
-import { colors, fontSizes } from "@/src/utils/objects/styles";
+import { colors, fontSizes } from "@/src/utils/styles";
 import {
   StyleSheet,
   TextInput,
