@@ -30,7 +30,6 @@ function MenuItem<T extends string | number>({
   value,
   setValue,
   setOpen,
-  overlap,
   isFirst,
   isLast,
 }: {
@@ -38,7 +37,6 @@ function MenuItem<T extends string | number>({
   value: any;
   setValue: (v: T) => void;
   setOpen: (v: boolean) => void;
-  overlap: number;
   isFirst: boolean;
   isLast: boolean;
 }) {
@@ -50,13 +48,18 @@ function MenuItem<T extends string | number>({
         { translateX: p.value * depth * 0.5 },
         { translateY: p.value * depth * 0.5 },
       ],
+    };
+  });
+
+  const bgColor = useAnimatedStyle(() => {
+    return {
       backgroundColor: shadowEquivalent(colors.white, p.value * 0.025),
     };
   });
 
   const press = (v: number) =>
     (p.value = withTiming(v, {
-      duration: styleConsts.pressDuration,
+      duration: styleConsts.pressDuration * 0.5,
       easing: Easing.inOut(Easing.ease),
     }));
 
@@ -70,9 +73,7 @@ function MenuItem<T extends string | number>({
           borderBottomRightRadius: isLast ? 10 : 0,
           borderTopRightRadius: isFirst ? 10 : 0,
           borderTopLeftRadius: isFirst ? 10 : 0,
-          boxShadow: isLast
-            ? `${2}px ${2}px 0 ${shadowEquivalent(colors.white)}`
-            : `${2}px ${0}px 0 ${shadowEquivalent(colors.white)}`,
+          boxShadow: `${2}px ${2}px 0 ${shadowEquivalent(colors.white)}`,
         },
         menuItemStyle,
       ]}
@@ -83,12 +84,23 @@ function MenuItem<T extends string | number>({
         //setOpen(false);
       }}
     >
-      <View style={styles.menuItem}>
+      <Animated.View
+        style={[
+          styles.menuItem,
+          bgColor,
+          {
+            borderBottomLeftRadius: isLast ? 10 : 0,
+            borderBottomRightRadius: isLast ? 10 : 0,
+            borderTopRightRadius: isFirst ? 10 : 0,
+            borderTopLeftRadius: isFirst ? 10 : 0,
+          },
+        ]}
+      >
         <Text style={styles.text}>{opt.label}</Text>
         {opt.value === value && (
           <Entypo style={[styles.icon, { color: colors.theme }]} name="check" />
         )}
-      </View>
+      </Animated.View>
       {!isLast && (
         <Svg width={200} height={2} style={{ backgroundColor: "transparent" }}>
           <Rect width={200} height={2} fill="transparent" />
@@ -152,7 +164,6 @@ export default function SolidDropDown<T extends string | number>({
               value={value}
               setValue={setValue}
               setOpen={setOpen}
-              overlap={i > 0 ? depth : 0}
               isFirst={i === 0}
               isLast={i === options.length - 1}
             />
