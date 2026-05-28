@@ -31,7 +31,8 @@ function MenuItem<T extends string | number>({
   setValue,
   setOpen,
   overlap,
-  index,
+  isFirst,
+  isLast,
 }: {
   opt: Option<T>;
   value: any;
@@ -39,6 +40,8 @@ function MenuItem<T extends string | number>({
   setOpen: (v: boolean) => void;
   overlap: number;
   index: number;
+  isFirst: boolean;
+  isLast: boolean;
 }) {
   const p = useSharedValue(0);
 
@@ -64,6 +67,7 @@ function MenuItem<T extends string | number>({
         {
           backgroundColor: "transparent",
           marginTop: overlap * 0.5,
+
           borderRadius: 10,
           minWidth: 200,
           boxShadow: ` ${2}px ${2}px 0 rgba(0,0,0,${styleConsts.shadowOpacity})`,
@@ -74,6 +78,7 @@ function MenuItem<T extends string | number>({
       onPressOut={() => press(0)}
       onPress={() => {
         setValue(opt.value);
+
         // setOpen(false);
       }}
     >
@@ -138,7 +143,8 @@ export default function SolidDropDown<T extends string | number>({
               setValue={setValue}
               setOpen={setOpen}
               overlap={i > 0 ? depth : 0}
-              index={i}
+              isFirst={i === 0}
+              isLast={i === options.length - 1}
             />
           ))}
         </View>

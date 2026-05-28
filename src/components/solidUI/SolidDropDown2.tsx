@@ -14,7 +14,7 @@ import Animated, {
   withTiming,
   Easing,
 } from "react-native-reanimated";
-import Svg, { Polygon } from "react-native-svg";
+import Svg, { Polygon, Rect } from "react-native-svg";
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
@@ -47,8 +47,8 @@ function MenuItem<T extends string | number>({
   const menuItemStyle = useAnimatedStyle(() => {
     return {
       transform: [
-        { translateX: p.value * depth },
-        { translateY: p.value * depth },
+        { translateX: p.value * depth * 0.5 },
+        { translateY: p.value * depth * 0.5 },
       ],
       backgroundColor: shadowEquivalent(colors.white, p.value * 0.025),
     };
@@ -65,12 +65,14 @@ function MenuItem<T extends string | number>({
       style={[
         {
           backgroundColor: "transparent",
-          marginTop: -overlap,
-          borderBottomLeftRadius: isLast ? 12 : 0,
-          borderBottomRightRadius: isLast ? 12 : 0,
-          borderTopRightRadius: isFirst ? 12 : 0,
-          borderTopLeftRadius: isFirst ? 12 : 0,
-          overflow: "hidden",
+          marginTop: isFirst ? 0 : -1,
+          borderBottomLeftRadius: isLast ? 10 : 0,
+          borderBottomRightRadius: isLast ? 10 : 0,
+          borderTopRightRadius: isFirst ? 10 : 0,
+          borderTopLeftRadius: isFirst ? 10 : 0,
+          boxShadow: isLast
+            ? `${2}px ${2}px 0 ${shadowEquivalent(colors.white)}`
+            : `${2}px ${0}px 0 ${shadowEquivalent(colors.white)}`,
         },
         menuItemStyle,
       ]}
@@ -87,12 +89,15 @@ function MenuItem<T extends string | number>({
           <Entypo style={[styles.icon, { color: colors.theme }]} name="check" />
         )}
       </View>
-      <Svg width={200} height={3} style={{ backgroundColor: "transparent" }}>
-        <Polygon
-          points="0,0 200,0 200,3 3,3"
-          fill={shadowEquivalent(colors.white)}
-        />
-      </Svg>
+      {!isLast && (
+        <Svg width={200} height={2} style={{ backgroundColor: "transparent" }}>
+          <Rect width={200} height={2} fill="transparent" />
+          <Polygon
+            points="0,0 200,0 200,2 2,2"
+            fill={shadowEquivalent(colors.white)}
+          />
+        </Svg>
+      )}
     </AnimatedPressable>
   );
 }
@@ -139,7 +144,7 @@ export default function SolidDropDown<T extends string | number>({
           </View>
         }
       >
-        <View style={styles.menu}>
+        <View>
           {options.map((opt, i) => (
             <MenuItem
               key={opt.value}
@@ -180,19 +185,18 @@ const styles = StyleSheet.create({
     marginTop: 4,
     fontSize: fontSizes.text - 4,
   },
-  menu: {},
   menuItem: {
     justifyContent: "space-between",
     flexDirection: "row",
     paddingVertical: 8,
     paddingHorizontal: 12,
-    borderRightWidth: 2,
-    borderRightColor: shadowEquivalent(colors.white),
   },
   popover: {
     backgroundColor: "transparent",
     borderRadius: 12,
     marginHorizontal: -10,
     paddingLeft: 2,
+    paddingBottom: 2,
+    paddingRight: 2,
   },
 });
