@@ -8,15 +8,8 @@ import {
 } from "@/src/utils/styles";
 import Popover from "react-native-popover-view";
 import { useState } from "react";
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withTiming,
-  Easing,
-} from "react-native-reanimated";
-import Svg, { Polygon } from "react-native-svg";
-
-const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
+import SolidButton from "./SolidButton";
+import sleep from "@/src/utils/sleep";
 
 export type Option<T = string> = {
   label: string;
@@ -24,66 +17,47 @@ export type Option<T = string> = {
 };
 
 const depth = 2;
+const itemHeight = 40;
+const itemWidth = 200;
 
 function MenuItem<T extends string | number>({
   opt,
   value,
   setValue,
   setOpen,
-  overlap,
-  index,
 }: {
   opt: Option<T>;
   value: any;
   setValue: (v: T) => void;
   setOpen: (v: boolean) => void;
-  overlap: number;
-  index: number;
 }) {
-  const p = useSharedValue(0);
-
-  const menuItemStyle = useAnimatedStyle(() => {
-    return {
-      transform: [
-        { translateX: p.value * depth },
-        { translateY: p.value * depth },
-      ],
-      backgroundColor: shadowEquivalent(colors.white, p.value * 0.025),
-    };
-  });
-
-  const press = (v: number) =>
-    (p.value = withTiming(v, {
-      duration: styleConsts.pressDuration,
-      easing: Easing.inOut(Easing.ease),
-    }));
-
   return (
-    <AnimatedPressable
-      style={[
-        {
-          backgroundColor: "transparent",
-          marginTop: overlap * 0.5,
-          borderRadius: 10,
-          minWidth: 200,
-          boxShadow: ` ${2}px ${2}px 0 rgba(0,0,0,${styleConsts.shadowOpacity})`,
-        },
-        menuItemStyle,
-      ]}
-      onPressIn={() => press(1)}
-      onPressOut={() => press(0)}
-      onPress={() => {
+    <SolidButton
+      backgroundColor={colors.white}
+      height={itemHeight}
+      width={itemWidth}
+      depth={depth}
+      borderRadius={8}
+      padding={0}
+      isToggle={true}
+      toggleValue={opt.value === value}
+      onPress={async () => {
         setValue(opt.value);
-        //setOpen(false);
+        await sleep(250);
+        setOpen(false);
       }}
-    >
-      <View style={styles.menuItem}>
-        <Text style={styles.text}>{opt.label}</Text>
-        {opt.value === value && (
-          <Entypo style={[styles.icon, { color: colors.theme }]} name="check" />
-        )}
-      </View>
-    </AnimatedPressable>
+      icon={
+        <View style={styles.menuItemContent}>
+          <Text style={styles.text}>{opt.label}</Text>
+          {opt.value === value && (
+            <Entypo
+              style={[styles.icon, { color: colors.theme }]}
+              name="check"
+            />
+          )}
+        </View>
+      }
+    />
   );
 }
 
@@ -129,16 +103,14 @@ export default function SolidDropDown<T extends string | number>({
           </View>
         }
       >
-        <View style={styles.menu}>
-          {options.map((opt, i) => (
+        <View style={styles.menuContainer}>
+          {options.map((opt) => (
             <MenuItem
               key={opt.value}
               opt={opt}
               value={value}
               setValue={setValue}
               setOpen={setOpen}
-              overlap={i > 0 ? depth : 0}
-              index={i}
             />
           ))}
         </View>
@@ -169,12 +141,19 @@ const styles = StyleSheet.create({
     marginTop: 4,
     fontSize: fontSizes.text - 4,
   },
-  menu: {},
-  menuItem: {
-    justifyContent: "space-between",
+  menuContainer: {
+    backgroundColor: colors.offWhite,
+    borderRadius: 12,
+    padding: depth + 4,
+    gap: 4,
+    boxShadow: ` ${depth}px ${depth}px 0 rgba(0,0,0,${styleConsts.shadowOpacity})`,
+  },
+  menuItemContent: {
+    width: "100%",
     flexDirection: "row",
-    paddingVertical: 8,
+    justifyContent: "space-between",
     paddingHorizontal: 12,
+    alignItems: "center",
   },
   popover: {
     backgroundColor: "transparent",
@@ -182,5 +161,9 @@ const styles = StyleSheet.create({
     marginHorizontal: -10,
     paddingLeft: 2,
     overflow: "visible",
+    shadowColor: "black",
+    shadowOpacity: 0.25,
+    shadowRadius: 20,
+    elevation: 6,
   },
 });
