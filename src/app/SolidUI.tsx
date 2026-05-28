@@ -5,10 +5,12 @@ import Slider from "../components/solidUI/SolidToggle";
 import { useState } from "react";
 import SolidInput from "../components/solidUI/SolidInput";
 import SolidDropDown from "../components/solidUI/SolidDropDown";
+import SolidDropDown2 from "../components/solidUI/SolidDropDown2";
+import SolidDropDown3 from "../components/solidUI/SolidDropDown3";
+
 import { listToOptions } from "../utils/listToOptions";
 import SolidInputHorizontalLabel from "../components/solidUI/SolidInputHorizontalLabel";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import DropDownMenu from "../components/form/DropDownMenu";
 
 export default function SolidUI() {
   const [value, setValue] = useState(false);
@@ -52,16 +54,15 @@ export default function SolidUI() {
         value={value2}
         setValue={setValue2}
       />
-      <DropDownMenu
+      <SolidDropDown2
         title="drop down"
-        options={listToOptions(["1", "2", "3"])}
+        options={listToOptions(["1", "2", "3", "4", "%"])}
         value={value2}
         setValue={setValue2}
-      ></DropDownMenu>
-      <View style={{ height: 300 }}></View>
-      <SolidDropDown
+      />
+      <SolidDropDown3
         title="drop down"
-        options={listToOptions(["1", "2", "3"])}
+        options={listToOptions(["1", "2", "3", "4", "%"])}
         value={value2}
         setValue={setValue2}
       />
