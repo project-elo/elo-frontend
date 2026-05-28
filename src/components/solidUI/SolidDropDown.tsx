@@ -31,12 +31,14 @@ function MenuItem<T extends string | number>({
   setValue,
   setOpen,
   overlap,
+  index,
 }: {
   opt: Option<T>;
   value: any;
   setValue: (v: T) => void;
   setOpen: (v: boolean) => void;
   overlap: number;
+  index: number;
 }) {
   const p = useSharedValue(0);
 
@@ -59,7 +61,13 @@ function MenuItem<T extends string | number>({
   return (
     <AnimatedPressable
       style={[
-        { backgroundColor: "transparent", marginTop: -overlap },
+        {
+          backgroundColor: "transparent",
+          marginTop: overlap * 0.5,
+          borderRadius: 10,
+          minWidth: 200,
+          boxShadow: ` ${2}px ${2}px 0 rgba(0,0,0,${styleConsts.shadowOpacity})`,
+        },
         menuItemStyle,
       ]}
       onPressIn={() => press(1)}
@@ -75,12 +83,6 @@ function MenuItem<T extends string | number>({
           <Entypo style={[styles.icon, { color: colors.theme }]} name="check" />
         )}
       </View>
-      <Svg width={200} height={3} style={{ backgroundColor: "transparent" }}>
-        <Polygon
-          points="0,0 200,0 200,3 3,3"
-          fill={shadowEquivalent(colors.white)}
-        />
-      </Svg>
     </AnimatedPressable>
   );
 }
@@ -136,6 +138,7 @@ export default function SolidDropDown<T extends string | number>({
               setValue={setValue}
               setOpen={setOpen}
               overlap={i > 0 ? depth : 0}
+              index={i}
             />
           ))}
         </View>
@@ -172,13 +175,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingVertical: 8,
     paddingHorizontal: 12,
-    borderRightWidth: 3,
-    borderRightColor: shadowEquivalent(colors.white),
   },
   popover: {
     backgroundColor: "transparent",
     borderRadius: 12,
     marginHorizontal: -10,
     paddingLeft: 2,
+    overflow: "visible",
   },
 });
