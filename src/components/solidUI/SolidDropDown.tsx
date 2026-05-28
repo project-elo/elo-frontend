@@ -23,35 +23,30 @@ export type Option<T = string> = {
   value: T;
 };
 
-const width = 200;
-const padding = 10;
 const depth = 2;
-const height = 50;
 
 function MenuItem<T extends string | number>({
   opt,
   value,
   setValue,
   setOpen,
+  overlap,
 }: {
   opt: Option<T>;
   value: any;
   setValue: (v: T) => void;
   setOpen: (v: boolean) => void;
+  overlap: number;
 }) {
   const p = useSharedValue(0);
 
   const menuItemStyle = useAnimatedStyle(() => {
-    const shadow = -depth + p.value * depth * 2;
     return {
-      width: width - p.value * depth,
-      height: height - p.value * depth,
-      marginTop: -depth + p.value * depth,
-      marginLeft: -depth + p.value * depth,
-      paddingTop: padding + p.value * depth,
-      paddingLeft: padding + p.value * depth,
-      paddingBottom: padding + depth - p.value * depth,
-      paddingRight: padding + depth - p.value * depth,
+      transform: [
+        { translateX: p.value * depth },
+        { translateY: p.value * depth },
+      ],
+      backgroundColor: shadowEquivalent(colors.white, p.value * 0.025),
     };
   });
 
@@ -63,7 +58,10 @@ function MenuItem<T extends string | number>({
 
   return (
     <AnimatedPressable
-      style={[styles.menuItem, menuItemStyle]}
+      style={[
+        { backgroundColor: "transparent", marginTop: -overlap },
+        menuItemStyle,
+      ]}
       onPressIn={() => press(1)}
       onPressOut={() => press(0)}
       onPress={() => {
@@ -71,10 +69,18 @@ function MenuItem<T extends string | number>({
         //setOpen(false);
       }}
     >
-      <Text style={styles.text}>{opt.label}</Text>
-      {opt.value === value && (
-        <Entypo style={[styles.icon, { color: colors.theme }]} name="check" />
-      )}
+      <View style={styles.menuItem}>
+        <Text style={styles.text}>{opt.label}</Text>
+        {opt.value === value && (
+          <Entypo style={[styles.icon, { color: colors.theme }]} name="check" />
+        )}
+      </View>
+      <Svg width={200} height={3} style={{ backgroundColor: "transparent" }}>
+        <Polygon
+          points="0,0 200,0 200,3 3,3"
+          fill={shadowEquivalent(colors.white)}
+        />
+      </Svg>
     </AnimatedPressable>
   );
 }
@@ -122,23 +128,15 @@ export default function SolidDropDown<T extends string | number>({
         }
       >
         <View style={styles.menu}>
-          {options.map((opt) => (
-            <View key={opt.value}>
-              <MenuItem
-                key={opt.value}
-                opt={opt}
-                value={value}
-                setValue={setValue}
-                setOpen={setOpen}
-              />
-
-              <Svg width={200} height={3} style={{ marginLeft: -2 }}>
-                <Polygon
-                  points="0,0 200,0 200,3 3,3"
-                  fill={shadowEquivalent(colors.white)}
-                />
-              </Svg>
-            </View>
+          {options.map((opt, i) => (
+            <MenuItem
+              key={opt.value}
+              opt={opt}
+              value={value}
+              setValue={setValue}
+              setOpen={setOpen}
+              overlap={i > 0 ? depth : 0}
+            />
           ))}
         </View>
       </Popover>
@@ -168,18 +166,18 @@ const styles = StyleSheet.create({
     marginTop: 4,
     fontSize: fontSizes.text - 4,
   },
-  menu: {
-    gap: -2,
-  },
+  menu: {},
   menuItem: {
-    backgroundColor: colors.white,
-    flexDirection: "row",
     justifyContent: "space-between",
+    flexDirection: "row",
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRightWidth: 3,
+    borderRightColor: shadowEquivalent(colors.white),
   },
   popover: {
     backgroundColor: "transparent",
     borderRadius: 12,
-    elevation: 6,
     marginHorizontal: -10,
     paddingLeft: 2,
   },

@@ -1,21 +1,20 @@
 import Color from "color";
 
+// these need to be hex so that shadowEquivalent works
 export const colors = {
   theme: "#94cee4",
 
-  white: "white",
-  offWhite: "rgb(240,240,240)",
-  lighterGray: "rgb(226, 226, 227)",
-  lightGray: "rgb(197,197,197)",
-  gray: "rgb(150,150,150)",
-  darkGray: "rgb(92, 92, 92)",
-  black: "black",
+  white: "#ffffff",
+  offWhite: "#f0f0f0",
+  lighterGray: "#e2e2e3",
+  lightGray: "#c5c5c5",
+  gray: "#969696",
+  darkGray: "#5c5c5c",
+  black: "#000000",
 
-  shadow: "rgba(0,0,0,0.35)",
-
-  red: "rgb(255, 52, 52)",
-  green: "rgb(12, 185, 0)",
-  blue: "rgb(45, 164, 255)",
+  red: "#ff3434",
+  green: "#0cb900",
+  blue: "#2da4ff",
 };
 
 export const fontSizes = {
@@ -32,11 +31,19 @@ export const styleConsts = {
   modalDelay: 400,
 };
 
-export function shadowEquivalent(backgroundColor: string): string {
-  const c = Color(backgroundColor);
-  return Color.rgb(
-    c.red() * (1 - styleConsts.shadowOpacity),
-    c.green() * (1 - styleConsts.shadowOpacity),
-    c.blue() * (1 - styleConsts.shadowOpacity),
-  ).string();
+export function shadowEquivalent(
+  backgroundColor: string,
+  shadowOpacity: number = styleConsts.shadowOpacity,
+): string {
+  "worklet";
+  // only works for hex colors like '#ffffff'
+  // we cant use Color lib because this runs on OS thread
+  const hex = backgroundColor.replace("#", "");
+  const r = parseInt(hex.substring(0, 2), 16);
+  const g = parseInt(hex.substring(2, 4), 16);
+  const b = parseInt(hex.substring(4, 6), 16);
+  const nr = Math.round(r * (1 - shadowOpacity));
+  const ng = Math.round(g * (1 - shadowOpacity));
+  const nb = Math.round(b * (1 - shadowOpacity));
+  return `rgb(${nr}, ${ng}, ${nb})`;
 }
