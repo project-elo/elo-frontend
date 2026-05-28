@@ -14,6 +14,7 @@ import Animated, {
   withTiming,
   Easing,
 } from "react-native-reanimated";
+import Svg, { Polygon } from "react-native-svg";
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
@@ -64,7 +65,7 @@ function MenuItem<T extends string | number>({
     <AnimatedPressable
       style={[styles.menuItem, menuItemStyle]}
       onPressIn={() => press(1)}
-      onPressOut={() => press(1)}
+      onPressOut={() => press(0)}
       onPress={() => {
         setValue(opt.value);
         //setOpen(false);
@@ -122,13 +123,22 @@ export default function SolidDropDown<T extends string | number>({
       >
         <View style={styles.menu}>
           {options.map((opt) => (
-            <MenuItem
-              key={opt.value}
-              opt={opt}
-              value={value}
-              setValue={setValue}
-              setOpen={setOpen}
-            />
+            <View key={opt.value}>
+              <MenuItem
+                key={opt.value}
+                opt={opt}
+                value={value}
+                setValue={setValue}
+                setOpen={setOpen}
+              />
+
+              <Svg width={200} height={3} style={{ marginLeft: -2 }}>
+                <Polygon
+                  points="0,0 200,0 200,3 3,3"
+                  fill={shadowEquivalent(colors.white)}
+                />
+              </Svg>
+            </View>
           ))}
         </View>
       </Popover>
@@ -159,10 +169,7 @@ const styles = StyleSheet.create({
     fontSize: fontSizes.text - 4,
   },
   menu: {
-    backgroundColor: shadowEquivalent(colors.red),
-    borderRadius: 12,
-    minWidth: 200,
-    gap: 3,
+    gap: -2,
   },
   menuItem: {
     backgroundColor: colors.white,
