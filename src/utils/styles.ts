@@ -27,7 +27,7 @@ export const fontSizes = {
 
 export const styleConsts = {
   pressDuration: 200,
-  shadowOpacity: 0.3,
+  shadowOpacity: 0.15,
   modalDelay: 400,
 };
 

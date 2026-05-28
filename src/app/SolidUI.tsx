@@ -38,17 +38,7 @@ export default function SolidUI() {
         }}
       />
       <Slider onChange={setValue} value={value} />
-      <SolidInput
-        defaultValue=""
-        placeholder="input"
-        onChangeText={(v: string) => {}}
-      />
-      <SolidInputHorizontalLabel
-        label="example"
-        defaultValue=""
-        placeholder="input"
-        onChangeText={(v: string) => {}}
-      />
+
       <SolidDropDown
         title="solid buttons"
         options={listToOptions(["1", "2", "3", "4", "%"])}

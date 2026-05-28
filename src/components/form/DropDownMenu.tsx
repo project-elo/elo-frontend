@@ -36,6 +36,7 @@ export default function DropDownMenu<T extends string | number>({
       <Text style={styles.text}>{title}</Text>
 
       <Popover
+        placement={["bottom"]}
         isVisible={open}
         onRequestClose={() => setOpen(false)}
         backgroundStyle={{ backgroundColor: "transparent" }}

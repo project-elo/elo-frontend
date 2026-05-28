@@ -66,7 +66,7 @@ export default function SolidDropDown<T extends string | number>({
   options,
   value,
   setValue,
-  backgroundColor = colors.white,
+  backgroundColor,
 }: {
   title: string;
   options: Option<T>[];

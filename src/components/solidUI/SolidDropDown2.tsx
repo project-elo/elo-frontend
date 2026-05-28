@@ -15,6 +15,8 @@ import Animated, {
   Easing,
 } from "react-native-reanimated";
 import Svg, { Polygon, Rect } from "react-native-svg";
+import sleep from "@/src/utils/sleep";
+import * as Haptics from "expo-haptics";
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
@@ -77,11 +79,15 @@ function MenuItem<T extends string | number>({
         },
         menuItemStyle,
       ]}
-      onPressIn={() => press(1)}
+      onPressIn={() => {
+        press(1);
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
+      }}
       onPressOut={() => press(0)}
-      onPress={() => {
+      onPress={async () => {
         setValue(opt.value);
-        //setOpen(false);
+        await sleep(250);
+        setOpen(false);
       }}
     >
       <Animated.View
@@ -119,7 +125,7 @@ export default function SolidDropDown<T extends string | number>({
   options,
   value,
   setValue,
-  backgroundColor = colors.white,
+  backgroundColor,
 }: {
   title: string;
   options: Option<T>[];
