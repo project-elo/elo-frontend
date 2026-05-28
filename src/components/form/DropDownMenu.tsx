@@ -124,10 +124,7 @@ const styles = StyleSheet.create({
   popover: {
     backgroundColor: "transparent",
     marginHorizontal: -10,
-
-    shadowColor: "black",
-    shadowOpacity: 0.25,
-    shadowRadius: 20,
-    elevation: 6,
+    borderRadius: 12,
+    boxShadow: ` ${2}px ${2}px 0 rgba(0,0,0,${0.3})`,
   },
 });

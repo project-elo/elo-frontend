@@ -31,12 +31,16 @@ function MenuItem<T extends string | number>({
   setValue,
   setOpen,
   overlap,
+  isFirst,
+  isLast,
 }: {
   opt: Option<T>;
   value: any;
   setValue: (v: T) => void;
   setOpen: (v: boolean) => void;
   overlap: number;
+  isFirst: boolean;
+  isLast: boolean;
 }) {
   const p = useSharedValue(0);
 
@@ -59,7 +63,15 @@ function MenuItem<T extends string | number>({
   return (
     <AnimatedPressable
       style={[
-        { backgroundColor: "transparent", marginTop: -overlap },
+        {
+          backgroundColor: "transparent",
+          marginTop: -overlap,
+          borderBottomLeftRadius: isLast ? 12 : 0,
+          borderBottomRightRadius: isLast ? 12 : 0,
+          borderTopRightRadius: isFirst ? 12 : 0,
+          borderTopLeftRadius: isFirst ? 12 : 0,
+          overflow: "hidden",
+        },
         menuItemStyle,
       ]}
       onPressIn={() => press(1)}
@@ -136,6 +148,8 @@ export default function SolidDropDown<T extends string | number>({
               setValue={setValue}
               setOpen={setOpen}
               overlap={i > 0 ? depth : 0}
+              isFirst={i === 0}
+              isLast={i === options.length - 1}
             />
           ))}
         </View>
@@ -172,7 +186,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingVertical: 8,
     paddingHorizontal: 12,
-    borderRightWidth: 3,
+    borderRightWidth: 2,
     borderRightColor: shadowEquivalent(colors.white),
   },
   popover: {

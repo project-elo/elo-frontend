@@ -74,7 +74,7 @@ function MenuItem<T extends string | number>({
       onPressOut={() => press(0)}
       onPress={() => {
         setValue(opt.value);
-        //setOpen(false);
+        // setOpen(false);
       }}
     >
       <View style={styles.menuItem}>
