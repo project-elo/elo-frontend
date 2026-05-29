@@ -53,7 +53,10 @@ function MenuItem<T extends string | number>({
 
   const bgColor = useAnimatedStyle(() => {
     return {
-      backgroundColor: shadowEquivalent(colors.white, p.value * 0.025),
+      backgroundColor: shadowEquivalent(
+        colors.white,
+        p.value * styleConsts.darkenFace,
+      ),
     };
   });
 

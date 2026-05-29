@@ -13,6 +13,7 @@ export default function SolidToggle({
   onChange,
   width = 56,
   height = 32,
+
   offColor = "#d4d4d4",
   onColor = colors.theme,
 }: {

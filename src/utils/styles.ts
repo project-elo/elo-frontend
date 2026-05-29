@@ -5,7 +5,7 @@ export const colors = {
   theme: "#94cee4",
 
   white: "#ffffff",
-  offWhite: "#f0f0f0",
+  offWhite: "#eeeeee",
   lighterGray: "#e2e2e3",
   lightGray: "#c5c5c5",
   gray: "#969696",
@@ -31,6 +31,7 @@ export const styleConsts = {
   modalDelay: 400,
   depth: 2,
   radius: 10,
+  darkenFace: 0.025,
 };
 
 export function shadowEquivalent(

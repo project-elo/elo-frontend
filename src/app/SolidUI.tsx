@@ -15,6 +15,7 @@ export default function SolidUI() {
   const [value, setValue] = useState(false);
   const [value2, setValue2] = useState("");
   const [value3, setValue3] = useState(false);
+
   return (
     <View style={styles.container}>
       <SolidButton
@@ -40,8 +41,20 @@ export default function SolidUI() {
         setValue={setValue2}
       />
       <SolidToggleGroup
-        title="solid buttons"
+        title="toggle group"
+        options={listToOptions(["1", "2"])}
+        value={value2}
+        setValue={setValue2}
+      />
+      <SolidToggleGroup
+        title="toggle group"
         options={listToOptions(["1", "2", "3"])}
+        value={value2}
+        setValue={setValue2}
+      />
+      <SolidToggleGroup
+        title="toggle group"
+        options={listToOptions(["1", "2", "3", "4"])}
         value={value2}
         setValue={setValue2}
       />
@@ -50,6 +63,7 @@ export default function SolidUI() {
 }
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: colors.offWhite,
     paddingTop: 100,
     flex: 1,
     padding: 20,

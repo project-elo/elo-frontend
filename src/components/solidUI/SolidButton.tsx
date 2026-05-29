@@ -6,7 +6,7 @@ import Animated, {
   Easing,
 } from "react-native-reanimated";
 import { ReactNode, useEffect } from "react";
-import { styleConsts, colors } from "@/src/utils/styles";
+import { styleConsts, colors, shadowEquivalent } from "@/src/utils/styles";
 import * as Haptics from "expo-haptics";
 
 export default function SolidButton({
@@ -51,6 +51,10 @@ export default function SolidButton({
       paddingBottom: padding + depth - p.value * depth,
       paddingRight: padding + depth - p.value * depth,
       boxShadow: `inset ${shadow}px ${shadow}px 0 rgba(0,0,0,${styleConsts.shadowOpacity})`,
+      backgroundColor: shadowEquivalent(
+        colors.white,
+        p.value * styleConsts.darkenFace,
+      ),
       justifyContent: "center",
       alignItems: "center",
     };
