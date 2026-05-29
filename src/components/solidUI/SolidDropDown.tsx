@@ -17,13 +17,9 @@ import Animated, {
 import Svg, { Polygon, Rect } from "react-native-svg";
 import sleep from "@/src/utils/sleep";
 import * as Haptics from "expo-haptics";
+import { Option } from "../form/DropDownMenu";
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
-
-export type Option<T = string> = {
-  label: string;
-  value: T;
-};
 
 function MenuItem<T extends string | number>({
   opt,

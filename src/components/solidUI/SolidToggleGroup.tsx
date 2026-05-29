@@ -1,30 +1,7 @@
-import { View, Text, StyleSheet, Pressable } from "react-native";
-import Entypo from "@expo/vector-icons/Entypo";
-import {
-  colors,
-  fontSizes,
-  styleConsts,
-  shadowEquivalent,
-} from "@/src/utils/styles";
-import Popover from "react-native-popover-view";
-import { useState } from "react";
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withTiming,
-  Easing,
-} from "react-native-reanimated";
-import Svg, { Polygon, Rect } from "react-native-svg";
-import sleep from "@/src/utils/sleep";
-import * as Haptics from "expo-haptics";
+import { View, Text, StyleSheet } from "react-native";
+import { fontSizes, styleConsts } from "@/src/utils/styles";
 import SolidButton from "./SolidButton";
-
-const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
-
-export type Option<T = string> = {
-  label: string;
-  value: T;
-};
+import { Option } from "../form/DropDownMenu";
 
 export default function SolidToggleGroup<T extends string | number>({
   title,
@@ -63,11 +40,7 @@ export default function SolidToggleGroup<T extends string | number>({
             height={39}
             isToggle={true}
             toggleValue={selectedOption === opt}
-            child={
-              <View style={styles.child}>
-                <Text style={styles.text}>{opt.label}</Text>
-              </View>
-            }
+            child={<Text style={styles.text}>{opt.label}</Text>}
           />
         ))}
       </View>
@@ -85,11 +58,6 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: "row",
     gap: 1,
-  },
-  child: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    width: "100%",
   },
   icon: {
     marginTop: 4,
