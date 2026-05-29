@@ -29,6 +29,8 @@ export const styleConsts = {
   pressDuration: 200,
   shadowOpacity: 0.15,
   modalDelay: 400,
+  depth: 2,
+  radius: 10,
 };
 
 export function shadowEquivalent(

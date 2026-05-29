@@ -25,8 +25,6 @@ export type Option<T = string> = {
   value: T;
 };
 
-const depth = 2;
-
 function MenuItem<T extends string | number>({
   opt,
   value,
@@ -47,8 +45,8 @@ function MenuItem<T extends string | number>({
   const menuItemStyle = useAnimatedStyle(() => {
     return {
       transform: [
-        { translateX: p.value * depth * 0.5 },
-        { translateY: p.value * depth * 0.5 },
+        { translateX: p.value * styleConsts.depth * 0.5 },
+        { translateY: p.value * styleConsts.depth * 0.5 },
       ],
     };
   });
@@ -70,11 +68,11 @@ function MenuItem<T extends string | number>({
       style={[
         {
           backgroundColor: "transparent",
-          marginTop: isFirst ? 0 : -1,
-          borderBottomLeftRadius: isLast ? 10 : 0,
-          borderBottomRightRadius: isLast ? 10 : 0,
-          borderTopRightRadius: isFirst ? 10 : 0,
-          borderTopLeftRadius: isFirst ? 10 : 0,
+          marginTop: isFirst ? 0 : -styleConsts.depth * 0.5,
+          borderBottomLeftRadius: isLast ? styleConsts.radius : 0,
+          borderBottomRightRadius: isLast ? styleConsts.radius : 0,
+          borderTopRightRadius: isFirst ? styleConsts.radius : 0,
+          borderTopLeftRadius: isFirst ? styleConsts.radius : 0,
           boxShadow: `${2}px ${2}px 0 ${shadowEquivalent(colors.white)}`,
         },
         menuItemStyle,
@@ -95,10 +93,10 @@ function MenuItem<T extends string | number>({
           styles.menuItem,
           bgColor,
           {
-            borderBottomLeftRadius: isLast ? 10 : 0,
-            borderBottomRightRadius: isLast ? 10 : 0,
-            borderTopRightRadius: isFirst ? 10 : 0,
-            borderTopLeftRadius: isFirst ? 10 : 0,
+            borderBottomLeftRadius: isLast ? styleConsts.radius : 0,
+            borderBottomRightRadius: isLast ? styleConsts.radius : 0,
+            borderTopRightRadius: isFirst ? styleConsts.radius : 0,
+            borderTopLeftRadius: isFirst ? styleConsts.radius : 0,
           },
         ]}
       >
@@ -111,7 +109,7 @@ function MenuItem<T extends string | number>({
         <Svg width={200} height={2} style={{ backgroundColor: "transparent" }}>
           <Rect width={200} height={2} fill="transparent" />
           <Polygon
-            points="0,0 200,0 200,2 2,2"
+            points={`0,0 200,0 200, ${styleConsts.depth} ${styleConsts.depth}, ${styleConsts.depth} `}
             fill={shadowEquivalent(colors.white)}
           />
         </Svg>
@@ -210,7 +208,6 @@ const styles = StyleSheet.create({
   },
   popover: {
     backgroundColor: "transparent",
-    borderRadius: 12,
     marginHorizontal: -10,
     paddingLeft: 2,
     paddingBottom: 2,

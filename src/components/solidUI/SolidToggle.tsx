@@ -13,7 +13,6 @@ export default function SolidToggle({
   onChange,
   width = 56,
   height = 32,
-  depth = 2,
   offColor = "#d4d4d4",
   onColor = colors.theme,
 }: {
@@ -21,12 +20,11 @@ export default function SolidToggle({
   onChange: (value: boolean) => void;
   width?: number;
   height?: number;
-  depth?: number;
   offColor?: string;
   onColor?: string;
 }) {
   const t = useSharedValue(value ? 1 : 0);
-  const thumbSize = height - depth * 2;
+  const thumbSize = height - styleConsts.depth * 2;
   const range = width - height;
   const speed = 150;
 
@@ -60,8 +58,8 @@ export default function SolidToggle({
             width,
             height,
             borderRadius: height / 2,
-            padding: depth,
-            boxShadow: `inset ${depth}px ${depth}px 0 rgba(0,0,0,${styleConsts.shadowOpacity})`,
+            padding: styleConsts.depth,
+            boxShadow: `inset ${styleConsts.depth}px ${styleConsts.depth}px 0 rgba(0,0,0,${styleConsts.shadowOpacity})`,
             overflow: "hidden",
           },
           trackStyle,
@@ -74,7 +72,7 @@ export default function SolidToggle({
               height: thumbSize,
               borderRadius: thumbSize / 2,
               backgroundColor: colors.offWhite,
-              boxShadow: `${depth}px ${depth}px 0 ${shadowEquivalent(colors.offWhite)}`,
+              boxShadow: `${styleConsts.depth}px ${styleConsts.depth}px 0 ${shadowEquivalent(colors.offWhite)}`,
             },
             thumbStyle,
           ]}

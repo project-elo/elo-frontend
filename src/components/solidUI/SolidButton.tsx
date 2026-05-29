@@ -6,33 +6,38 @@ import Animated, {
   Easing,
 } from "react-native-reanimated";
 import { ReactNode, useEffect } from "react";
-import { styleConsts } from "@/src/utils/styles";
+import { styleConsts, colors } from "@/src/utils/styles";
 import * as Haptics from "expo-haptics";
 
 export default function SolidButton({
-  backgroundColor,
-  height,
-  width,
-  depth = 2,
-  borderRadius = 10,
+  backgroundColor = colors.white,
+  height = 50,
+  width = 50,
+  borderTopLeftRadius = styleConsts.radius,
+  borderTopRightRadius = styleConsts.radius,
+  borderBottomLeftRadius = styleConsts.radius,
+  borderBottomRightRadius = styleConsts.radius,
   padding = 4,
   onPress,
-  icon,
+  child,
   isToggle = false,
   toggleValue,
 }: {
-  backgroundColor: string;
-  height: number;
-  width: number;
-  depth?: number;
-  borderRadius?: number;
+  backgroundColor?: string;
+  height?: number;
+  width?: number;
+  borderTopLeftRadius?: number;
+  borderTopRightRadius?: number;
+  borderBottomLeftRadius?: number;
+  borderBottomRightRadius?: number;
   padding?: number;
   onPress: () => void;
-  icon: ReactNode;
+  child?: ReactNode;
   isToggle?: boolean;
   toggleValue?: boolean;
 }) {
   const p = useSharedValue(0);
+  const depth = styleConsts.depth;
 
   const style = useAnimatedStyle(() => {
     const shadow = -depth + p.value * depth * 2;
@@ -81,9 +86,19 @@ export default function SolidButton({
       }}
     >
       <Animated.View
-        style={[{ backgroundColor, borderRadius, overflow: "hidden" }, style]}
+        style={[
+          {
+            backgroundColor,
+            borderTopLeftRadius,
+            borderTopRightRadius,
+            borderBottomLeftRadius,
+            borderBottomRightRadius,
+            overflow: "hidden",
+          },
+          style,
+        ]}
       >
-        {icon}
+        {child}
       </Animated.View>
     </Pressable>
   );
