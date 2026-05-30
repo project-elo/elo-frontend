@@ -41,43 +41,20 @@ export default function RootLayout() {
           }}
         />
         <Tabs.Screen
-          name="Likes"
+          name="Matches"
           options={{
-            title: "Likes",
+            title: "Matches",
             tabBarButton: ({ onPress }) => (
               <SolidButton
                 style={{ alignSelf: "center" }}
                 isToggle
-                toggleValue={pathname === "/Likes"}
+                toggleValue={pathname === "/Matches"}
                 onPress={() => onPress?.(undefined as any)}
                 child={
                   <FontAwesome6
                     name="heart"
                     size={24}
                     color={pathname === "/Likes" ? colors.theme : colors.gray}
-                  />
-                }
-              />
-            ),
-          }}
-        />
-        <Tabs.Screen
-          name="Messages"
-          options={{
-            title: "Messages",
-            tabBarButton: ({ onPress }) => (
-              <SolidButton
-                style={{ alignSelf: "center" }}
-                isToggle
-                toggleValue={pathname === "/Messages"}
-                onPress={() => onPress?.(undefined as any)}
-                child={
-                  <MaterialCommunityIcons
-                    name="message-outline"
-                    size={24}
-                    color={
-                      pathname === "/Messages" ? colors.theme : colors.gray
-                    }
                   />
                 }
               />
