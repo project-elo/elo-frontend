@@ -4,8 +4,8 @@ import { colors } from "../utils/styles";
 import Slider from "../components/solidUI/SolidToggle";
 import { useState } from "react";
 import SolidInput from "../components/solidUI/SolidInput";
-import SolidInputHorizontalLabel from "../components/solidUI/SolidInputHorizontalLabel";
 import SolidDropDown from "../components/solidUI/SolidDropDown";
+import SolidSlideUpModal from "../components/solidUI/SolidSlideUpModal";
 
 import { listToOptions } from "../utils/listToOptions";
 import AntDesign from "@expo/vector-icons/AntDesign";
@@ -15,13 +15,16 @@ export default function SolidUI() {
   const [value, setValue] = useState(false);
   const [value2, setValue2] = useState("");
   const [value3, setValue3] = useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
     <View style={styles.container}>
       <SolidButton
         backgroundColor={colors.white}
-        onPress={() => {}}
-        child={<AntDesign name="arrow-down" size={24} color="black" />}
+        onPress={() => {
+          setOpen(true);
+        }}
+        child={<AntDesign name="arrow-up" size={24} color="black" />}
       />
       <SolidButton
         backgroundColor={colors.white}
@@ -53,6 +56,17 @@ export default function SolidUI() {
         setValue={setValue2}
       />
       <SolidInput placeholder="text" onChangeText={setValue2} />
+
+      <SolidSlideUpModal
+        title={"example"}
+        form={<View />}
+        modalOpen={open}
+        submitForm={() => {}}
+        clearForm={() => {
+          setOpen(false);
+        }}
+        canSubmit={true}
+      />
     </View>
   );
 }
@@ -62,6 +76,6 @@ const styles = StyleSheet.create({
     paddingTop: 100,
     flex: 1,
     padding: 20,
-    gap: 20,
+    gap: 5,
   },
 });

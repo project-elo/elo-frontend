@@ -13,7 +13,7 @@ import { fontSizes, colors, styleConsts } from "@/src/utils/styles";
 import { useSettingsStore } from "@/src/state/settings/useSettingsStore";
 import { useDeviceClass } from "@/src/hooks/useDeviceClass";
 
-export default function SlideUpModal({
+export default function SolidSlideUpModal({
   modalOpen,
   title,
   form,
@@ -88,10 +88,10 @@ export default function SlideUpModal({
                 Keyboard.dismiss();
               }}
               style={({ pressed }) => [
-                { opacity: pressed ? styleConsts.opacity : 1 },
+                { opacity: pressed ? styleConsts.shadowOpacity : 1 },
               ]}
             >
-              <Text style={[styles.button, { color: settings.themeColor }]}>
+              <Text style={[styles.button, { color: colors.theme }]}>
                 {cancelText}
               </Text>
             </Pressable>
@@ -104,14 +104,17 @@ export default function SlideUpModal({
                   Keyboard.dismiss();
                 }}
                 style={({ pressed }) => [
-                  { opacity: pressed && canSubmit ? styleConsts.opacity : 1 },
+                  {
+                    opacity:
+                      pressed && canSubmit ? styleConsts.shadowOpacity : 1,
+                  },
                 ]}
                 disabled={!canSubmit}
               >
                 <Text
                   style={[
                     styles.button,
-                    { color: canSubmit ? settings.themeColor : colors.gray },
+                    { color: canSubmit ? colors.theme : colors.gray },
                   ]}
                 >
                   {saveText}
@@ -143,10 +146,12 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   container: {
+    boxShadow: ` ${2}px ${2}px 0 rgba(0,0,0,${styleConsts.shadowOpacity})`,
     backgroundColor: colors.white,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     borderRadius: 20,
+    overflow: "visible",
   },
   header: {
     position: "relative",
