@@ -35,17 +35,13 @@ export default function SolidToggle({
     mass: 0.5,
   });
 
-  const trackStyle = useAnimatedStyle(() => ({
-    backgroundColor: offColor,
-  }));
-
   const fillStyle = useAnimatedStyle(() => ({
     width: Math.max(0, t.value) * width,
   }));
 
   const thumbStyle = useAnimatedStyle(() => ({
     transform: [{ translateX: t.value * range }],
-    boxShadow: `${styleConsts.depth - t.value}px ${styleConsts.depth - t.value}px 0 ${shadowEquivalent(colors.offWhite)}`,
+    boxShadow: `${styleConsts.depth - t.value}px ${styleConsts.depth - t.value}px 0 ${shadowEquivalent(colors.offWhite, styleConsts.shadowOpacity)}`,
   }));
 
   return (
