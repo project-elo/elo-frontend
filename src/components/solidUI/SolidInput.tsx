@@ -1,14 +1,14 @@
-import { colors, fontSizes } from "@/src/utils/styles";
+import { colors, fontSizes, styleConsts } from "@/src/utils/styles";
 import { BoxShadow } from "@shopify/react-native-skia";
 import { StyleSheet, TextInput, KeyboardTypeOptions, View } from "react-native";
 
 export default function SolidInput({
-  defaultValue,
+  defaultValue = "",
   placeholder,
   onChangeText,
   keyboardType,
 }: {
-  defaultValue: string;
+  defaultValue?: string;
   placeholder: string;
   onChangeText: (v: string) => void;
   keyboardType?: KeyboardTypeOptions;
@@ -27,7 +27,7 @@ export default function SolidInput({
 
 const styles = StyleSheet.create({
   input: {
-    boxShadow: `inset ${2}px ${2}px 0 rgba(0,0,0,0.35)`,
+    boxShadow: `inset ${2}px ${2}px 0 rgba(0,0,0,${styleConsts.shadowOpacity})`,
     backgroundColor: colors.white,
     padding: 10,
     fontSize: fontSizes.text,

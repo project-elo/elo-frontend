@@ -5,7 +5,7 @@ import Animated, {
   withTiming,
   Easing,
 } from "react-native-reanimated";
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useEffect, useRef } from "react";
 import { styleConsts, colors, shadowEquivalent } from "@/src/utils/styles";
 import * as Haptics from "expo-haptics";
 
@@ -38,6 +38,7 @@ export default function SolidButton({
 }) {
   const p = useSharedValue(0);
   const depth = styleConsts.depth;
+  const pressCompleted = useRef(false);
 
   const style = useAnimatedStyle(() => {
     const shadow = -depth + p.value * depth * 2;
@@ -73,20 +74,24 @@ export default function SolidButton({
   return (
     <Pressable
       onPressIn={() => {
-        !isToggle &&
-          press(1) &&
-          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+        pressCompleted.current = false;
+        press(1);
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
       }}
       onPressOut={() => {
-        !isToggle && press(0);
+        if (!isToggle) {
+          press(0);
+          return;
+        }
+        Promise.resolve().then(() => {
+          if (!pressCompleted.current) {
+            press(toggleValue ? 1 : 0);
+          }
+        });
       }}
       onPress={() => {
+        pressCompleted.current = true;
         onPress();
-        if (!isToggle || toggleValue) {
-          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-        } else {
-          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
-        }
       }}
     >
       <Animated.View

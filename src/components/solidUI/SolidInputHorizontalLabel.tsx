@@ -8,14 +8,14 @@ import {
 } from "react-native";
 
 export default function SolidInputHorizontalLabel({
-  defaultValue,
+  defaultValue = "",
   placeholder,
   onChangeText,
   keyboardType = "default",
   label,
   backgroundColor = colors.offWhite,
 }: {
-  defaultValue: string;
+  defaultValue?: string;
   placeholder: string;
   onChangeText: (v: string) => void;
   keyboardType?: KeyboardTypeOptions;

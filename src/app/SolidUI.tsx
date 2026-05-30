@@ -4,10 +4,10 @@ import { colors } from "../utils/styles";
 import Slider from "../components/solidUI/SolidToggle";
 import { useState } from "react";
 import SolidInput from "../components/solidUI/SolidInput";
+import SolidInputHorizontalLabel from "../components/solidUI/SolidInputHorizontalLabel";
 import SolidDropDown from "../components/solidUI/SolidDropDown";
 
 import { listToOptions } from "../utils/listToOptions";
-import SolidInputHorizontalLabel from "../components/solidUI/SolidInputHorizontalLabel";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import SolidToggleGroup from "../components/solidUI/SolidToggleGroup";
 
@@ -41,23 +41,18 @@ export default function SolidUI() {
         setValue={setValue2}
       />
       <SolidToggleGroup
-        title="toggle group"
-        options={listToOptions(["1", "2"])}
+        title="radio"
+        options={listToOptions(["5'11 ", "6 ft"])}
         value={value2}
         setValue={setValue2}
       />
       <SolidToggleGroup
-        title="toggle group"
+        title="multi"
         options={listToOptions(["1", "2", "3"])}
         value={value2}
         setValue={setValue2}
       />
-      <SolidToggleGroup
-        title="toggle group"
-        options={listToOptions(["1", "2", "3", "4"])}
-        value={value2}
-        setValue={setValue2}
-      />
+      <SolidInput placeholder="text" onChangeText={setValue2} />
     </View>
   );
 }

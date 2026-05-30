@@ -40,7 +40,16 @@ export default function SolidToggleGroup<T extends string | number>({
             height={39}
             isToggle={true}
             toggleValue={selectedOption === opt}
-            child={<Text style={styles.text}>{opt.label}</Text>}
+            child={
+              <Text
+                style={styles.text}
+                adjustsFontSizeToFit
+                numberOfLines={2}
+                minimumFontScale={0.6}
+              >
+                {opt.label}
+              </Text>
+            }
           />
         ))}
       </View>
@@ -65,5 +74,6 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: fontSizes.text,
+    textAlign: "center",
   },
 });
