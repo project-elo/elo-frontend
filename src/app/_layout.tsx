@@ -25,6 +25,7 @@ export default function RootLayout() {
             title: "People",
             tabBarButton: ({ onPress }) => (
               <SolidButton
+                style={{ alignSelf: "center" }}
                 isToggle
                 toggleValue={pathname === "/People"}
                 onPress={() => onPress?.(undefined as any)}
@@ -45,6 +46,7 @@ export default function RootLayout() {
             title: "Likes",
             tabBarButton: ({ onPress }) => (
               <SolidButton
+                style={{ alignSelf: "center" }}
                 isToggle
                 toggleValue={pathname === "/Likes"}
                 onPress={() => onPress?.(undefined as any)}
@@ -65,6 +67,7 @@ export default function RootLayout() {
             title: "Messages",
             tabBarButton: ({ onPress }) => (
               <SolidButton
+                style={{ alignSelf: "center" }}
                 isToggle
                 toggleValue={pathname === "/Messages"}
                 onPress={() => onPress?.(undefined as any)}
@@ -87,6 +90,7 @@ export default function RootLayout() {
             title: "Rank",
             tabBarButton: ({ onPress }) => (
               <SolidButton
+                style={{ alignSelf: "center" }}
                 isToggle
                 toggleValue={pathname === "/Rank"}
                 onPress={() => onPress?.(undefined as any)}
@@ -107,6 +111,7 @@ export default function RootLayout() {
             title: "Profile",
             tabBarButton: ({ onPress }) => (
               <SolidButton
+                style={{ alignSelf: "center" }}
                 isToggle
                 toggleValue={pathname === "/Profile"}
                 onPress={() => onPress?.(undefined as any)}

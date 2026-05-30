@@ -8,6 +8,10 @@ import Animated, {
 import { ReactNode, useEffect, useRef } from "react";
 import { styleConsts, colors, shadowEquivalent } from "@/src/utils/styles";
 import * as Haptics from "expo-haptics";
+import { StyleProp, ViewStyle } from "react-native";
+import { View } from "react-native-reanimated/lib/typescript/Animated";
+
+const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 export default function SolidButton({
   backgroundColor = colors.white,
@@ -22,6 +26,7 @@ export default function SolidButton({
   child,
   isToggle = false,
   toggleValue,
+  style,
 }: {
   backgroundColor?: string;
   height?: number;
@@ -35,12 +40,13 @@ export default function SolidButton({
   child?: ReactNode;
   isToggle?: boolean;
   toggleValue?: boolean;
+  style?: StyleProp<ViewStyle>;
 }) {
   const p = useSharedValue(0);
   const depth = styleConsts.depth;
   const pressCompleted = useRef(false);
 
-  const style = useAnimatedStyle(() => {
+  const animatedStyle = useAnimatedStyle(() => {
     const shadow = -depth + p.value * depth * 2;
     return {
       width: width - p.value * depth,
@@ -72,7 +78,21 @@ export default function SolidButton({
     }));
 
   return (
-    <Pressable
+    <AnimatedPressable
+      style={[
+        {
+          height,
+          width,
+          backgroundColor,
+          borderTopLeftRadius,
+          borderTopRightRadius,
+          borderBottomLeftRadius,
+          borderBottomRightRadius,
+          overflow: "hidden",
+        },
+        style,
+        animatedStyle,
+      ]}
       onPressIn={() => {
         pressCompleted.current = false;
         press(1);
@@ -94,21 +114,7 @@ export default function SolidButton({
         onPress();
       }}
     >
-      <Animated.View
-        style={[
-          {
-            backgroundColor,
-            borderTopLeftRadius,
-            borderTopRightRadius,
-            borderBottomLeftRadius,
-            borderBottomRightRadius,
-            overflow: "hidden",
-          },
-          style,
-        ]}
-      >
-        {child}
-      </Animated.View>
-    </Pressable>
+      {child}
+    </AnimatedPressable>
   );
 }
