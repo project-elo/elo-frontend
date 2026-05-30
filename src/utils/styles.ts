@@ -3,6 +3,7 @@ import Color from "color";
 // these need to be hex so that shadowEquivalent works
 export const colors = {
   theme: "#94cee4",
+  themeLight: "#ebf9ff",
 
   white: "#ffffff",
   offWhite: "#eeeeee",

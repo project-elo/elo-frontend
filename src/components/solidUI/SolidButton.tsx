@@ -58,6 +58,7 @@ export default function SolidButton({
       paddingBottom: padding + depth - p.value * depth,
       paddingRight: padding + depth - p.value * depth,
       boxShadow: `inset ${shadow}px ${shadow}px 0 rgba(0,0,0,${styleConsts.shadowOpacity})`,
+      borderColor: `rgba(0,0,0,${styleConsts.shadowOpacity})`,
       backgroundColor: shadowEquivalent(
         colors.white,
         p.value * styleConsts.darkenFace,

@@ -14,7 +14,7 @@ export default function RootLayout() {
         screenOptions={{
           headerShown: false,
           tabBarStyle: {
-            paddingTop: 5,
+            paddingTop: 10,
             height: 100,
           },
         }}
