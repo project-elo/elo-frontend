@@ -6,6 +6,7 @@ import { useState } from "react";
 import SolidInput from "../components/solidUI/SolidInput";
 import SolidDropDown from "../components/solidUI/SolidDropDown";
 import SolidSlideUpModal from "../components/solidUI/SolidSlideUpModal";
+import SolidSlider from "../components/solidUI/SolidSlider";
 
 import { listToOptions } from "../utils/listToOptions";
 import AntDesign from "@expo/vector-icons/AntDesign";
@@ -16,6 +17,7 @@ export default function SolidUI() {
   const [value2, setValue2] = useState("");
   const [value3, setValue3] = useState(false);
   const [open, setOpen] = useState(false);
+  const [minAge, setMinAge] = useState(18);
 
   return (
     <View style={styles.container}>
@@ -67,6 +69,8 @@ export default function SolidUI() {
         }}
         canSubmit={true}
       />
+      <SolidSlider value={minAge} onChange={setMinAge} min={18} max={100} />
+      <Text>{minAge}</Text>
     </View>
   );
 }

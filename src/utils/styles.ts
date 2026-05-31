@@ -42,8 +42,7 @@ export function shadowEquivalent(
   "worklet";
   // only works for hex colors like '#ffffff'
   // we cant use Color lib because this runs on OS thread
-  // WARNING: always pass shadowOpacity explicitly when calling from a worklet —
-  // Reanimated does not capture default parameter expressions in closure serialization (silent native crash)
+  // WARNING: always pass shadowOpacity explicitly when calling from a worklet
   const hex = backgroundColor.replace("#", "");
   const r = parseInt(hex.substring(0, 2), 16);
   const g = parseInt(hex.substring(2, 4), 16);
