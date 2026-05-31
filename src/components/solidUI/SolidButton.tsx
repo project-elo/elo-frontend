@@ -9,7 +9,6 @@ import { ReactNode, useEffect, useRef } from "react";
 import { styleConsts, colors, shadowEquivalent } from "@/src/utils/styles";
 import * as Haptics from "expo-haptics";
 import { StyleProp, ViewStyle } from "react-native";
-import { View } from "react-native-reanimated/lib/typescript/Animated";
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 

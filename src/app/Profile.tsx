@@ -18,6 +18,7 @@ export default function SolidUI() {
   const [value3, setValue3] = useState(false);
   const [open, setOpen] = useState(false);
   const [minAge, setMinAge] = useState(18);
+  const [maxAge, setMaxAge] = useState(50);
 
   return (
     <View style={styles.container}>
@@ -69,8 +70,15 @@ export default function SolidUI() {
         }}
         canSubmit={true}
       />
-      <SolidSlider value={minAge} onChange={setMinAge} min={18} max={100} />
-      <Text>{minAge}</Text>
+      <SolidSlider
+        value={minAge}
+        onChange={setMinAge}
+        min={18}
+        max={100}
+        value2={maxAge}
+        onChange2={setMaxAge}
+      />
+      <Text>{[minAge, " ", maxAge]}</Text>
     </View>
   );
 }
