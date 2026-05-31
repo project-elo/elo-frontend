@@ -39,6 +39,7 @@ export function shadowEquivalent(
   backgroundColor: string,
   shadowOpacity: number = styleConsts.shadowOpacity,
 ): string {
+  "worklet";
   // only works for hex colors like '#ffffff'
   // we cant use Color lib because this runs on OS thread
   // WARNING: always pass shadowOpacity explicitly when calling from a worklet —
