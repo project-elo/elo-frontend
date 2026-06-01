@@ -3,11 +3,15 @@ import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
+  withTiming,
+  Easing,
   runOnJS,
 } from "react-native-reanimated";
 import { colors, styleConsts, shadowEquivalent } from "@/src/utils/styles";
 
 const THUMB_SIZE = 18;
+const PRESS_DEPTH = 1;
+const TRACK_HEIGHT = 40;
 
 export default function SolidSlider({
   value,
@@ -30,16 +34,27 @@ export default function SolidSlider({
   const width = 300;
 
   const toX = (v: number) => ((v - min) / (max - min)) * width;
-  const gapX = toX(min + (minGap ?? 0));
+  const gapX = toX(min + minGap);
 
   const x = useSharedValue(toX(value));
   const x2 = useSharedValue(toX(value2 ?? max));
   const startX = useSharedValue(0);
   const startX2 = useSharedValue(0);
+  const p = useSharedValue(0);
+  const p2 = useSharedValue(0);
+
+  const press = (target: typeof p, v: number) => {
+    "worklet";
+    target.value = withTiming(v, {
+      duration: styleConsts.pressDuration,
+      easing: Easing.inOut(Easing.ease),
+    });
+  };
 
   const gesture = Gesture.Pan()
     .onBegin(() => {
       startX.value = x.value;
+      press(p, 1);
     })
     .onUpdate((e) => {
       x.value = Math.min(
@@ -47,11 +62,15 @@ export default function SolidSlider({
         isRange ? x2.value - gapX : width,
       );
       runOnJS(onChange)(Math.round(min + (x.value / width) * (max - min)));
+    })
+    .onFinalize(() => {
+      press(p, 0);
     });
 
   const gesture2 = Gesture.Pan()
     .onBegin(() => {
       startX2.value = x2.value;
+      press(p2, 1);
     })
     .onUpdate((e) => {
       x2.value = Math.min(
@@ -60,6 +79,9 @@ export default function SolidSlider({
       );
       if (onChange2)
         runOnJS(onChange2)(Math.round(min + (x2.value / width) * (max - min)));
+    })
+    .onFinalize(() => {
+      press(p2, 0);
     });
 
   const fillStyle = useAnimatedStyle(() => ({
@@ -68,48 +90,44 @@ export default function SolidSlider({
   }));
 
   const thumbStyle = useAnimatedStyle(() => ({
-    transform: [{ translateX: x.value - THUMB_SIZE / 2 }],
+    transform: [
+      {
+        translateX:
+          x.value - THUMB_SIZE / 2 - PRESS_DEPTH + p.value * PRESS_DEPTH,
+      },
+      { translateY: -PRESS_DEPTH + p.value * PRESS_DEPTH },
+    ],
+    backgroundColor: shadowEquivalent(
+      colors.white,
+      p.value * styleConsts.darkenFace,
+    ),
   }));
 
   const thumb2Style = useAnimatedStyle(() => ({
-    transform: [{ translateX: x2.value - THUMB_SIZE / 2 }],
+    transform: [
+      {
+        translateX:
+          x2.value - THUMB_SIZE / 2 - PRESS_DEPTH + p2.value * PRESS_DEPTH,
+      },
+      { translateY: -PRESS_DEPTH + p2.value * PRESS_DEPTH },
+    ],
+    backgroundColor: shadowEquivalent(
+      colors.white,
+      p2.value * styleConsts.darkenFace,
+    ),
   }));
 
-  const thumb = (
-    <Animated.View
-      style={[
-        thumbStyle,
-        {
-          position: "absolute",
-          width: THUMB_SIZE,
-          height: THUMB_SIZE,
-          borderRadius: 5,
-          backgroundColor: colors.white,
-          boxShadow: ` ${2}px ${2}px 0 ${shadowEquivalent(colors.white, styleConsts.shadowOpacity)}`,
-        },
-      ]}
-    />
-  );
-
-  const thumb2 = (
-    <Animated.View
-      style={[
-        thumb2Style,
-        {
-          position: "absolute",
-          width: THUMB_SIZE,
-          height: THUMB_SIZE,
-          borderRadius: 5,
-          backgroundColor: colors.white,
-          boxShadow: ` ${2}px ${2}px 0 ${shadowEquivalent(colors.white, styleConsts.shadowOpacity)}`,
-          top: (40 - THUMB_SIZE) / 2,
-        },
-      ]}
-    />
-  );
+  const thumbBase = {
+    position: "absolute" as const,
+    width: THUMB_SIZE,
+    height: THUMB_SIZE,
+    borderRadius: 5,
+    top: (TRACK_HEIGHT - THUMB_SIZE) / 2,
+    boxShadow: `${styleConsts.depth}px ${styleConsts.depth}px 0 ${shadowEquivalent(colors.white, styleConsts.shadowOpacity)}`,
+  };
 
   return (
-    <View style={{ width, height: 40, justifyContent: "center" }}>
+    <View style={{ width, height: TRACK_HEIGHT, justifyContent: "center" }}>
       <View
         style={{
           height: 4,
@@ -131,9 +149,13 @@ export default function SolidSlider({
           },
         ]}
       />
-      <GestureDetector gesture={gesture}>{thumb}</GestureDetector>
+      <GestureDetector gesture={gesture}>
+        <Animated.View style={[thumbBase, thumbStyle]} />
+      </GestureDetector>
       {isRange && (
-        <GestureDetector gesture={gesture2}>{thumb2}</GestureDetector>
+        <GestureDetector gesture={gesture2}>
+          <Animated.View style={[thumbBase, thumb2Style]} />
+        </GestureDetector>
       )}
     </View>
   );
