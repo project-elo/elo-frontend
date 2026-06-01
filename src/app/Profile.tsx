@@ -19,6 +19,7 @@ export default function SolidUI() {
   const [open, setOpen] = useState(false);
   const [minAge, setMinAge] = useState(18);
   const [maxAge, setMaxAge] = useState(50);
+  const [minDist, setMinDist] = useState(50);
 
   return (
     <View style={styles.container}>
@@ -74,11 +75,13 @@ export default function SolidUI() {
         value={minAge}
         onChange={setMinAge}
         min={18}
-        max={100}
+        max={70}
         value2={maxAge}
         onChange2={setMaxAge}
       />
       <Text>{[minAge, " ", maxAge]}</Text>
+      <SolidSlider value={minDist} onChange={setMinDist} min={10} max={100} />
+      <Text>{minDist}</Text>
     </View>
   );
 }
