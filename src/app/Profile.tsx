@@ -8,7 +8,7 @@ import SolidDropDown from "../components/solidUI/SolidDropDown";
 import SolidSlideUpModal from "../components/solidUI/SolidSlideUpModal";
 import SolidSlider from "../components/solidUI/SolidSlider";
 
-import { listToOptions } from "../utils/listToOptions";
+import { listToOptions } from "../utils/utils";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import SolidToggleGroup from "../components/solidUI/SolidToggleGroup";
 
@@ -78,10 +78,31 @@ export default function SolidUI() {
         max={70}
         value2={maxAge}
         onChange2={setMaxAge}
+        unit={"Years Old"}
       />
-      <Text>{[minAge, " ", maxAge]}</Text>
-      <SolidSlider value={minDist} onChange={setMinDist} min={10} max={100} />
-      <Text>{minDist}</Text>
+      <SolidSlider
+        value={minDist}
+        onChange={setMinDist}
+        min={10}
+        max={100}
+        unit={"Miles Away"}
+      />
+      <SolidSlider
+        value={minDist}
+        onChange={setMinDist}
+        min={10}
+        max={100}
+        unit={"feet"}
+      />
+      <SolidSlider
+        value={minAge}
+        onChange={setMinAge}
+        min={18}
+        max={70}
+        value2={maxAge}
+        onChange2={setMaxAge}
+        unit={"feet"}
+      />
     </View>
   );
 }

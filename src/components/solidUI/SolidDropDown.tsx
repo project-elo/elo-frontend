@@ -15,7 +15,7 @@ import Animated, {
   Easing,
 } from "react-native-reanimated";
 import Svg, { Polygon, Rect } from "react-native-svg";
-import sleep from "@/src/utils/sleep";
+import { sleep } from "@/src/utils/utils";
 import * as Haptics from "expo-haptics";
 import { Option } from "../form/DropDownMenu";
 
