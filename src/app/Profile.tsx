@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet } from "react-native";
 import SolidButton from "../components/solidUI/SolidButton";
 import { colors } from "../utils/styles";
 import Slider from "../components/solidUI/SolidToggle";
@@ -7,6 +7,7 @@ import SolidInput from "../components/solidUI/SolidInput";
 import SolidDropDown from "../components/solidUI/SolidDropDown";
 import SolidSlideUpModal from "../components/solidUI/SolidSlideUpModal";
 import SolidSlider from "../components/solidUI/SolidSlider";
+import FormContainer from "../components/form/FormContainer";
 
 import { listToOptions } from "../utils/utils";
 import AntDesign from "@expo/vector-icons/AntDesign";
@@ -87,22 +88,25 @@ export default function SolidUI() {
         max={100}
         unit={"Miles Away"}
       />
-      <SolidSlider
-        value={minDist}
-        onChange={setMinDist}
-        min={10}
-        max={100}
-        unit={"feet"}
-      />
-      <SolidSlider
-        value={minAge}
-        onChange={setMinAge}
-        min={18}
-        max={70}
-        value2={maxAge}
-        onChange2={setMaxAge}
-        unit={"feet"}
-      />
+
+      <FormContainer title="Height">
+        <SolidSlider
+          value={minDist}
+          onChange={setMinDist}
+          min={10}
+          max={100}
+          unit={"feet"}
+        />
+        <SolidSlider
+          value={minAge}
+          onChange={setMinAge}
+          min={18}
+          max={70}
+          value2={maxAge}
+          onChange2={setMaxAge}
+          unit={"feet"}
+        />
+      </FormContainer>
     </View>
   );
 }

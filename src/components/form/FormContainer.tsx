@@ -11,16 +11,14 @@ export default function FormContainer({
   children: React.ReactNode;
 }) {
   return (
-    <View style={styles.full}>
-      {title && <Text style={styles.title}>{title.toUpperCase()}</Text>}
-      <View style={[styles.outer, { backgroundColor }]}>
-        <View style={styles.inner}>{children}</View>
-      </View>
+    <View style={styles.container}>
+      {title && <Text style={styles.title}>{title}</Text>}
+      <View style={[styles.outer, { backgroundColor }]}>{children}</View>
     </View>
   );
 }
 const styles = StyleSheet.create({
-  full: {
+  container: {
     marginBottom: 20,
   },
   title: {
@@ -30,12 +28,9 @@ const styles = StyleSheet.create({
   },
   outer: {
     borderRadius: 15,
-    paddingLeft: 15,
-    paddingRight: 15,
-    marginTop: 5,
-  },
-  inner: {
-    backgroundColor: colors.darkGray,
-    gap: StyleSheet.hairlineWidth,
+    padding: 15,
+    marginTop: 10,
+    borderColor: colors.lighterGray,
+    borderWidth: 1,
   },
 });
