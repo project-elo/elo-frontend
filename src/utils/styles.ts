@@ -6,7 +6,7 @@ export const colors = {
   themeLight: "#ebf9ff",
 
   white: "#ffffff",
-  offWhite: "#eeeeee",
+  offWhite: "#efefef",
   lighterGray: "#e2e2e3",
   lightGray: "#c5c5c5",
   gray: "#969696",

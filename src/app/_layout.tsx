@@ -10,9 +10,31 @@ import {
 import SolidButton from "../components/solidUI/SolidButton";
 import Entypo from "@expo/vector-icons/Entypo";
 import Feather from "@expo/vector-icons/Feather";
+import React from "react";
+
+type TabBarButtonProps = {
+  onPress: ((e?: any) => void) | undefined;
+  route: string;
+  icon: (isActive: boolean) => React.ReactNode;
+};
+
+function TabBarButton({ onPress, route, icon }: TabBarButtonProps) {
+  const pathname = usePathname();
+  const isActive = pathname === `/${route}`;
+  return (
+    <SolidButton
+      style={{ alignSelf: "center" }}
+      isToggle
+      width={60}
+      toggleValue={isActive}
+      onPress={() => onPress?.(undefined as any)}
+      borderWidth={1}
+      child={icon(isActive)}
+    />
+  );
+}
 
 function Layout() {
-  const pathname = usePathname();
   const insets = useSafeAreaInsets();
 
   return (
@@ -22,6 +44,7 @@ function Layout() {
           headerShown: false,
           tabBarStyle: {
             paddingTop: 10,
+            paddingBottom: 10,
             height: 60 + insets.bottom,
           },
         }}
@@ -31,20 +54,16 @@ function Layout() {
           options={{
             title: "People",
             tabBarButton: ({ onPress }) => (
-              <SolidButton
-                style={{ alignSelf: "center" }}
-                isToggle
-                width={60}
-                toggleValue={pathname === "/People"}
-                onPress={() => onPress?.(undefined as any)}
-                borderWidth={1}
-                child={
+              <TabBarButton
+                onPress={onPress}
+                route="People"
+                icon={(isActive) => (
                   <Entypo
                     name="magnifying-glass"
                     size={24}
-                    color={pathname === "/People" ? colors.theme : colors.gray}
+                    color={isActive ? colors.theme : colors.gray}
                   />
-                }
+                )}
               />
             ),
           }}
@@ -54,20 +73,16 @@ function Layout() {
           options={{
             title: "Matches",
             tabBarButton: ({ onPress }) => (
-              <SolidButton
-                style={{ alignSelf: "center" }}
-                isToggle
-                width={60}
-                toggleValue={pathname === "/Matches"}
-                onPress={() => onPress?.(undefined as any)}
-                borderWidth={1}
-                child={
+              <TabBarButton
+                onPress={onPress}
+                route="Matches"
+                icon={(isActive) => (
                   <FontAwesome6
                     name="message"
                     size={24}
-                    color={pathname === "/Matches" ? colors.theme : colors.gray}
+                    color={isActive ? colors.theme : colors.gray}
                   />
-                }
+                )}
               />
             ),
           }}
@@ -77,20 +92,16 @@ function Layout() {
           options={{
             title: "Rank",
             tabBarButton: ({ onPress }) => (
-              <SolidButton
-                style={{ alignSelf: "center" }}
-                isToggle
-                width={60}
-                toggleValue={pathname === "/Rank"}
-                onPress={() => onPress?.(undefined as any)}
-                borderWidth={1}
-                child={
+              <TabBarButton
+                onPress={onPress}
+                route="Rank"
+                icon={(isActive) => (
                   <MaterialCommunityIcons
                     name="trophy-outline"
                     size={24}
-                    color={pathname === "/Rank" ? colors.theme : colors.gray}
+                    color={isActive ? colors.theme : colors.gray}
                   />
-                }
+                )}
               />
             ),
           }}
@@ -100,22 +111,16 @@ function Layout() {
           options={{
             title: "Profile",
             tabBarButton: ({ onPress }) => (
-              <SolidButton
-                style={{
-                  alignSelf: "center",
-                }}
-                isToggle
-                width={60}
-                toggleValue={pathname === "/Profile"}
-                onPress={() => onPress?.(undefined as any)}
-                borderWidth={1}
-                child={
+              <TabBarButton
+                onPress={onPress}
+                route="Profile"
+                icon={(isActive) => (
                   <Feather
                     name="user"
                     size={24}
-                    color={pathname === "/Profile" ? colors.theme : colors.gray}
+                    color={isActive ? colors.theme : colors.gray}
                   />
-                }
+                )}
               />
             ),
           }}

@@ -48,21 +48,7 @@ export default function Profile() {
           max={96}
           unit="feet"
         />
-        <SolidToggleGroup
-          title="Interests"
-          options={listToOptions([
-            "Hiking",
-            "Music",
-            "Gaming",
-            "Travel",
-            "Cooking",
-            "Fitness",
-            "Art",
-            "Reading",
-          ])}
-          value={interests}
-          setValue={(v) => setInterests(v as string[])}
-        />
+
         <SolidToggleGroup
           title="Looking For"
           options={listToOptions([
@@ -78,12 +64,6 @@ export default function Profile() {
       {/* Discovery */}
       <Text style={styles.section}>Discovery</Text>
       <FormContainer>
-        <SolidToggleGroup
-          title="Show Me As"
-          options={listToOptions(["Man", "Woman", "Non-binary"])}
-          value={showMeAs}
-          setValue={(v) => setShowMeAs(v as string)}
-        />
         <SolidToggleGroup
           title="Show Me To"
           options={listToOptions(["Men", "Women", "Non-binary"])}
