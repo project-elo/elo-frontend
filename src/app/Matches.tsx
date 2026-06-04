@@ -84,12 +84,9 @@ const styles = StyleSheet.create({
   scrollable: {
     margin: 20,
     marginTop: 60,
-    gap: 0,
-
     flex: 1,
   },
   content: {
-    gap: 1,
     overflow: "hidden",
     paddingBottom: 2,
     paddingRight: 2,
