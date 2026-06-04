@@ -1,73 +1,59 @@
-import { StyleSheet, View, Text, Image, Pressable } from "react-native";
+import { StyleSheet, View, Text, Image, useWindowDimensions } from "react-native";
 import { MessagePreviewType } from "@/src/app/Matches";
-import { styleConsts, shadowEquivalent, colors } from "@/src/utils/styles";
+import { styleConsts } from "@/src/utils/styles";
 import { formatTimestamp } from "@/src/utils/utils";
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withTiming,
-  Easing,
-} from "react-native-reanimated";
+import SolidButton from "../solidUI/SolidButton";
 
-const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
+const TILE_HEIGHT = 80;
+const HORIZONTAL_MARGIN = 40;
 
 export default function MessagePreviewTile({
   messagePreview,
+  isFirst = false,
+  isLast = false,
 }: {
   messagePreview: MessagePreviewType;
+  isFirst?: boolean;
+  isLast?: boolean;
 }) {
-  const p = useSharedValue(0);
-
-  const tileStyle = useAnimatedStyle(() => {
-    return {
-      transform: [
-        { translateX: p.value * styleConsts.depth },
-        { translateY: p.value * styleConsts.depth },
-      ],
-      backgroundColor: shadowEquivalent(
-        colors.white,
-        p.value * styleConsts.darkenFace,
-      ),
-      boxShadow: ` ${22 * p.value}px ${2 * p.value}px 0 rgba(0,0,0,${styleConsts.shadowOpacity})`,
-    };
-  });
-
-  const press = (v: number) =>
-    (p.value = withTiming(v, {
-      duration: styleConsts.pressDuration * 0.5,
-      easing: Easing.inOut(Easing.ease),
-    }));
+  const { width: screenWidth } = useWindowDimensions();
+  const r = styleConsts.radius;
 
   return (
-    <AnimatedPressable
-      style={[styles.container, tileStyle]}
-      onPressIn={() => press(1)}
-      onPressOut={() => press(0)}
-    >
-      <Image
-        style={styles.image}
-        source={{ uri: messagePreview.profilePictureUrl }}
-      />
-      <View style={styles.rightContent}>
-        <View style={styles.topBar}>
-          <Text>{messagePreview.firstName}</Text>
-          <Text>{formatTimestamp(messagePreview.lastMessageTimestamp)}</Text>
+    <SolidButton
+      onPress={() => {}}
+      width={screenWidth - HORIZONTAL_MARGIN}
+      height={TILE_HEIGHT}
+      borderTopLeftRadius={isFirst ? r : 0}
+      borderTopRightRadius={isFirst ? r : 0}
+      borderBottomLeftRadius={isLast ? r : 0}
+      borderBottomRightRadius={isLast ? r : 0}
+      child={
+        <View style={styles.inner}>
+          <Image
+            style={styles.image}
+            source={{ uri: messagePreview.profilePictureUrl }}
+          />
+          <View style={styles.rightContent}>
+            <View style={styles.topBar}>
+              <Text>{messagePreview.firstName}</Text>
+              <Text>{formatTimestamp(messagePreview.lastMessageTimestamp)}</Text>
+            </View>
+            <Text numberOfLines={2} ellipsizeMode="tail">
+              {messagePreview.lastMessage}
+            </Text>
+          </View>
         </View>
-        <View>
-          <Text numberOfLines={2} ellipsizeMode="tail">
-            {messagePreview.lastMessage}
-          </Text>
-        </View>
-      </View>
-    </AnimatedPressable>
+      }
+    />
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    paddingVertical: 15,
+  inner: {
+    flex: 1,
     flexDirection: "row",
-    backgroundColor: colors.white,
+    alignItems: "center",
   },
   rightContent: {
     flex: 1,
@@ -75,10 +61,8 @@ const styles = StyleSheet.create({
   },
   topBar: {
     justifyContent: "space-between",
-    flex: 1,
     flexDirection: "row",
   },
-  message: {},
   image: {
     width: 50,
     height: 50,

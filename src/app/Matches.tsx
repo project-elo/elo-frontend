@@ -65,7 +65,12 @@ export default function Messages() {
     >
       <View style={styles.content}>
         {messages.map((m, i) => (
-          <MessagePreviewTile key={i} messagePreview={m} />
+          <MessagePreviewTile
+            key={i}
+            messagePreview={m}
+            isFirst={i === 0}
+            isLast={i === messages.length - 1}
+          />
         ))}
       </View>
     </ScrollView>
@@ -74,7 +79,7 @@ export default function Messages() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.white,
+    backgroundColor: colors.offWhite,
   },
   scrollable: {
     margin: 20,
@@ -85,7 +90,5 @@ const styles = StyleSheet.create({
   },
   content: {
     gap: 1,
-
-    backgroundColor: shadowEquivalent(colors.white),
   },
 });
