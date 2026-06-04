@@ -3,10 +3,17 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { colors } from "../utils/styles";
 import { Tabs, usePathname } from "expo-router";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import {
+  SafeAreaProvider,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
 import SolidButton from "../components/solidUI/SolidButton";
+import Entypo from "@expo/vector-icons/Entypo";
+import Feather from "@expo/vector-icons/Feather";
 
-export default function RootLayout() {
+function Layout() {
   const pathname = usePathname();
+  const insets = useSafeAreaInsets();
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -15,7 +22,7 @@ export default function RootLayout() {
           headerShown: false,
           tabBarStyle: {
             paddingTop: 10,
-            height: 100,
+            height: 60 + insets.bottom,
           },
         }}
       >
@@ -27,11 +34,13 @@ export default function RootLayout() {
               <SolidButton
                 style={{ alignSelf: "center" }}
                 isToggle
+                width={60}
                 toggleValue={pathname === "/People"}
                 onPress={() => onPress?.(undefined as any)}
+                borderWidth={1}
                 child={
-                  <MaterialCommunityIcons
-                    name="cards"
+                  <Entypo
+                    name="magnifying-glass"
                     size={24}
                     color={pathname === "/People" ? colors.theme : colors.gray}
                   />
@@ -48,13 +57,15 @@ export default function RootLayout() {
               <SolidButton
                 style={{ alignSelf: "center" }}
                 isToggle
+                width={60}
                 toggleValue={pathname === "/Matches"}
                 onPress={() => onPress?.(undefined as any)}
+                borderWidth={1}
                 child={
                   <FontAwesome6
-                    name="heart"
+                    name="message"
                     size={24}
-                    color={pathname === "/Likes" ? colors.theme : colors.gray}
+                    color={pathname === "/Matches" ? colors.theme : colors.gray}
                   />
                 }
               />
@@ -69,8 +80,10 @@ export default function RootLayout() {
               <SolidButton
                 style={{ alignSelf: "center" }}
                 isToggle
+                width={60}
                 toggleValue={pathname === "/Rank"}
                 onPress={() => onPress?.(undefined as any)}
+                borderWidth={1}
                 child={
                   <MaterialCommunityIcons
                     name="trophy-outline"
@@ -88,13 +101,17 @@ export default function RootLayout() {
             title: "Profile",
             tabBarButton: ({ onPress }) => (
               <SolidButton
-                style={{ alignSelf: "center" }}
+                style={{
+                  alignSelf: "center",
+                }}
                 isToggle
+                width={60}
                 toggleValue={pathname === "/Profile"}
                 onPress={() => onPress?.(undefined as any)}
+                borderWidth={1}
                 child={
-                  <FontAwesome6
-                    name="circle-user"
+                  <Feather
+                    name="user"
                     size={24}
                     color={pathname === "/Profile" ? colors.theme : colors.gray}
                   />
@@ -106,5 +123,13 @@ export default function RootLayout() {
         <Tabs.Screen name="index" options={{ href: null }} />
       </Tabs>
     </GestureHandlerRootView>
+  );
+}
+
+export default function RootLayout() {
+  return (
+    <SafeAreaProvider>
+      <Layout />
+    </SafeAreaProvider>
   );
 }

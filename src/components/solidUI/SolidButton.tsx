@@ -25,6 +25,7 @@ export default function SolidButton({
   isToggle = false,
   toggleValue,
   style,
+  borderWidth = 0,
 }: {
   backgroundColor?: string;
   height?: number;
@@ -39,6 +40,7 @@ export default function SolidButton({
   isToggle?: boolean;
   toggleValue?: boolean;
   style?: StyleProp<ViewStyle>;
+  borderWidth?: number;
 }) {
   const p = useSharedValue(0);
   const depth = styleConsts.depth;
@@ -57,6 +59,7 @@ export default function SolidButton({
       paddingRight: padding + depth - p.value * depth,
       boxShadow: `inset ${shadow}px ${shadow}px 0 rgba(0,0,0,${styleConsts.shadowOpacity})`,
       borderColor: `rgba(0,0,0,${styleConsts.shadowOpacity})`,
+      borderWidth: (1 - p.value) * borderWidth,
       backgroundColor: shadowEquivalent(
         colors.white,
         p.value * styleConsts.darkenFace,

@@ -1,111 +1,163 @@
-import { View, StyleSheet, ScrollView } from "react-native";
-import SolidButton from "../components/solidUI/SolidButton";
-import { colors } from "../utils/styles";
-import Slider from "../components/solidUI/SolidToggle";
+import { StyleSheet, ScrollView, Text } from "react-native";
 import { useState } from "react";
-import SolidInput from "../components/solidUI/SolidInput";
-import SolidDropDown from "../components/solidUI/SolidDropDown";
-import SolidSlideUpModal from "../components/solidUI/SolidSlideUpModal";
-import SolidSlider from "../components/solidUI/SolidSlider";
-import FormContainer from "../components/form/FormContainer";
-
+import { colors } from "../utils/styles";
 import { listToOptions } from "../utils/utils";
-import AntDesign from "@expo/vector-icons/AntDesign";
+import FormContainer from "../components/form/FormContainer";
+import SolidInput from "../components/solidUI/SolidInput";
+import SolidToggle from "../components/solidUI/SolidToggle";
 import SolidToggleGroup from "../components/solidUI/SolidToggleGroup";
+import SolidSlider from "../components/solidUI/SolidSlider";
+import SolidButton from "../components/solidUI/SolidButton";
+export default function Profile() {
+  // Profile
+  const [name, setName] = useState("");
+  const [bio, setBio] = useState("");
+  const [gender, setGender] = useState("");
+  const [height, setHeight] = useState(66);
+  const [interests, setInterests] = useState<string[]>([]);
+  const [intent, setIntent] = useState("");
 
-export default function SolidUI() {
-  const [value, setValue] = useState(false);
-  const [value2, setValue2] = useState("");
-  const [value3, setValue3] = useState(false);
-  const [open, setOpen] = useState(false);
+  // Discovery
+  const [showMeAs, setShowMeAs] = useState("");
+  const [showMeTo, setShowMeTo] = useState<string[]>([]);
   const [minAge, setMinAge] = useState(18);
-  const [maxAge, setMaxAge] = useState(50);
-  const [minDist, setMinDist] = useState(50);
-  const [multiValue, setMultiValue] = useState([]);
+  const [maxAge, setMaxAge] = useState(35);
+  const [maxDist, setMaxDist] = useState(25);
+
+  // Settings
+  const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+  const [likesNotifications, setLikesNotifications] = useState(true);
 
   return (
-    <ScrollView style={styles.container}>
-      <SolidButton
-        backgroundColor={colors.white}
-        onPress={() => {
-          setOpen(true);
-        }}
-        child={<AntDesign name="arrow-up" size={24} color="black" />}
-      />
-      <SolidButton
-        backgroundColor={colors.white}
-        child={<AntDesign name="api" size={24} color="black" />}
-        isToggle={true}
-        toggleValue={value3}
-        onPress={() => {
-          setValue3(!value3);
-        }}
-      />
-      <Slider onChange={setValue} value={value} />
-
-      <SolidDropDown
-        title="solid buttons"
-        options={listToOptions(["1", "2", "3", "4", "5"])}
-        value={value2}
-        setValue={setValue2}
-      />
-
-      <FormContainer title="Name">
-        <SolidInput placeholder="text" onChangeText={setValue2} />
-      </FormContainer>
-
-      <FormContainer title="Preferences">
+    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+      {/* Profile */}
+      <Text style={styles.section}>Profile</Text>
+      <FormContainer>
+        <SolidInput placeholder="Name" onChangeText={setName} />
+        <SolidInput placeholder="Bio" onChangeText={setBio} />
         <SolidToggleGroup
-          title="gender"
-          options={listToOptions(["men", "women", "non-binary"])}
-          value={multiValue}
-          setValue={setMultiValue}
+          title="Gender Identity"
+          options={listToOptions(["Man", "Woman", "Non-binary"])}
+          value={gender}
+          setValue={(v) => setGender(v as string)}
         />
         <SolidSlider
-          value={minAge}
-          onChange={setMinAge}
-          min={18}
-          max={70}
-          value2={maxAge}
-          onChange2={setMaxAge}
-          unit={"Years Old"}
+          value={height}
+          onChange={setHeight}
+          min={48}
+          max={96}
+          unit="feet"
         />
-        <SolidSlider
-          value={minDist}
-          onChange={setMinDist}
-          min={10}
-          max={100}
-          unit={"Miles Away"}
+        <SolidToggleGroup
+          title="Interests"
+          options={listToOptions([
+            "Hiking",
+            "Music",
+            "Gaming",
+            "Travel",
+            "Cooking",
+            "Fitness",
+            "Art",
+            "Reading",
+          ])}
+          value={interests}
+          setValue={(v) => setInterests(v as string[])}
+        />
+        <SolidToggleGroup
+          title="Looking For"
+          options={listToOptions([
+            "Something casual",
+            "A relationship",
+            "Not sure yet",
+          ])}
+          value={intent}
+          setValue={(v) => setIntent(v as string)}
         />
       </FormContainer>
 
-      <FormContainer title="Height">
-        <SolidSlider
-          value={minDist}
-          onChange={setMinDist}
-          min={10}
-          max={100}
-          unit={"feet"}
+      {/* Discovery */}
+      <Text style={styles.section}>Discovery</Text>
+      <FormContainer>
+        <SolidToggleGroup
+          title="Show Me As"
+          options={listToOptions(["Man", "Woman", "Non-binary"])}
+          value={showMeAs}
+          setValue={(v) => setShowMeAs(v as string)}
+        />
+        <SolidToggleGroup
+          title="Show Me To"
+          options={listToOptions(["Men", "Women", "Non-binary"])}
+          value={showMeTo}
+          setValue={(v) => setShowMeTo(v as string[])}
         />
         <SolidSlider
           value={minAge}
           onChange={setMinAge}
-          min={18}
-          max={70}
           value2={maxAge}
           onChange2={setMaxAge}
-          unit={"feet"}
+          min={18}
+          max={100}
+          unit="years"
+        />
+        <SolidSlider
+          value={maxDist}
+          onChange={setMaxDist}
+          min={1}
+          max={100}
+          unit="mi"
+        />
+      </FormContainer>
+
+      {/* Settings */}
+      <Text style={styles.section}>Settings</Text>
+      <FormContainer>
+        <SolidInput placeholder="Email" onChangeText={() => {}} />
+        <SolidButton
+          onPress={() => {}}
+          child={<Text>Change Password</Text>}
+          width={200}
+          height={44}
+        />
+        <SolidToggle
+          value={notificationsEnabled}
+          onChange={setNotificationsEnabled}
+        />
+        <SolidToggle
+          value={likesNotifications}
+          onChange={setLikesNotifications}
+        />
+        <SolidButton
+          onPress={() => {}}
+          child={<Text>Sign Out</Text>}
+          width={200}
+          height={44}
+        />
+        <SolidButton
+          onPress={() => {}}
+          child={<Text style={{ color: "red" }}>Delete Account</Text>}
+          width={200}
+          height={44}
         />
       </FormContainer>
     </ScrollView>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.offWhite,
-    paddingTop: 100,
     flex: 1,
+    backgroundColor: colors.white,
+  },
+  content: {
     padding: 20,
-    gap: 5,
+    paddingTop: 60,
+    gap: 0,
+  },
+  section: {
+    fontSize: 22,
+    fontWeight: "600",
+    color: colors.gray,
+    marginBottom: 8,
+    marginTop: 16,
   },
 });
