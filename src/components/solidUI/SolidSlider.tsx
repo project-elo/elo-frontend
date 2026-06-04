@@ -8,7 +8,7 @@ import Animated, {
   Easing,
   runOnJS,
 } from "react-native-reanimated";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { colors, styleConsts, shadowEquivalent } from "@/src/utils/styles";
 import { formatSliderLabel } from "@/src/utils/utils";
 
@@ -49,7 +49,9 @@ export default function SolidSlider({
   const p = useSharedValue(0);
   const p2 = useSharedValue(0);
 
-  const [label, setLabel] = useState(formatSliderLabel(value, unit, max, value2));
+  const [label, setLabel] = useState(
+    formatSliderLabel(value, unit, max, value2),
+  );
 
   useAnimatedReaction(
     () => ({
@@ -57,7 +59,9 @@ export default function SolidSlider({
       v2: Math.round(min + (x2.value / width) * (max - min)),
     }),
     ({ v, v2 }) => {
-      runOnJS(setLabel)(formatSliderLabel(v, unit, max, isRange ? v2 : undefined));
+      runOnJS(setLabel)(
+        formatSliderLabel(v, unit, max, isRange ? v2 : undefined),
+      );
     },
   );
 
@@ -110,18 +114,30 @@ export default function SolidSlider({
 
   const thumbStyle = useAnimatedStyle(() => ({
     transform: [
-      { translateX: x.value - THUMB_SIZE / 2 - PRESS_DEPTH + p.value * PRESS_DEPTH },
+      {
+        translateX:
+          x.value - THUMB_SIZE / 2 - PRESS_DEPTH + p.value * PRESS_DEPTH,
+      },
       { translateY: -PRESS_DEPTH + p.value * PRESS_DEPTH },
     ],
-    backgroundColor: shadowEquivalent(colors.white, p.value * styleConsts.darkenFace),
+    backgroundColor: shadowEquivalent(
+      colors.white,
+      p.value * styleConsts.darkenFace,
+    ),
   }));
 
   const thumb2Style = useAnimatedStyle(() => ({
     transform: [
-      { translateX: x2.value - THUMB_SIZE / 2 - PRESS_DEPTH + p2.value * PRESS_DEPTH },
+      {
+        translateX:
+          x2.value - THUMB_SIZE / 2 - PRESS_DEPTH + p2.value * PRESS_DEPTH,
+      },
       { translateY: -PRESS_DEPTH + p2.value * PRESS_DEPTH },
     ],
-    backgroundColor: shadowEquivalent(colors.white, p2.value * styleConsts.darkenFace),
+    backgroundColor: shadowEquivalent(
+      colors.white,
+      p2.value * styleConsts.darkenFace,
+    ),
   }));
 
   const thumbBase = {
@@ -133,22 +149,43 @@ export default function SolidSlider({
     boxShadow: `${styleConsts.depth}px ${styleConsts.depth}px 0 ${shadowEquivalent(colors.white, styleConsts.shadowOpacity)}`,
   };
 
+  useEffect(() => {
+    x.value = toX(value);
+    x2.value = toX(value2 ?? max);
+  }, [width]);
+
   return (
     <View>
       <Text>{label}</Text>
       <GestureDetector gesture={gesture}>
-        <View style={{ width, height: TRACK_HEIGHT, justifyContent: "center" }}>
+        <View
+          style={{
+            width,
+            height: TRACK_HEIGHT,
+            justifyContent: "center",
+            marginLeft: THUMB_SIZE / 2,
+            marginRight: THUMB_SIZE / 2,
+          }}
+        >
           <View
             style={{
               height: 4,
-              backgroundColor: shadowEquivalent(colors.offWhite, styleConsts.shadowOpacity),
+              backgroundColor: shadowEquivalent(
+                colors.offWhite,
+                styleConsts.shadowOpacity,
+              ),
               borderRadius: 2,
             }}
           />
           <Animated.View
             style={[
               fillStyle,
-              { position: "absolute", height: 4, backgroundColor: colors.theme, borderRadius: 2 },
+              {
+                position: "absolute",
+                height: 4,
+                backgroundColor: colors.theme,
+                borderRadius: 2,
+              },
             ]}
           />
           <Animated.View style={[thumbBase, thumbStyle]} />
