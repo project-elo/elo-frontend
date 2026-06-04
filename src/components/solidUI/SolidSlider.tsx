@@ -36,7 +36,7 @@ export default function SolidSlider({
   unit?: string;
 }) {
   const isRange = value2 !== undefined && onChange2 !== undefined;
-  const width = 300;
+  const [width, setWidth] = useState(0);
 
   const toX = (v: number) => ((v - min) / (max - min)) * width;
   const gapX = toX(min + minGap);
@@ -155,16 +155,14 @@ export default function SolidSlider({
   }, [width]);
 
   return (
-    <View>
+    <View onLayout={(e) => setWidth(e.nativeEvent.layout.width - THUMB_SIZE)}>
       <Text>{label}</Text>
       <GestureDetector gesture={gesture}>
         <View
           style={{
-            width,
             height: TRACK_HEIGHT,
             justifyContent: "center",
-            marginLeft: THUMB_SIZE / 2,
-            marginRight: THUMB_SIZE / 2,
+            marginHorizontal: THUMB_SIZE / 2,
           }}
         >
           <View
