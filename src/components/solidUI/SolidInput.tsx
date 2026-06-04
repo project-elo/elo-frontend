@@ -34,7 +34,7 @@ export default function SolidInput({
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
-      boxShadow: `inset ${p.value * 2}px ${p.value * 2}px 0 rgba(0,0,0,${styleConsts.shadowOpacity})`,
+      boxShadow: `inset ${p.value * depth}px ${p.value * depth}px 0 rgba(0,0,0,${styleConsts.shadowOpacity})`,
       paddingTop: padding + p.value * depth,
       paddingLeft: padding + p.value * depth,
       paddingBottom: padding + depth - p.value * depth,

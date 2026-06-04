@@ -32,5 +32,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     borderColor: colors.lighterGray,
     borderWidth: 1,
+    gap: 10,
   },
 });

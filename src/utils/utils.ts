@@ -18,7 +18,7 @@ export function formatSliderVal(
 ): string {
   "worklet";
   const suffix = isMax ? "+" : "";
-  if (unit === "feet") return `${Math.trunc(v / 12)}'${v % 12}"`;
+  if (unit === "feet") return `${Math.trunc(v / 12)}'${v % 12}"${suffix}`;
   return `${v}${suffix}`;
 }
 
@@ -29,7 +29,7 @@ export function formatSliderLabel(
   value2?: number,
 ): string {
   "worklet";
-  const v1 = formatSliderVal(value, unit, false);
+  const v1 = formatSliderVal(value, unit, value === max);
   const unitLabel = unit === "feet" ? "" : ` ${unit}`;
   if (value2 !== undefined) {
     const v2 = formatSliderVal(value2, unit, value2 === max);

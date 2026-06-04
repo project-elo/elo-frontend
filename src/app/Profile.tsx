@@ -21,6 +21,7 @@ export default function SolidUI() {
   const [minAge, setMinAge] = useState(18);
   const [maxAge, setMaxAge] = useState(50);
   const [minDist, setMinDist] = useState(50);
+  const [multiValue, setMultiValue] = useState([]);
 
   return (
     <ScrollView style={styles.container}>
@@ -48,33 +49,18 @@ export default function SolidUI() {
         value={value2}
         setValue={setValue2}
       />
-      <SolidToggleGroup
-        title="radio"
-        options={listToOptions(["5'11 ", "6 ft"])}
-        value={value2}
-        setValue={setValue2}
-      />
-      <SolidToggleGroup
-        title="multi"
-        options={listToOptions(["1", "2", "3"])}
-        value={value2}
-        setValue={setValue2}
-      />
+
       <FormContainer title="Name">
         <SolidInput placeholder="text" onChangeText={setValue2} />
       </FormContainer>
 
-      <SolidSlideUpModal
-        title={"example"}
-        form={<View />}
-        modalOpen={open}
-        submitForm={() => {}}
-        clearForm={() => {
-          setOpen(false);
-        }}
-        canSubmit={true}
-      />
       <FormContainer title="Preferences">
+        <SolidToggleGroup
+          title="gender"
+          options={listToOptions(["men", "women", "non-binary"])}
+          value={multiValue}
+          setValue={setMultiValue}
+        />
         <SolidSlider
           value={minAge}
           onChange={setMinAge}

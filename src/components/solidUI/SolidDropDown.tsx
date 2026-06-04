@@ -8,6 +8,7 @@ import {
 } from "@/src/utils/styles";
 import Popover from "react-native-popover-view";
 import { useState } from "react";
+import SolidButton from "./SolidButton";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -17,7 +18,7 @@ import Animated, {
 import Svg, { Polygon, Rect } from "react-native-svg";
 import { sleep } from "@/src/utils/utils";
 import * as Haptics from "expo-haptics";
-import { Option } from "../form/DropDownMenu";
+import { Option } from "@/src/types/componentTypes";
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
@@ -148,13 +149,24 @@ export default function SolidDropDown<T extends string | number>({
         arrowSize={{ width: 0, height: 0 }}
         offset={14}
         from={
-          <View style={styles.button}>
-            <Text style={[styles.buttonText, { color: colors.theme }]}>
-              {selectedOption?.label ?? "Select"}
-            </Text>
-            <Entypo
-              style={[styles.icon, { color: colors.theme }]}
-              name="select-arrows"
+          <View>
+            <SolidButton
+              isToggle={true}
+              toggleValue={open}
+              onPress={() => setOpen(!open)}
+              height={36}
+              width={110}
+              child={
+                <View style={styles.button}>
+                  <Text style={[styles.buttonText, { color: colors.theme }]}>
+                    {selectedOption?.label ?? "Select"}
+                  </Text>
+                  <Entypo
+                    style={[styles.icon, { color: colors.theme }]}
+                    name="select-arrows"
+                  />
+                </View>
+              }
             />
           </View>
         }
@@ -194,6 +206,9 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: fontSizes.text,
+    justifyContent: "space-between",
+
+    paddingHorizontal: 10,
   },
   icon: {
     marginTop: 4,

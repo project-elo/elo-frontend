@@ -1,7 +1,12 @@
 import { View, Text, StyleSheet } from "react-native";
-import { fontSizes, styleConsts } from "@/src/utils/styles";
+import {
+  fontSizes,
+  styleConsts,
+  colors,
+  shadowEquivalent,
+} from "@/src/utils/styles";
 import SolidButton from "./SolidButton";
-import { Option } from "../form/DropDownMenu";
+import { Option } from "@/src/types/componentTypes";
 
 export default function SolidToggleGroup<T extends string | number>({
   title,
@@ -13,38 +18,58 @@ export default function SolidToggleGroup<T extends string | number>({
   title: string;
   options: Option<T>[];
   value: any;
-  setValue: (v: T) => void;
+  setValue: (v: T | T[]) => void;
   backgroundColor?: string;
 }) {
-  const selectedOption = options.find((o) => o.value === value);
-  const totalWidth = 200;
+  const isArray = Array.isArray(value);
+
+  const gap = isArray ? 5 : 1;
+  const totalWidth = 200 - gap * (options.length - 1);
   const width = totalWidth / options.length;
+  const color = shadowEquivalent(colors.theme);
 
   return (
     <View style={[styles.container, { backgroundColor }]}>
       <Text style={styles.text}>{title}</Text>
-      <View style={styles.buttonContainer}>
+      <View style={[styles.buttonContainer, { gap }]}>
         {options.map((opt, i) => (
           <SolidButton
             key={i}
-            onPress={() => setValue(opt.value)}
-            borderTopLeftRadius={i === 0 ? styleConsts.radius : 0}
-            borderBottomLeftRadius={i === 0 ? styleConsts.radius : 0}
+            onPress={() => {
+              if (isArray) {
+                setValue(
+                  value.includes(opt.value)
+                    ? value.filter((v) => v !== opt.value)
+                    : [...value, opt.value],
+                );
+              } else {
+                setValue(opt.value);
+              }
+            }}
+            borderTopLeftRadius={i === 0 || isArray ? styleConsts.radius : 0}
+            borderBottomLeftRadius={i === 0 || isArray ? styleConsts.radius : 0}
             borderTopRightRadius={
-              i === options.length - 1 ? styleConsts.radius : 0
+              i === options.length - 1 || isArray ? styleConsts.radius : 0
             }
             borderBottomRightRadius={
-              i === options.length - 1 ? styleConsts.radius : 0
+              i === options.length - 1 || isArray ? styleConsts.radius : 0
             }
             width={width}
             height={39}
             isToggle={true}
-            toggleValue={selectedOption === opt}
+            toggleValue={
+              isArray ? value.includes(opt.value) : opt.value === value
+            }
             child={
               <Text
-                style={styles.text}
+                style={[
+                  styles.text,
+                  (isArray
+                    ? value.includes(opt.value)
+                    : opt.value === value) && { color },
+                ]}
                 adjustsFontSizeToFit
-                numberOfLines={2}
+                numberOfLines={1}
                 minimumFontScale={0.6}
               >
                 {opt.label}
@@ -59,14 +84,12 @@ export default function SolidToggleGroup<T extends string | number>({
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 10,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
   },
   buttonContainer: {
     flexDirection: "row",
-    gap: 1,
   },
   icon: {
     marginTop: 4,
