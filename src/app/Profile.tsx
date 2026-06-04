@@ -1,4 +1,4 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
 import SolidButton from "../components/solidUI/SolidButton";
 import { colors } from "../utils/styles";
 import Slider from "../components/solidUI/SolidToggle";
@@ -23,7 +23,7 @@ export default function SolidUI() {
   const [minDist, setMinDist] = useState(50);
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <SolidButton
         backgroundColor={colors.white}
         onPress={() => {
@@ -72,22 +72,24 @@ export default function SolidUI() {
         }}
         canSubmit={true}
       />
-      <SolidSlider
-        value={minAge}
-        onChange={setMinAge}
-        min={18}
-        max={70}
-        value2={maxAge}
-        onChange2={setMaxAge}
-        unit={"Years Old"}
-      />
-      <SolidSlider
-        value={minDist}
-        onChange={setMinDist}
-        min={10}
-        max={100}
-        unit={"Miles Away"}
-      />
+      <FormContainer title="Preferences">
+        <SolidSlider
+          value={minAge}
+          onChange={setMinAge}
+          min={18}
+          max={70}
+          value2={maxAge}
+          onChange2={setMaxAge}
+          unit={"Years Old"}
+        />
+        <SolidSlider
+          value={minDist}
+          onChange={setMinDist}
+          min={10}
+          max={100}
+          unit={"Miles Away"}
+        />
+      </FormContainer>
 
       <FormContainer title="Height">
         <SolidSlider
@@ -107,7 +109,7 @@ export default function SolidUI() {
           unit={"feet"}
         />
       </FormContainer>
-    </View>
+    </ScrollView>
   );
 }
 const styles = StyleSheet.create({

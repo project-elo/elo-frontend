@@ -1,10 +1,10 @@
+import { useEffect } from "react";
 import { Pressable, View } from "react-native";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withSpring,
 } from "react-native-reanimated";
-import Color from "color";
 import { colors, styleConsts, shadowEquivalent } from "@/src/utils/styles";
 import * as Haptics from "expo-haptics";
 
@@ -29,11 +29,13 @@ export default function SolidToggle({
   const range = width - height;
   const speed = 150;
 
-  t.value = withSpring(value ? 1 : 0, {
-    damping: 12,
-    stiffness: speed,
-    mass: 0.5,
-  });
+  useEffect(() => {
+    t.value = withSpring(value ? 1 : 0, {
+      damping: 12,
+      stiffness: speed,
+      mass: 0.5,
+    });
+  }, [value, t]);
 
   const fillStyle = useAnimatedStyle(() => ({
     width: Math.max(0, t.value) * width,
