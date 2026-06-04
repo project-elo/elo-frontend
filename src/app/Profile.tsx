@@ -60,7 +60,9 @@ export default function SolidUI() {
         value={value2}
         setValue={setValue2}
       />
-      <SolidInput placeholder="text" onChangeText={setValue2} />
+      <FormContainer title="Name">
+        <SolidInput placeholder="text" onChangeText={setValue2} />
+      </FormContainer>
 
       <SolidSlideUpModal
         title={"example"}
