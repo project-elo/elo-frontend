@@ -26,6 +26,8 @@ export default function SolidButton({
   toggleValue,
   style,
   borderWidth = 0,
+  maxPress = 1,
+  depth = 2,
 }: {
   backgroundColor?: string;
   height?: number;
@@ -41,28 +43,30 @@ export default function SolidButton({
   toggleValue?: boolean;
   style?: StyleProp<ViewStyle>;
   borderWidth?: number;
+  maxPress?: number;
+  depth?: number;
 }) {
   const p = useSharedValue(0);
-  const depth = styleConsts.depth;
   const pressCompleted = useRef(false);
 
   const animatedStyle = useAnimatedStyle(() => {
-    const shadow = -depth + p.value * depth * 2;
+    const scaled = p.value * maxPress;
+    const shadow = -depth + scaled * depth * 2;
     return {
-      width: width - p.value * depth,
-      height: height - p.value * depth,
-      marginTop: -depth + p.value * depth,
-      marginLeft: -depth + p.value * depth,
-      paddingTop: padding + p.value * depth,
-      paddingLeft: padding + p.value * depth,
-      paddingBottom: padding + depth - p.value * depth,
-      paddingRight: padding + depth - p.value * depth,
+      width: width - scaled * depth,
+      height: height - scaled * depth,
+      marginTop: -depth + scaled * depth,
+      marginLeft: -depth + scaled * depth,
+      paddingTop: padding + scaled * depth,
+      paddingLeft: padding + scaled * depth,
+      paddingBottom: padding + depth - scaled * depth,
+      paddingRight: padding + depth - scaled * depth,
       boxShadow: `inset ${shadow}px ${shadow}px 0 rgba(0,0,0,${styleConsts.shadowOpacity})`,
       borderColor: `rgba(0,0,0,${styleConsts.shadowOpacity})`,
-      borderWidth: (1 - p.value) * borderWidth,
+      borderWidth: (1 - scaled) * borderWidth,
       backgroundColor: shadowEquivalent(
         colors.white,
-        p.value * styleConsts.darkenFace,
+        scaled * styleConsts.darkenFace,
       ),
       justifyContent: "center",
       alignItems: "center",

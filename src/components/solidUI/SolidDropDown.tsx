@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
   },
   popover: {
     backgroundColor: "transparent",
-    marginHorizontal: -10,
+    borderRadius: 10,
     paddingBottom: 2,
     paddingRight: 2,
   },

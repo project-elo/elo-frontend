@@ -93,5 +93,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     paddingBottom: 2,
     paddingRight: 2,
+    borderRadius: 10,
+    backgroundColor: "transparent",
   },
 });
