@@ -155,7 +155,7 @@ export default function SolidDropDown<T extends string | number>({
               toggleValue={open}
               onPress={() => setOpen(!open)}
               height={36}
-              width={110}
+              width={200}
               child={
                 <View style={styles.button}>
                   <Text style={[styles.buttonText, { color: colors.theme }]}>
@@ -202,10 +202,10 @@ const styles = StyleSheet.create({
     gap: 5,
   },
   text: {
-    fontSize: fontSizes.text,
+    fontSize: fontSizes.small,
   },
   buttonText: {
-    fontSize: fontSizes.text,
+    fontSize: fontSizes.small,
     justifyContent: "space-between",
 
     paddingHorizontal: 10,
@@ -223,7 +223,6 @@ const styles = StyleSheet.create({
   popover: {
     backgroundColor: "transparent",
     marginHorizontal: -10,
-    paddingLeft: 2,
     paddingBottom: 2,
     paddingRight: 2,
   },

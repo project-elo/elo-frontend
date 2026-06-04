@@ -90,5 +90,8 @@ const styles = StyleSheet.create({
   },
   content: {
     gap: 1,
+    overflow: "hidden",
+    paddingBottom: 2,
+    paddingRight: 2,
   },
 });

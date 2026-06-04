@@ -8,6 +8,8 @@ import SolidToggle from "../components/solidUI/SolidToggle";
 import SolidToggleGroup from "../components/solidUI/SolidToggleGroup";
 import SolidSlider from "../components/solidUI/SolidSlider";
 import SolidButton from "../components/solidUI/SolidButton";
+import SolidDropDown from "../components/solidUI/SolidDropDown";
+
 export default function Profile() {
   // Profile
   const [name, setName] = useState("");
@@ -49,7 +51,7 @@ export default function Profile() {
           unit="feet"
         />
 
-        <SolidToggleGroup
+        <SolidDropDown
           title="Looking For"
           options={listToOptions([
             "Something casual",
