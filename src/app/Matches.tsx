@@ -79,7 +79,7 @@ export default function Messages() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.offWhite,
+    backgroundColor: colors.google,
   },
   scrollable: {
     margin: 20,

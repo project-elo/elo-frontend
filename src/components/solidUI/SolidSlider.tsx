@@ -121,7 +121,7 @@ export default function SolidSlider({
       { translateY: -PRESS_DEPTH + p.value * PRESS_DEPTH },
     ],
     backgroundColor: shadowEquivalent(
-      colors.white,
+      colors.google,
       p.value * styleConsts.darkenFace,
     ),
   }));
@@ -135,7 +135,7 @@ export default function SolidSlider({
       { translateY: -PRESS_DEPTH + p2.value * PRESS_DEPTH },
     ],
     backgroundColor: shadowEquivalent(
-      colors.white,
+      colors.google,
       p2.value * styleConsts.darkenFace,
     ),
   }));

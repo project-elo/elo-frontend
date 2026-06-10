@@ -50,7 +50,7 @@ export default function SolidToggle({
     <Pressable
       style={{
         padding: 2,
-        backgroundColor: colors.white,
+        backgroundColor: colors.google,
         height: height + 4,
         width: width + 4,
         borderRadius: (height + 4) / 2,
@@ -96,7 +96,7 @@ export default function SolidToggle({
               width: thumbSize,
               height: thumbSize,
               borderRadius: thumbSize / 2,
-              backgroundColor: colors.white,
+              backgroundColor: colors.google,
             },
             thumbStyle,
           ]}

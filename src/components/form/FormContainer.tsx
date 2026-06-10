@@ -4,7 +4,7 @@ import { StyleSheet, View, Text } from "react-native";
 export default function FormContainer({
   title,
   children,
-  backgroundColor = colors.offWhite,
+  backgroundColor = colors.white,
 }: {
   title?: string;
   backgroundColor?: string;
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     padding: 15,
     marginTop: 10,
     borderColor: colors.lighterGray,
-    borderWidth: 0,
+    borderWidth: 1,
     gap: 10,
   },
 });

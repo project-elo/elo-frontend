@@ -30,6 +30,7 @@ function TabBarButton({ onPress, route, icon }: TabBarButtonProps) {
       onPress={() => onPress?.(undefined as any)}
       borderWidth={1}
       child={icon(isActive)}
+      backgroundColor={colors.white}
     />
   );
 }

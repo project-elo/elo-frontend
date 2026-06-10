@@ -225,5 +225,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingBottom: 2,
     paddingRight: 2,
+
+    shadowColor: "black",
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
   },
 });
