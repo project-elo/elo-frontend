@@ -33,7 +33,7 @@ export const styleConsts = {
   modalDelay: 400,
   depth: 2,
   radius: 10,
-  darkenFace: 0.025,
+  darkenFace: 0.0,
 };
 
 export function shadowEquivalent(

@@ -58,7 +58,7 @@ export default function SolidInput({
 
 const styles = StyleSheet.create({
   input: {
-    backgroundColor: colors.google,
+    backgroundColor: colors.white,
     padding: 10,
     fontSize: fontSizes.text,
     borderRadius: 10,

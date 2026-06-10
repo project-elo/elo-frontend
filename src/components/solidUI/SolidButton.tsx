@@ -12,7 +12,7 @@ import * as Haptics from "expo-haptics";
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 export default function SolidButton({
-  backgroundColor = colors.google,
+  backgroundColor = colors.white,
   height = 50,
   width = 50,
   borderTopLeftRadius = styleConsts.radius,

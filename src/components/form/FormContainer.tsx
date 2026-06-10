@@ -4,7 +4,7 @@ import { StyleSheet, View, Text } from "react-native";
 export default function FormContainer({
   title,
   children,
-  backgroundColor = colors.white,
+  backgroundColor = colors.google,
 }: {
   title?: string;
   backgroundColor?: string;
