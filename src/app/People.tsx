@@ -1,8 +1,10 @@
-import { View, StyleSheet } from "react-native";
+import { View } from "react-native";
+import TabContainer from "../components/tabs/TabContainer";
 
 export default function People() {
-  return <View style={styles.container}></View>;
+  return (
+    <TabContainer>
+      <View></View>
+    </TabContainer>
+  );
 }
-const styles = StyleSheet.create({
-  container: {},
-});

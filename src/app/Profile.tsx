@@ -1,7 +1,8 @@
-import { StyleSheet, ScrollView, Text } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import { useState } from "react";
 import { colors } from "../utils/styles";
 import { listToOptions } from "../utils/utils";
+import TabContainer from "../components/tabs/TabContainer";
 import FormContainer from "../components/form/FormContainer";
 import SolidInput from "../components/solidUI/SolidInput";
 import SolidToggle from "../components/solidUI/SolidToggle";
@@ -31,7 +32,7 @@ export default function Profile() {
   const [likesNotifications, setLikesNotifications] = useState(true);
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+    <TabContainer>
       {/* Profile */}
       <Text style={styles.section}>Profile</Text>
       <FormContainer>
@@ -121,20 +122,11 @@ export default function Profile() {
           height={44}
         />
       </FormContainer>
-    </ScrollView>
+    </TabContainer>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.white,
-  },
-  content: {
-    padding: 20,
-    paddingTop: 60,
-    gap: 0,
-  },
   section: {
     fontSize: 22,
     fontWeight: "600",

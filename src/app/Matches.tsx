@@ -1,7 +1,6 @@
 import { View, StyleSheet } from "react-native";
 import MessagePreviewTile from "../components/messages/MessagePreviewTile";
-import { colors, shadowEquivalent } from "../utils/styles";
-import { ScrollView } from "react-native-gesture-handler";
+import TabContainer from "../components/tabs/TabContainer";
 
 export type MessagePreviewType = {
   userId: string;
@@ -59,10 +58,7 @@ const messages: MessagePreviewType[] = [
 
 export default function Messages() {
   return (
-    <ScrollView
-      style={styles.container}
-      contentContainerStyle={styles.scrollable}
-    >
+    <TabContainer>
       <View style={styles.content}>
         {messages.map((m, i) => (
           <MessagePreviewTile
@@ -73,19 +69,10 @@ export default function Messages() {
           />
         ))}
       </View>
-    </ScrollView>
+    </TabContainer>
   );
 }
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.white,
-  },
-  scrollable: {
-    margin: 20,
-    marginTop: 60,
-    flex: 1,
-  },
   content: {
     overflow: "hidden",
     paddingBottom: 2,
