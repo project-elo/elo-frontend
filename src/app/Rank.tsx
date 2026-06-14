@@ -7,6 +7,7 @@ import { useState } from "react";
 import SolidToggleGroup from "../components/solidUI/SolidToggleGroup";
 import { listToOptions } from "../utils/utils";
 import SolidSlider from "../components/solidUI/SolidSlider";
+import SolidInput from "../components/solidUI/SolidInput";
 
 export type MessagePreviewType = {
   userId: string;
@@ -35,6 +36,11 @@ export default function Rank() {
       value={notificationsEnabled}
       onChange={setNotificationsEnabled}
     />,
+    <SolidToggle
+      key={0}
+      value={notificationsEnabled}
+      onChange={setNotificationsEnabled}
+    />,
     <SolidToggleGroup
       key={1}
       options={listToOptions(["Man", "Woman", "Non-binary"])}
@@ -54,16 +60,35 @@ export default function Rank() {
   return (
     <TabContainer>
       <SolidContainer>
-        {rows.map((row, i) => (
-          <SolidTile
-            key={i}
-            isFirst={i === 0}
-            isLast={i === rows.length - 1}
-            childrenAfter={i === 10}
-          >
-            {row}
-          </SolidTile>
-        ))}
+        <SolidTile isFirst>
+          <SolidToggle
+            key={0}
+            value={notificationsEnabled}
+            onChange={setNotificationsEnabled}
+          />
+        </SolidTile>
+        <SolidTile>
+          <SolidToggle
+            key={0}
+            value={notificationsEnabled}
+            onChange={setNotificationsEnabled}
+          />
+        </SolidTile>
+        <View>
+          <SolidToggleGroup
+            key={1}
+            options={listToOptions(["Man", "Woman", "x"])}
+            value={gender}
+            setValue={(v) => setGender(v as string)}
+          />
+        </View>
+        <SolidTile isLast>
+          <SolidToggle
+            key={0}
+            value={notificationsEnabled}
+            onChange={setNotificationsEnabled}
+          />
+        </SolidTile>
       </SolidContainer>
     </TabContainer>
   );

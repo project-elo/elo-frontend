@@ -19,14 +19,12 @@ export default function SolidTile({
   isLast = false,
   width,
   onPress,
-  childrenAfter = false,
 }: {
   children: React.ReactNode;
   isFirst?: boolean;
   isLast?: boolean;
   width?: number;
   onPress?: () => void;
-  childrenAfter?: boolean;
 }) {
   const p = useSharedValue(0);
 
@@ -57,63 +55,59 @@ export default function SolidTile({
     }));
 
   return (
-    <View style={{}}>
-      <AnimatedPressable
+    <AnimatedPressable
+      style={[
+        {
+          backgroundColor: "transparent",
+          marginTop: isFirst ? 0 : -styleConsts.depth * 0.5,
+          borderBottomLeftRadius: isLast ? styleConsts.radius : 0,
+          borderBottomRightRadius: isLast ? styleConsts.radius : 0,
+          borderTopRightRadius: isFirst ? styleConsts.radius : 0,
+          borderTopLeftRadius: isFirst ? styleConsts.radius : 0,
+          boxShadow: `${styleConsts.depth}px ${styleConsts.depth}px 0 ${shadowEquivalent(colors.white)}`,
+          flex: 1,
+        },
+        menuItemStyle,
+      ]}
+      onPressIn={() => {
+        press(1);
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
+      }}
+      onPressOut={() => press(0)}
+      onLayout={(e) => setCurrWidth(e.nativeEvent.layout.width)}
+    >
+      <Animated.View
         style={[
+          bgColor,
+
           {
-            backgroundColor: "transparent",
-            marginTop: isFirst ? 0 : -styleConsts.depth * 0.5,
             borderBottomLeftRadius: isLast ? styleConsts.radius : 0,
             borderBottomRightRadius: isLast ? styleConsts.radius : 0,
             borderTopRightRadius: isFirst ? styleConsts.radius : 0,
             borderTopLeftRadius: isFirst ? styleConsts.radius : 0,
-            boxShadow: isLast
-              ? `${styleConsts.depth}px ${styleConsts.depth}px 0 ${shadowEquivalent(colors.white)}`
-              : `${styleConsts.depth}px 0px 0 ${shadowEquivalent(colors.white)}`,
-            width: width ? width : "inherit",
+            minHeight: 40,
           },
-          menuItemStyle,
         ]}
-        onPressIn={() => {
-          press(1);
-          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
-        }}
-        onPressOut={() => press(0)}
-        onLayout={(e) => setCurrWidth(e.nativeEvent.layout.width)}
       >
-        <Animated.View
-          style={[
-            bgColor,
-
-            {
-              borderBottomLeftRadius: isLast ? styleConsts.radius : 0,
-              borderBottomRightRadius: isLast ? styleConsts.radius : 0,
-              borderTopRightRadius: isFirst ? styleConsts.radius : 0,
-              borderTopLeftRadius: isFirst ? styleConsts.radius : 0,
-            },
-          ]}
+        {children}
+      </Animated.View>
+      {!isLast && currWidth > 0 && (
+        <Svg
+          width={currWidth}
+          height={styleConsts.depth}
+          style={{ backgroundColor: "transparent" }}
         >
-          {!childrenAfter && children}
-        </Animated.View>
-        {!isLast && currWidth > 0 && (
-          <Svg
-            width={width}
+          <Rect
+            width={currWidth}
             height={styleConsts.depth}
-            style={{ backgroundColor: "transparent" }}
-          >
-            <Rect
-              width={currWidth}
-              height={styleConsts.depth}
-              fill="transparent"
-            />
-            <Polygon
-              points={`0,0 ${currWidth},0 ${currWidth},${styleConsts.depth} ${styleConsts.depth},${styleConsts.depth}`}
-              fill={shadowEquivalent(colors.white)}
-            />
-          </Svg>
-        )}
-      </AnimatedPressable>
-      {childrenAfter && children}
-    </View>
+            fill="transparent"
+          />
+          <Polygon
+            points={`0,0 ${currWidth},0 ${currWidth},${styleConsts.depth} ${styleConsts.depth},${styleConsts.depth}`}
+            fill={shadowEquivalent(colors.white)}
+          />
+        </Svg>
+      )}
+    </AnimatedPressable>
   );
 }

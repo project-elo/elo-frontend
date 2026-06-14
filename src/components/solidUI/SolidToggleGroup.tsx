@@ -29,6 +29,7 @@ export default function SolidToggleGroup<T extends string | number>({
 
   return (
     <View style={[styles.buttonContainer, { gap }]}>
+      <SolidTile></SolidTile>
       {options.map((opt, i) => (
         <SolidTile
           key={i}
