@@ -1,4 +1,4 @@
-import { colors, fontSizes } from "@/src/utils/styles";
+import { colors, fontSizes, styleConsts } from "@/src/utils/styles";
 import { StyleSheet, View, Text } from "react-native";
 
 export default function SolidContainer({
@@ -26,7 +26,10 @@ const styles = StyleSheet.create({
     fontSize: fontSizes.small,
   },
   container: {
-    borderRadius: 15,
+    borderRadius: styleConsts.radius,
     marginTop: 10,
+    overflow: "hidden",
+    paddingRight: styleConsts.depth,
+    paddingBottom: styleConsts.depth,
   },
 });

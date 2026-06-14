@@ -35,6 +35,7 @@ export default function SolidToggleGroup<T extends string | number>({
         {options.map((opt, i) => (
           <SolidButton
             key={i}
+            startFlat
             onPress={() => {
               if (isArray) {
                 setValue(
@@ -60,6 +61,8 @@ export default function SolidToggleGroup<T extends string | number>({
             toggleValue={
               isArray ? value.includes(opt.value) : opt.value === value
             }
+            maxPress={1}
+            depth={1}
             child={
               <Text
                 style={[

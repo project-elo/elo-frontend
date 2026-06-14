@@ -1,24 +1,7 @@
-import {
-  StyleSheet,
-  View,
-  Text,
-  Image,
-  useWindowDimensions,
-  Pressable,
-} from "react-native";
-import { MessagePreviewType } from "@/src/app/Matches";
-import { formatTimestamp } from "@/src/utils/utils";
-import SolidButton from "./SolidButton";
+import { View, Pressable } from "react-native";
 import React from "react";
 
-import {
-  colors,
-  fontSizes,
-  styleConsts,
-  shadowEquivalent,
-} from "@/src/utils/styles";
-import Popover from "react-native-popover-view";
-import { useState } from "react";
+import { colors, styleConsts, shadowEquivalent } from "@/src/utils/styles";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -26,12 +9,7 @@ import Animated, {
   Easing,
 } from "react-native-reanimated";
 import Svg, { Polygon, Rect } from "react-native-svg";
-import { sleep } from "@/src/utils/utils";
 import * as Haptics from "expo-haptics";
-import { Option } from "@/src/types/componentTypes";
-
-const TILE_HEIGHT = 80;
-const HORIZONTAL_MARGIN = 40;
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
@@ -80,7 +58,7 @@ export default function SolidTile({
           borderBottomRightRadius: isLast ? styleConsts.radius : 0,
           borderTopRightRadius: isFirst ? styleConsts.radius : 0,
           borderTopLeftRadius: isFirst ? styleConsts.radius : 0,
-          boxShadow: `${2}px ${2}px 0 ${shadowEquivalent(colors.white)}`,
+          boxShadow: `${styleConsts.depth}px ${styleConsts.depth}px 0 ${shadowEquivalent(colors.white)}`,
         },
         menuItemStyle,
       ]}
@@ -92,7 +70,6 @@ export default function SolidTile({
     >
       <Animated.View
         style={[
-          styles.menuItem,
           bgColor,
           {
             borderBottomLeftRadius: isLast ? styleConsts.radius : 0,
@@ -102,11 +79,15 @@ export default function SolidTile({
           },
         ]}
       >
-        <View style={styles.inner}>{children}</View>
+        <View>{children}</View>
       </Animated.View>
       {!isLast && (
-        <Svg width={2000} height={2} style={{ backgroundColor: "transparent" }}>
-          <Rect width={2000} height={2} fill="transparent" />
+        <Svg
+          width={2000}
+          height={styleConsts.depth}
+          style={{ backgroundColor: "transparent" }}
+        >
+          <Rect width={2000} height={styleConsts.depth} fill="transparent" />
           <Polygon
             points={`0,0 2000,0 2000, ${styleConsts.depth} ${styleConsts.depth}, ${styleConsts.depth} `}
             fill={shadowEquivalent(colors.white)}
@@ -116,30 +97,3 @@ export default function SolidTile({
     </AnimatedPressable>
   );
 }
-
-const styles = StyleSheet.create({
-  inner: {
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  rightContent: {
-    flex: 1,
-    paddingHorizontal: 10,
-  },
-  topBar: {
-    justifyContent: "space-between",
-    flexDirection: "row",
-  },
-  image: {
-    width: 50,
-    height: 50,
-    borderRadius: styleConsts.radius,
-  },
-  menuItem: {
-    justifyContent: "space-between",
-    flexDirection: "row",
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-  },
-});

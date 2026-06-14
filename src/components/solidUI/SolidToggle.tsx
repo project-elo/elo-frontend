@@ -48,60 +48,49 @@ export default function SolidToggle({
 
   return (
     <Pressable
-      style={{
-        padding: 2,
-        backgroundColor: colors.white,
-        height: height + 4,
-        width: width + 4,
-        borderRadius: (height + 4) / 2,
-        boxShadow: ` ${styleConsts.depth}px ${styleConsts.depth}px 0 rgba(0,0,0,${styleConsts.shadowOpacity})`,
-      }}
       onPress={() => {
         onChange(!value);
         setTimeout(() => {
           Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
         }, speed * 0.66);
       }}
+      style={[
+        {
+          width,
+          height,
+          backgroundColor: offColor,
+          borderRadius: height / 2,
+          padding: styleConsts.depth,
+          boxShadow: `inset ${styleConsts.depth}px ${styleConsts.depth}px 0 rgba(0,0,0,${styleConsts.shadowOpacity})`,
+          overflow: "hidden",
+        },
+      ]}
     >
-      <View
+      <Animated.View
         style={[
           {
-            width,
-            height,
-            backgroundColor: offColor,
+            position: "absolute",
+            left: 0,
+            top: 0,
+            bottom: 0,
+            backgroundColor: onColor,
             borderRadius: height / 2,
-            padding: styleConsts.depth,
-            boxShadow: `inset ${styleConsts.depth}px ${styleConsts.depth}px 0 rgba(0,0,0,${styleConsts.shadowOpacity})`,
-            overflow: "hidden",
+            boxShadow: ` inset ${styleConsts.depth * 0.5}px ${styleConsts.depth * 0.5}px 0 rgba(0,0,0,${styleConsts.shadowOpacity})`,
           },
+          fillStyle,
         ]}
-      >
-        <Animated.View
-          style={[
-            {
-              position: "absolute",
-              left: 0,
-              top: 0,
-              bottom: 0,
-              backgroundColor: onColor,
-              borderRadius: height / 2,
-              boxShadow: ` inset ${styleConsts.depth * 0.5}px ${styleConsts.depth * 0.5}px 0 rgba(0,0,0,${styleConsts.shadowOpacity})`,
-            },
-            fillStyle,
-          ]}
-        />
-        <Animated.View
-          style={[
-            {
-              width: thumbSize,
-              height: thumbSize,
-              borderRadius: thumbSize / 2,
-              backgroundColor: colors.white,
-            },
-            thumbStyle,
-          ]}
-        />
-      </View>
+      />
+      <Animated.View
+        style={[
+          {
+            width: thumbSize,
+            height: thumbSize,
+            borderRadius: thumbSize / 2,
+            backgroundColor: colors.white,
+          },
+          thumbStyle,
+        ]}
+      />
     </Pressable>
   );
 }
