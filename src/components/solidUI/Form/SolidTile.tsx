@@ -1,5 +1,5 @@
 import { View, Pressable } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 
 import { colors, styleConsts, shadowEquivalent } from "@/src/utils/styles";
 import Animated, {
@@ -17,12 +17,16 @@ export default function SolidTile({
   children,
   isFirst = false,
   isLast = false,
+  width,
 }: {
   children: React.ReactNode;
   isFirst?: boolean;
   isLast?: boolean;
+  width?: number;
 }) {
   const p = useSharedValue(0);
+
+  const [currWidth, setCurrWidth] = useState(0);
 
   const menuItemStyle = useAnimatedStyle(() => {
     return {
@@ -59,6 +63,7 @@ export default function SolidTile({
           borderTopRightRadius: isFirst ? styleConsts.radius : 0,
           borderTopLeftRadius: isFirst ? styleConsts.radius : 0,
           boxShadow: `${styleConsts.depth}px ${styleConsts.depth}px 0 ${shadowEquivalent(colors.white)}`,
+          width: width ? width : "inherit",
         },
         menuItemStyle,
       ]}
@@ -67,6 +72,7 @@ export default function SolidTile({
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
       }}
       onPressOut={() => press(0)}
+      onLayout={(e) => setCurrWidth(e.nativeEvent.layout.width)}
     >
       <Animated.View
         style={[
@@ -83,13 +89,17 @@ export default function SolidTile({
       </Animated.View>
       {!isLast && (
         <Svg
-          width={2000}
+          width={width}
           height={styleConsts.depth}
           style={{ backgroundColor: "transparent" }}
         >
-          <Rect width={2000} height={styleConsts.depth} fill="transparent" />
+          <Rect
+            width={currWidth}
+            height={styleConsts.depth}
+            fill="transparent"
+          />
           <Polygon
-            points={`0,0 2000,0 2000, ${styleConsts.depth} ${styleConsts.depth}, ${styleConsts.depth} `}
+            points={`0,0 ${width},0 ${width},${styleConsts.depth} ${styleConsts.depth},${styleConsts.depth}`}
             fill={shadowEquivalent(colors.white)}
           />
         </Svg>

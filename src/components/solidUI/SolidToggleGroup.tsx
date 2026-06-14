@@ -7,6 +7,7 @@ import {
 } from "@/src/utils/styles";
 import SolidButton from "./SolidButton";
 import { Option } from "@/src/types/componentTypes";
+import SolidTile from "./Form/SolidTile";
 
 export default function SolidToggleGroup<T extends string | number>({
   title,
@@ -35,7 +36,6 @@ export default function SolidToggleGroup<T extends string | number>({
         {options.map((opt, i) => (
           <SolidButton
             key={i}
-            startFlat
             onPress={() => {
               if (isArray) {
                 setValue(

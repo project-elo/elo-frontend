@@ -2,7 +2,6 @@ import { View } from "react-native";
 import TabContainer from "../components/tabs/TabContainer";
 import SolidContainer from "../components/solidUI/Form/SolidContainer";
 import SolidTile from "../components/solidUI/Form/SolidTile";
-import SolidMenuItem from "../components/solidUI/Form/SolidMenuItem";
 import SolidToggle from "../components/solidUI/SolidToggle";
 import { useState } from "react";
 import SolidToggleGroup from "../components/solidUI/SolidToggleGroup";
@@ -31,29 +30,26 @@ export default function Rank() {
   const [height, setHeight] = useState(66);
 
   const rows = [
-    <SolidMenuItem key={0}>
-      <SolidToggle
-        value={notificationsEnabled}
-        onChange={setNotificationsEnabled}
-      />
-    </SolidMenuItem>,
-    <SolidMenuItem key={1}>
-      <SolidToggleGroup
-        title="Gender Identity"
-        options={listToOptions(["Man", "Woman", "Non-binary"])}
-        value={gender}
-        setValue={(v) => setGender(v as string)}
-      />
-    </SolidMenuItem>,
-    <SolidMenuItem key={1}>
-      <SolidSlider
-        value={height}
-        onChange={setHeight}
-        min={48}
-        max={96}
-        unit="feet"
-      />
-    </SolidMenuItem>,
+    <SolidToggle
+      key={0}
+      value={notificationsEnabled}
+      onChange={setNotificationsEnabled}
+    />,
+    <SolidToggleGroup
+      key={1}
+      title="Gender Identity"
+      options={listToOptions(["Man", "Woman", "Non-binary"])}
+      value={gender}
+      setValue={(v) => setGender(v as string)}
+    />,
+    <SolidSlider
+      key={2}
+      value={height}
+      onChange={setHeight}
+      min={48}
+      max={96}
+      unit="feet"
+    />,
   ];
 
   return (
