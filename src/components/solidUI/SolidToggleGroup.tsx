@@ -10,13 +10,11 @@ import { Option } from "@/src/types/componentTypes";
 import SolidTile from "./Form/SolidTile";
 
 export default function SolidToggleGroup<T extends string | number>({
-  title,
   options,
   value,
   setValue,
   backgroundColor,
 }: {
-  title: string;
   options: Option<T>[];
   value: any;
   setValue: (v: T | T[]) => void;
@@ -30,57 +28,38 @@ export default function SolidToggleGroup<T extends string | number>({
   const color = shadowEquivalent(colors.theme);
 
   return (
-    <View style={[styles.container, { backgroundColor }]}>
-      <Text style={styles.text}>{title}</Text>
-      <View style={[styles.buttonContainer, { gap }]}>
-        {options.map((opt, i) => (
-          <SolidButton
-            key={i}
-            onPress={() => {
-              if (isArray) {
-                setValue(
-                  value.includes(opt.value)
-                    ? value.filter((v) => v !== opt.value)
-                    : [...value, opt.value],
-                );
-              } else {
-                setValue(opt.value);
-              }
-            }}
-            borderTopLeftRadius={i === 0 || isArray ? styleConsts.radius : 0}
-            borderBottomLeftRadius={i === 0 || isArray ? styleConsts.radius : 0}
-            borderTopRightRadius={
-              i === options.length - 1 || isArray ? styleConsts.radius : 0
+    <View style={[styles.buttonContainer, { gap }]}>
+      {options.map((opt, i) => (
+        <SolidTile
+          key={i}
+          onPress={() => {
+            if (isArray) {
+              setValue(
+                value.includes(opt.value)
+                  ? value.filter((v) => v !== opt.value)
+                  : [...value, opt.value],
+              );
+            } else {
+              setValue(opt.value);
             }
-            borderBottomRightRadius={
-              i === options.length - 1 || isArray ? styleConsts.radius : 0
-            }
-            width={width}
-            height={39}
-            isToggle={true}
-            toggleValue={
-              isArray ? value.includes(opt.value) : opt.value === value
-            }
-            maxPress={1}
-            depth={1}
-            child={
-              <Text
-                style={[
-                  styles.text,
-                  (isArray
-                    ? value.includes(opt.value)
-                    : opt.value === value) && { color },
-                ]}
-                adjustsFontSizeToFit
-                numberOfLines={1}
-                minimumFontScale={0.6}
-              >
-                {opt.label}
-              </Text>
-            }
-          />
-        ))}
-      </View>
+          }}
+          width={width}
+        >
+          <Text
+            style={[
+              styles.text,
+              (isArray ? value.includes(opt.value) : opt.value === value) && {
+                color,
+              },
+            ]}
+            adjustsFontSizeToFit
+            numberOfLines={1}
+            minimumFontScale={0.6}
+          >
+            {opt.label}
+          </Text>
+        </SolidTile>
+      ))}
     </View>
   );
 }

@@ -37,7 +37,6 @@ export default function Rank() {
     />,
     <SolidToggleGroup
       key={1}
-      title="Gender Identity"
       options={listToOptions(["Man", "Woman", "Non-binary"])}
       value={gender}
       setValue={(v) => setGender(v as string)}
@@ -56,15 +55,12 @@ export default function Rank() {
     <TabContainer>
       <SolidContainer>
         {rows.map((row, i) => (
-          <SolidTile key={i} isFirst={i === 0} isLast={i === rows.length - 1}>
-            {row}
-          </SolidTile>
-        ))}
-      </SolidContainer>
-
-      <SolidContainer>
-        {rows.map((row, i) => (
-          <SolidTile key={i} isFirst={i === 0} isLast={i === rows.length - 1}>
+          <SolidTile
+            key={i}
+            isFirst={i === 0}
+            isLast={i === rows.length - 1}
+            childrenAfter={i === 10}
+          >
             {row}
           </SolidTile>
         ))}
