@@ -6,18 +6,17 @@ import {
   styleConsts,
   shadowEquivalent,
 } from "@/src/utils/styles";
-import Popover from "react-native-popover-view";
+import Popover, { Rect } from "react-native-popover-view";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withTiming,
   Easing,
 } from "react-native-reanimated";
-import Svg, { Polygon, Rect } from "react-native-svg";
+import Svg, { Polygon, Rect as SvgRect } from "react-native-svg";
 import { sleep } from "@/src/utils/utils";
 import * as Haptics from "expo-haptics";
 import { Option } from "@/src/types/componentTypes";
-import { RefObject } from "react";
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
@@ -106,7 +105,7 @@ function MenuItem<T extends string | number>({
       </Animated.View>
       {!isLast && (
         <Svg width={200} height={2} style={{ backgroundColor: "transparent" }}>
-          <Rect width={200} height={2} fill="transparent" />
+          <SvgRect width={200} height={2} fill="transparent" />
           <Polygon
             points={`0,0 200,0 200, ${styleConsts.depth} ${styleConsts.depth}, ${styleConsts.depth} `}
             fill={shadowEquivalent(colors.white)}
@@ -123,15 +122,17 @@ export default function SolidDropDownMenu<T extends string | number>({
   setValue,
   isVisible,
   setOpen,
-  fromRef,
+  from,
 }: {
   options: Option<T>[];
   value: any;
   setValue: (v: T) => void;
   isVisible: boolean;
   setOpen: (v: boolean) => void;
-  fromRef: RefObject<any>;
+  from: Rect | null;
 }) {
+  if (!from) return null;
+
   return (
     <Popover
       isVisible={isVisible}
@@ -140,7 +141,7 @@ export default function SolidDropDownMenu<T extends string | number>({
       popoverStyle={styles.popover}
       arrowSize={{ width: 0, height: 0 }}
       offset={14}
-      from={fromRef}
+      from={from}
     >
       <View>
         {options.map((opt, i) => (

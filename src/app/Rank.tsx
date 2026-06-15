@@ -10,6 +10,7 @@ import { listToOptions } from "../utils/utils";
 import SolidSlider from "../components/solidUI/SolidSlider";
 import SolidInput from "../components/solidUI/SolidInput";
 import SolidDropDownMenu from "../components/solidUI/SolidDropDown";
+import { Rect } from "react-native-popover-view";
 import { colors, fontSizes } from "../utils/styles";
 
 export type MessagePreviewType = {
@@ -34,6 +35,7 @@ export default function Rank() {
   const [height, setHeight] = useState(66);
   const [state, setState] = useState("");
   const [stateOpen, setStateOpen] = useState(false);
+  const [stateAnchor, setStateAnchor] = useState<Rect | null>(null);
   const stateTileRef = useRef<View>(null);
   const stateOptions = listToOptions(["VA", "CA", "North Dakota"]);
   const selectedState = stateOptions.find((o) => o.value === state);
@@ -62,7 +64,12 @@ export default function Rank() {
         <SolidTile
           isLast
           label="State"
-          onPress={() => setStateOpen((o) => !o)}
+          onPress={() => {
+            stateTileRef.current?.measureInWindow((x, y, width, height) => {
+              setStateAnchor(new Rect(x, y, width, height));
+              setStateOpen((o) => !o);
+            });
+          }}
         >
           <View
             ref={stateTileRef}
@@ -84,7 +91,7 @@ export default function Rank() {
         <SolidDropDownMenu
           isVisible={stateOpen}
           setOpen={setStateOpen}
-          fromRef={stateTileRef}
+          from={stateAnchor}
           options={stateOptions}
           value={state}
           setValue={(v) => setState(v as string)}

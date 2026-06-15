@@ -12,6 +12,7 @@ import SolidSlider from "../components/solidUI/SolidSlider";
 import SolidButton from "../components/solidUI/SolidButton";
 import SolidTile from "../components/solidUI/Form/SolidTile";
 import SolidDropDownMenu from "../components/solidUI/SolidDropDown";
+import { Rect } from "react-native-popover-view";
 
 export default function Profile() {
   // Profile
@@ -22,6 +23,7 @@ export default function Profile() {
   const [interests, setInterests] = useState<string[]>([]);
   const [intent, setIntent] = useState("");
   const [intentOpen, setIntentOpen] = useState(false);
+  const [intentAnchor, setIntentAnchor] = useState<Rect | null>(null);
   const intentTileRef = useRef<View>(null);
   const intentOptions = listToOptions([
     "Something casual",
@@ -66,7 +68,12 @@ export default function Profile() {
           isFirst
           isLast
           label="Looking For"
-          onPress={() => setIntentOpen((o) => !o)}
+          onPress={() => {
+            intentTileRef.current?.measureInWindow((x, y, width, height) => {
+              setIntentAnchor(new Rect(x, y, width, height));
+              setIntentOpen((o) => !o);
+            });
+          }}
         >
           <View
             ref={intentTileRef}
@@ -88,7 +95,7 @@ export default function Profile() {
         <SolidDropDownMenu
           isVisible={intentOpen}
           setOpen={setIntentOpen}
-          fromRef={intentTileRef}
+          from={intentAnchor}
           options={intentOptions}
           value={intent}
           setValue={(v) => setIntent(v as string)}
