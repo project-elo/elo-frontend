@@ -4,6 +4,7 @@ import Animated, {
   useAnimatedStyle,
   withTiming,
   Easing,
+  interpolateColor,
 } from "react-native-reanimated";
 import { ReactNode, useEffect, useRef } from "react";
 import { styleConsts, colors, shadowEquivalent } from "@/src/utils/styles";
@@ -13,6 +14,10 @@ const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 export default function SolidButton({
   backgroundColor = colors.white,
+  pressedBackgroundColor = shadowEquivalent(
+    backgroundColor,
+    styleConsts.darkenFace,
+  ),
   height = 50,
   width = 50,
   borderTopLeftRadius = styleConsts.radius,
@@ -30,6 +35,7 @@ export default function SolidButton({
   depth = 2,
 }: {
   backgroundColor?: string;
+  pressedBackgroundColor?: string;
   height?: number;
   width?: number;
   borderTopLeftRadius?: number;
@@ -64,9 +70,10 @@ export default function SolidButton({
       boxShadow: `inset ${shadow}px ${shadow}px 0 rgba(0,0,0,${styleConsts.shadowOpacity})`,
       borderColor: `rgba(0,0,0,${styleConsts.shadowOpacity})`,
       borderWidth: (1 - scaled) * borderWidth,
-      backgroundColor: shadowEquivalent(
-        backgroundColor,
-        scaled * styleConsts.darkenFace,
+      backgroundColor: interpolateColor(
+        p.value,
+        [0, 1],
+        [backgroundColor, pressedBackgroundColor],
       ),
       justifyContent: "center",
       alignItems: "center",

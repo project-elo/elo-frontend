@@ -139,8 +139,6 @@ export default function SolidDropDown<T extends string | number>({
       style={[styles.container, { backgroundColor }]}
       onPress={() => setOpen(true)}
     >
-      <Text style={styles.text}>{title}</Text>
-
       <Popover
         isVisible={open}
         onRequestClose={() => setOpen(false)}

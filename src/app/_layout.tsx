@@ -31,6 +31,7 @@ function TabBarButton({ onPress, route, icon }: TabBarButtonProps) {
       borderWidth={1}
       child={icon(isActive)}
       backgroundColor={colors.white}
+      pressedBackgroundColor={colors.apple}
     />
   );
 }
@@ -62,7 +63,7 @@ function Layout() {
                   <Entypo
                     name="magnifying-glass"
                     size={24}
-                    color={isActive ? colors.theme : colors.gray}
+                    color={isActive ? colors.gray : colors.gray}
                   />
                 )}
               />
@@ -81,7 +82,7 @@ function Layout() {
                   <FontAwesome6
                     name="message"
                     size={24}
-                    color={isActive ? colors.theme : colors.gray}
+                    color={isActive ? colors.gray : colors.gray}
                   />
                 )}
               />
@@ -100,7 +101,7 @@ function Layout() {
                   <MaterialCommunityIcons
                     name="trophy-outline"
                     size={24}
-                    color={isActive ? colors.theme : colors.gray}
+                    color={isActive ? colors.gray : colors.gray}
                   />
                 )}
               />
@@ -119,7 +120,7 @@ function Layout() {
                   <Feather
                     name="user"
                     size={24}
-                    color={isActive ? colors.theme : colors.gray}
+                    color={isActive ? colors.gray : colors.gray}
                   />
                 )}
               />

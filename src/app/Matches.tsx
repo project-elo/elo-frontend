@@ -58,7 +58,7 @@ const messages: MessagePreviewType[] = [
 
 export default function Messages() {
   return (
-    <TabContainer>
+    <TabContainer style={{ padding: 5 }}>
       <View style={styles.content}>
         {messages.map((m, i) => (
           <MessagePreviewTile

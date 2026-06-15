@@ -1,14 +1,20 @@
 import { StyleSheet, ScrollView, Text } from "react-native";
 import { colors } from "@/src/utils/styles";
 import React from "react";
+import { StyleProp, ViewStyle } from "react-native";
 
 export default function TabContainer({
   children,
+  style,
 }: {
   children: React.ReactNode;
+  style?: StyleProp<ViewStyle>;
 }) {
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={[styles.content, style]}
+    >
       {children}
     </ScrollView>
   );

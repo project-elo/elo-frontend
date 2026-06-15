@@ -1,7 +1,12 @@
-import { View, Pressable } from "react-native";
+import { View, Pressable, Text, StyleSheet } from "react-native";
 import React, { useState } from "react";
 
-import { colors, styleConsts, shadowEquivalent } from "@/src/utils/styles";
+import {
+  colors,
+  styleConsts,
+  shadowEquivalent,
+  fontSizes,
+} from "@/src/utils/styles";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -18,15 +23,18 @@ export default function SolidTile({
   isFirst = false,
   isLast = false,
   width,
+  label,
   onPress,
 }: {
   children: React.ReactNode;
   isFirst?: boolean;
   isLast?: boolean;
   width?: number;
+  label?: string;
   onPress?: () => void;
 }) {
   const p = useSharedValue(0);
+  const pressable = onPress !== undefined;
 
   const [currWidth, setCurrWidth] = useState(0);
 
@@ -70,8 +78,10 @@ export default function SolidTile({
         menuItemStyle,
       ]}
       onPressIn={() => {
-        press(1);
-        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
+        if (pressable) {
+          press(1);
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
+        }
       }}
       onPressOut={() => press(0)}
       onLayout={(e) => setCurrWidth(e.nativeEvent.layout.width)}
@@ -89,7 +99,10 @@ export default function SolidTile({
           },
         ]}
       >
-        {children}
+        <View style={styles.container}>
+          {label && <Text style={styles.text}>{label}</Text>}
+          {children}
+        </View>
       </Animated.View>
       {!isLast && currWidth > 0 && (
         <Svg
@@ -111,3 +124,17 @@ export default function SolidTile({
     </AnimatedPressable>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    flex: 1,
+    paddingHorizontal: 15,
+  },
+  text: {
+    fontSize: fontSizes.text,
+    width: 100,
+  },
+});
