@@ -7,8 +7,6 @@ import {
   shadowEquivalent,
 } from "@/src/utils/styles";
 import Popover from "react-native-popover-view";
-import { useState } from "react";
-import SolidButton from "./SolidButton";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -19,6 +17,7 @@ import Svg, { Polygon, Rect } from "react-native-svg";
 import { sleep } from "@/src/utils/utils";
 import * as Haptics from "expo-haptics";
 import { Option } from "@/src/types/componentTypes";
+import { RefObject } from "react";
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
@@ -118,99 +117,55 @@ function MenuItem<T extends string | number>({
   );
 }
 
-export default function SolidDropDown<T extends string | number>({
-  title,
+export default function SolidDropDownMenu<T extends string | number>({
   options,
   value,
   setValue,
-  backgroundColor,
+  isVisible,
+  setOpen,
+  fromRef,
 }: {
-  title: string;
   options: Option<T>[];
   value: any;
   setValue: (v: T) => void;
-  backgroundColor?: string;
+  isVisible: boolean;
+  setOpen: (v: boolean) => void;
+  fromRef: RefObject<any>;
 }) {
-  const [open, setOpen] = useState(false);
-  const selectedOption = options.find((o) => o.value === value);
-
   return (
-    <Pressable
-      style={[styles.container, { backgroundColor }]}
-      onPress={() => setOpen(true)}
+    <Popover
+      isVisible={isVisible}
+      onRequestClose={() => setOpen(false)}
+      backgroundStyle={{ backgroundColor: "transparent" }}
+      popoverStyle={styles.popover}
+      arrowSize={{ width: 0, height: 0 }}
+      offset={14}
+      from={fromRef}
     >
-      <Popover
-        isVisible={open}
-        onRequestClose={() => setOpen(false)}
-        backgroundStyle={{ backgroundColor: "transparent" }}
-        popoverStyle={styles.popover}
-        arrowSize={{ width: 0, height: 0 }}
-        offset={14}
-        from={
-          <View>
-            <SolidButton
-              isToggle={true}
-              toggleValue={open}
-              onPress={() => setOpen(!open)}
-              height={36}
-              width={200}
-              child={
-                <View style={styles.button}>
-                  <Text style={[styles.buttonText, { color: colors.theme }]}>
-                    {selectedOption?.label ?? "Select"}
-                  </Text>
-                  <Entypo
-                    style={[styles.icon, { color: colors.theme }]}
-                    name="select-arrows"
-                  />
-                </View>
-              }
-            />
-          </View>
-        }
-      >
-        <View>
-          {options.map((opt, i) => (
-            <MenuItem
-              key={opt.value}
-              opt={opt}
-              value={value}
-              setValue={setValue}
-              setOpen={setOpen}
-              isFirst={i === 0}
-              isLast={i === options.length - 1}
-            />
-          ))}
-        </View>
-      </Popover>
-    </Pressable>
+      <View>
+        {options.map((opt, i) => (
+          <MenuItem
+            key={opt.value}
+            opt={opt}
+            value={value}
+            setValue={setValue}
+            setOpen={setOpen}
+            isFirst={i === 0}
+            isLast={i === options.length - 1}
+          />
+        ))}
+      </View>
+    </Popover>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    paddingVertical: 10,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  button: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    gap: 5,
-  },
   text: {
     fontSize: fontSizes.small,
   },
-  buttonText: {
-    fontSize: fontSizes.small,
-    justifyContent: "space-between",
-
-    paddingHorizontal: 10,
-  },
   icon: {
-    marginTop: 4,
-    fontSize: fontSizes.text - 4,
+    marginTop: 1,
+    fontSize: fontSizes.small,
   },
   menuItem: {
     justifyContent: "space-between",
@@ -223,7 +178,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingBottom: 2,
     paddingRight: 2,
-
     shadowColor: "black",
     shadowOpacity: 0.1,
     shadowRadius: 10,

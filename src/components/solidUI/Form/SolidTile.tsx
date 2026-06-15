@@ -18,21 +18,20 @@ import * as Haptics from "expo-haptics";
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
-export default function SolidTile({
-  children,
-  isFirst = false,
-  isLast = false,
-  width,
-  label,
-  onPress,
-}: {
-  children: React.ReactNode;
-  isFirst?: boolean;
-  isLast?: boolean;
-  width?: number;
-  label?: string;
-  onPress?: () => void;
-}) {
+const SolidTile = React.forwardRef<
+  View,
+  {
+    children: React.ReactNode;
+    isFirst?: boolean;
+    isLast?: boolean;
+    width?: number;
+    label?: string;
+    onPress?: () => void;
+  }
+>(function SolidTile(
+  { children, isFirst = false, isLast = false, width, label, onPress },
+  ref,
+) {
   const p = useSharedValue(0);
   const pressable = onPress !== undefined;
 
@@ -64,6 +63,8 @@ export default function SolidTile({
 
   return (
     <AnimatedPressable
+      ref={ref}
+      onPress={onPress}
       style={[
         {
           backgroundColor: "transparent",
@@ -123,7 +124,9 @@ export default function SolidTile({
       )}
     </AnimatedPressable>
   );
-}
+});
+
+export default SolidTile;
 
 const styles = StyleSheet.create({
   container: {
@@ -135,6 +138,6 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: fontSizes.text,
-    width: 100,
+    width: styleConsts.labelWidth,
   },
 });

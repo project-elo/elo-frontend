@@ -36,6 +36,7 @@ export const styleConsts = {
   depth: 2,
   radius: 10,
   darkenFace: 0.025,
+  labelWidth: 100,
 };
 
 export function shadowEquivalent(

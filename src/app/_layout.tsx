@@ -63,7 +63,7 @@ function Layout() {
                   <Entypo
                     name="magnifying-glass"
                     size={24}
-                    color={isActive ? colors.gray : colors.gray}
+                    color={colors.gray}
                   />
                 )}
               />
@@ -79,11 +79,7 @@ function Layout() {
                 onPress={onPress}
                 route="Matches"
                 icon={(isActive) => (
-                  <FontAwesome6
-                    name="message"
-                    size={24}
-                    color={isActive ? colors.gray : colors.gray}
-                  />
+                  <FontAwesome6 name="message" size={24} color={colors.gray} />
                 )}
               />
             ),
@@ -101,7 +97,7 @@ function Layout() {
                   <MaterialCommunityIcons
                     name="trophy-outline"
                     size={24}
-                    color={isActive ? colors.gray : colors.gray}
+                    color={colors.gray}
                   />
                 )}
               />
@@ -117,11 +113,7 @@ function Layout() {
                 onPress={onPress}
                 route="Profile"
                 icon={(isActive) => (
-                  <Feather
-                    name="user"
-                    size={24}
-                    color={isActive ? colors.gray : colors.gray}
-                  />
+                  <Feather name="user" size={24} color={colors.gray} />
                 )}
               />
             ),

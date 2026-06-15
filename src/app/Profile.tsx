@@ -1,6 +1,7 @@
-import { StyleSheet, Text } from "react-native";
-import { useState } from "react";
-import { colors } from "../utils/styles";
+import { StyleSheet, Text, View } from "react-native";
+import { useRef, useState } from "react";
+import Entypo from "@expo/vector-icons/Entypo";
+import { colors, fontSizes } from "../utils/styles";
 import { listToOptions } from "../utils/utils";
 import TabContainer from "../components/tabs/TabContainer";
 import FormContainer from "../components/form/FormContainer";
@@ -9,7 +10,8 @@ import SolidToggle from "../components/solidUI/SolidToggle";
 import SolidToggleGroup from "../components/solidUI/SolidToggleGroup";
 import SolidSlider from "../components/solidUI/SolidSlider";
 import SolidButton from "../components/solidUI/SolidButton";
-import SolidDropDown from "../components/solidUI/SolidDropDown";
+import SolidTile from "../components/solidUI/Form/SolidTile";
+import SolidDropDownMenu from "../components/solidUI/SolidDropDown";
 
 export default function Profile() {
   // Profile
@@ -19,6 +21,14 @@ export default function Profile() {
   const [height, setHeight] = useState(66);
   const [interests, setInterests] = useState<string[]>([]);
   const [intent, setIntent] = useState("");
+  const [intentOpen, setIntentOpen] = useState(false);
+  const intentTileRef = useRef<View>(null);
+  const intentOptions = listToOptions([
+    "Something casual",
+    "A relationship",
+    "Not sure yet",
+  ]);
+  const selectedIntent = intentOptions.find((o) => o.value === intent);
 
   // Discovery
   const [showMeAs, setShowMeAs] = useState("");
@@ -52,13 +62,34 @@ export default function Profile() {
           unit="feet"
         />
 
-        <SolidDropDown
-          title="Looking For"
-          options={listToOptions([
-            "Something casual",
-            "A relationship",
-            "Not sure yet",
-          ])}
+        <SolidTile
+          isFirst
+          isLast
+          label="Looking For"
+          onPress={() => setIntentOpen((o) => !o)}
+        >
+          <View
+            ref={intentTileRef}
+            style={{ flexDirection: "row", alignItems: "center" }}
+          >
+            <Text style={{ fontSize: fontSizes.small, color: colors.theme }}>
+              {selectedIntent?.label ?? "Select"}
+            </Text>
+            <Entypo
+              style={{
+                marginTop: 4,
+                fontSize: fontSizes.text - 4,
+                color: colors.theme,
+              }}
+              name="select-arrows"
+            />
+          </View>
+        </SolidTile>
+        <SolidDropDownMenu
+          isVisible={intentOpen}
+          setOpen={setIntentOpen}
+          fromRef={intentTileRef}
+          options={intentOptions}
           value={intent}
           setValue={(v) => setIntent(v as string)}
         />
