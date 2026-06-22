@@ -9,9 +9,9 @@ import SolidToggleGroup from "../components/solidUI/SolidToggleGroup";
 import { listToOptions } from "../utils/utils";
 import SolidSlider from "../components/solidUI/SolidSlider";
 import SolidInput from "../components/solidUI/SolidInput";
-import SolidDropDownMenu from "../components/solidUI/SolidDropDown";
 import { Rect } from "react-native-popover-view";
 import { colors, fontSizes } from "../utils/styles";
+import SolidDropDownTile from "../components/solidUI/SolidDropDown";
 
 export type MessagePreviewType = {
   userId: string;
@@ -60,41 +60,12 @@ export default function Rank() {
             onChange={setNotificationsEnabled}
           />
         </SolidTile>
-
-        <SolidTile
-          isLast
+        <SolidDropDownTile
           label="State"
-          onPress={() => {
-            stateTileRef.current?.measureInWindow((x, y, width, height) => {
-              setStateAnchor(new Rect(x, y, width, height));
-              setStateOpen((o) => !o);
-            });
-          }}
-        >
-          <View
-            ref={stateTileRef}
-            style={{ flexDirection: "row", alignItems: "center" }}
-          >
-            <Text style={{ fontSize: fontSizes.small, color: colors.theme }}>
-              {selectedState?.label ?? "Select"}
-            </Text>
-            <Entypo
-              style={{
-                marginTop: 4,
-                fontSize: fontSizes.text - 4,
-                color: colors.theme,
-              }}
-              name="select-arrows"
-            />
-          </View>
-        </SolidTile>
-        <SolidDropDownMenu
-          isVisible={stateOpen}
-          setOpen={setStateOpen}
-          from={stateAnchor}
+          isLast
           options={stateOptions}
           value={state}
-          setValue={(v) => setState(v as string)}
+          setValue={setState}
         />
       </SolidContainer>
     </TabContainer>

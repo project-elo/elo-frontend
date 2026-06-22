@@ -17,6 +17,8 @@ import Svg, { Polygon, Rect as SvgRect } from "react-native-svg";
 import { sleep } from "@/src/utils/utils";
 import * as Haptics from "expo-haptics";
 import { Option } from "@/src/types/componentTypes";
+import { useRef, useState } from "react";
+import SolidTile from "./Form/SolidTile";
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
@@ -82,7 +84,7 @@ function MenuItem<T extends string | number>({
       onPressOut={() => press(0)}
       onPress={async () => {
         setValue(opt.value);
-        await sleep(250);
+        await sleep(150);
         setOpen(false);
       }}
     >
@@ -116,7 +118,7 @@ function MenuItem<T extends string | number>({
   );
 }
 
-export default function SolidDropDownMenu<T extends string | number>({
+export function SolidDropDown<T extends string | number>({
   options,
   value,
   setValue,
@@ -131,8 +133,6 @@ export default function SolidDropDownMenu<T extends string | number>({
   setOpen: (v: boolean) => void;
   from: Rect | null;
 }) {
-  if (!from) return null;
-
   return (
     <Popover
       isVisible={isVisible}
@@ -160,6 +160,61 @@ export default function SolidDropDownMenu<T extends string | number>({
   );
 }
 
+export default function SolidDropDownTile<T extends string | number>({
+  label,
+  isFirst,
+  isLast,
+  options,
+  value,
+  setValue,
+}: {
+  label: string;
+  isFirst?: boolean;
+  isLast?: boolean;
+  options: Option<T>[];
+  value: T;
+  setValue: (v: T) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const [anchor, setAnchor] = useState<Rect | null>(null);
+  const tileRef = useRef<View>(null);
+  const selectedOption = options.find((o) => o.value === value);
+
+  return (
+    <>
+      <SolidTile
+        isFirst={isFirst}
+        isLast={isLast}
+        label={label}
+        onPress={() => {
+          tileRef.current?.measureInWindow((x, y, width, height) => {
+            setAnchor(new Rect(x, y, width, height));
+            setOpen((o) => !o);
+          });
+        }}
+      >
+        <View ref={tileRef} style={{ flexDirection: "row", alignItems: "center" }}>
+          <Text style={{ fontSize: fontSizes.small, color: colors.theme }}>
+            {selectedOption?.label ?? "Select"}
+          </Text>
+          <Entypo
+            style={{ marginTop: 4, fontSize: fontSizes.text - 4, color: colors.theme }}
+            name="select-arrows"
+          />
+        </View>
+      </SolidTile>
+      <SolidDropDown
+        isVisible={open}
+        setOpen={setOpen}
+        from={anchor}
+        options={options}
+        value={value}
+        setValue={setValue}
+      />
+    </>
+  );
+}
+
 const styles = StyleSheet.create({
   text: {
     fontSize: fontSizes.small,
@@ -179,6 +234,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingBottom: 2,
     paddingRight: 2,
+    marginLeft: -10, // TODO: dont hard code this
     shadowColor: "black",
     shadowOpacity: 0.1,
     shadowRadius: 10,
