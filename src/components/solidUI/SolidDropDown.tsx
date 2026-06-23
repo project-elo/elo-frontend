@@ -19,6 +19,7 @@ import * as Haptics from "expo-haptics";
 import { Option } from "@/src/types/componentTypes";
 import { useRef, useState } from "react";
 import SolidTile from "./Form/SolidTile";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
@@ -102,7 +103,7 @@ function MenuItem<T extends string | number>({
       >
         <Text style={styles.text}>{opt.label}</Text>
         {opt.value === value && (
-          <Entypo style={[styles.icon, { color: colors.theme }]} name="check" />
+          <Entypo style={[styles.text, { color: colors.theme }]} name="check" />
         )}
       </Animated.View>
       {!isLast && (
@@ -142,6 +143,7 @@ export function SolidDropDown<T extends string | number>({
       arrowSize={{ width: 0, height: 0 }}
       offset={14}
       from={from}
+      popoverShift={{ x: -1 }}
     >
       <View>
         {options.map((opt, i) => (
@@ -193,13 +195,12 @@ export default function SolidDropDownTile<T extends string | number>({
           });
         }}
       >
-        <View ref={tileRef} style={{ flexDirection: "row", alignItems: "center" }}>
-          <Text style={{ fontSize: fontSizes.small, color: colors.theme }}>
-            {selectedOption?.label ?? "Select"}
-          </Text>
-          <Entypo
-            style={{ marginTop: 4, fontSize: fontSizes.text - 4, color: colors.theme }}
-            name="select-arrows"
+        <View ref={tileRef} style={styles.currOption}>
+          <Text style={styles.text}>{selectedOption?.label ?? "Select"}</Text>
+          <Ionicons
+            name="chevron-expand-outline"
+            size={24}
+            color={colors.gray}
           />
         </View>
       </SolidTile>
@@ -217,11 +218,7 @@ export default function SolidDropDownTile<T extends string | number>({
 
 const styles = StyleSheet.create({
   text: {
-    fontSize: fontSizes.small,
-  },
-  icon: {
-    marginTop: 1,
-    fontSize: fontSizes.small,
+    fontSize: fontSizes.text,
   },
   menuItem: {
     justifyContent: "space-between",
@@ -234,9 +231,15 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingBottom: 2,
     paddingRight: 2,
-    marginLeft: -10, // TODO: dont hard code this
+
     shadowColor: "black",
     shadowOpacity: 0.1,
     shadowRadius: 10,
+  },
+  currOption: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    flex: 1,
   },
 });
