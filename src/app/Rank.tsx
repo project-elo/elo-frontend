@@ -12,6 +12,7 @@ import SolidInput from "../components/solidUI/SolidInput";
 import { Rect } from "react-native-popover-view";
 import { colors, fontSizes } from "../utils/styles";
 import SolidDropDownTile from "../components/solidUI/SolidDropDown";
+import SolidStackButton from "../components/solidUI/SolidStackButton";
 
 export type MessagePreviewType = {
   userId: string;
@@ -31,24 +32,9 @@ export type MessageType = {
 
 export default function Rank() {
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
-  const [gender, setGender] = useState("");
-  const [height, setHeight] = useState(66);
+  const [name, setName] = useState("");
   const [state, setState] = useState("");
-  const [stateOpen, setStateOpen] = useState(false);
-  const [stateAnchor, setStateAnchor] = useState<Rect | null>(null);
-  const stateTileRef = useRef<View>(null);
   const stateOptions = listToOptions(["VA", "CA", "North Dakota"]);
-  const selectedState = stateOptions.find((o) => o.value === state);
-
-  /* 
-          <SolidToggleGroup
-            key={1}
-            options={listToOptions(["Man", "Woman", "x"])}
-            value={gender}
-            setValue={(v) => setGender(v as string)}
-          />
-
-  */
 
   return (
     <TabContainer>
@@ -60,6 +46,13 @@ export default function Rank() {
             onChange={setNotificationsEnabled}
           />
         </SolidTile>
+        <SolidInput
+          label="Name"
+          value={name}
+          setValue={setName}
+          placeholder="Required"
+        />
+        <SolidStackButton label="Next Screen" onPress={() => {}} />
         <SolidDropDownTile
           label="State"
           isLast

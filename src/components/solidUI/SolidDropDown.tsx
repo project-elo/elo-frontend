@@ -197,11 +197,7 @@ export default function SolidDropDownTile<T extends string | number>({
       >
         <View ref={tileRef} style={styles.currOption}>
           <Text style={styles.text}>{selectedOption?.label ?? "Select"}</Text>
-          <Ionicons
-            name="chevron-expand-outline"
-            size={24}
-            color={colors.gray}
-          />
+          <Ionicons name="chevron-expand" size={24} color={colors.gray} />
         </View>
       </SolidTile>
       <SolidDropDown

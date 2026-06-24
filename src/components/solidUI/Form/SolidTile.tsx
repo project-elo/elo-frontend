@@ -21,19 +21,30 @@ const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 const SolidTile = React.forwardRef<
   View,
   {
-    children: React.ReactNode;
+    children?: React.ReactNode;
     isFirst?: boolean;
     isLast?: boolean;
     width?: number;
     label?: string;
     onPress?: () => void;
+    pressable?: boolean;
   }
 >(function SolidTile(
-  { children, isFirst = false, isLast = false, width, label, onPress },
+  {
+    children,
+    isFirst = false,
+    isLast = false,
+    width,
+    label,
+    onPress,
+    pressable,
+  },
   ref,
 ) {
   const p = useSharedValue(0);
-  const pressable = onPress !== undefined;
+  if (pressable === undefined) {
+    pressable = onPress !== undefined;
+  }
 
   const [currWidth, setCurrWidth] = useState(0);
 
@@ -135,6 +146,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flex: 1,
     paddingHorizontal: 15,
+    gap: 10,
   },
   text: {
     fontSize: fontSizes.text,

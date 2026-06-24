@@ -1,68 +1,59 @@
-import { colors, fontSizes, styleConsts } from "@/src/utils/styles";
-import { BoxShadow } from "@shopify/react-native-skia";
-import { StyleSheet, TextInput, KeyboardTypeOptions, View } from "react-native";
+import { useRef } from "react";
+import { View, Text, StyleSheet, TextInput } from "react-native";
+import { colors, fontSizes } from "@/src/utils/styles";
+import { KeyboardTypeOptions } from "react-native";
 
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withTiming,
-  Easing,
-} from "react-native-reanimated";
-
-const AnimatedInput = Animated.createAnimatedComponent(TextInput);
+import SolidTile from "./Form/SolidTile";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function SolidInput({
-  defaultValue = "",
+  label,
   placeholder,
-  onChangeText,
+  isFirst,
+  isLast,
+  value,
+  setValue,
   keyboardType,
 }: {
-  defaultValue?: string;
+  label: string;
   placeholder: string;
-  onChangeText: (v: string) => void;
+  isFirst?: boolean;
+  isLast?: boolean;
+  value: string;
+  setValue: (v: string) => void;
   keyboardType?: KeyboardTypeOptions;
 }) {
-  const p = useSharedValue(0);
-  const press = (v: number) =>
-    (p.value = withTiming(v, {
-      duration: styleConsts.pressDuration,
-      easing: Easing.inOut(Easing.ease),
-    }));
-
-  const depth = 2;
-  const padding = 10;
-
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      boxShadow: `inset ${p.value * depth}px ${p.value * depth}px 0 rgba(0,0,0,${styleConsts.shadowOpacity})`,
-      paddingTop: padding + p.value * depth,
-      paddingLeft: padding + p.value * depth,
-      paddingBottom: padding + depth - p.value * depth,
-      paddingRight: padding + depth - p.value * depth,
-    };
-  });
+  const inputRef = useRef<TextInput>(null);
 
   return (
-    <AnimatedInput
-      onFocus={() => press(1)}
-      onBlur={() => press(0)}
-      style={[styles.input, animatedStyle]}
-      defaultValue={defaultValue}
-      placeholder={placeholder}
-      onChangeText={onChangeText}
-      keyboardType={keyboardType ? keyboardType : "default"}
-      placeholderTextColor={colors.gray}
-    />
+    <>
+      <SolidTile
+        isFirst={isFirst}
+        isLast={isLast}
+        label={label}
+        onPress={() => inputRef.current?.focus()}
+        pressable={false}
+      >
+        <TextInput
+          ref={inputRef}
+          style={styles.input}
+          defaultValue={value}
+          placeholder={placeholder}
+          onChangeText={setValue}
+          keyboardType={keyboardType ? keyboardType : "default"}
+          placeholderTextColor={colors.gray}
+        />
+      </SolidTile>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
   input: {
-    backgroundColor: colors.white,
-    padding: 10,
     fontSize: fontSizes.text,
-    borderRadius: 10,
-    borderColor: colors.lighterGray,
-    borderWidth: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    flex: 1,
   },
 });
