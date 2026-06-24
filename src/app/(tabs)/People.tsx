@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import TabContainer from "../components/tabs/TabContainer";
+import TabContainer from "../../components/tabs/TabContainer";
 
 export default function People() {
   return (

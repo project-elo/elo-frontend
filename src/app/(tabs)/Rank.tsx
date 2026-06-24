@@ -1,18 +1,19 @@
 import { View, Text } from "react-native";
 import Entypo from "@expo/vector-icons/Entypo";
-import TabContainer from "../components/tabs/TabContainer";
-import SolidContainer from "../components/solidUI/Form/SolidContainer";
-import SolidTile from "../components/solidUI/Form/SolidTile";
-import SolidToggle from "../components/solidUI/SolidToggle";
+import TabContainer from "../../components/tabs/TabContainer";
+import SolidContainer from "../../components/solidUI/Form/SolidContainer";
+import SolidTile from "../../components/solidUI/Form/SolidTile";
+import SolidToggle from "../../components/solidUI/SolidToggle";
 import { useRef, useState } from "react";
-import SolidToggleGroup from "../components/solidUI/SolidToggleGroup";
-import { listToOptions } from "../utils/utils";
-import SolidSlider from "../components/solidUI/SolidSlider";
-import SolidInput from "../components/solidUI/SolidInput";
+import SolidToggleGroup from "../../components/solidUI/SolidToggleGroup";
+import { listToOptions } from "../../utils/utils";
+import SolidSlider from "../../components/solidUI/SolidSlider";
+import SolidInput from "../../components/solidUI/SolidInput";
 import { Rect } from "react-native-popover-view";
-import { colors, fontSizes } from "../utils/styles";
-import SolidDropDownTile from "../components/solidUI/SolidDropDown";
-import SolidStackButton from "../components/solidUI/SolidStackButton";
+import { colors, fontSizes } from "../../utils/styles";
+import SolidDropDownTile from "../../components/solidUI/SolidDropDown";
+import SolidStackButton from "../../components/solidUI/SolidStackButton";
+import { router } from "expo-router";
 
 export type MessagePreviewType = {
   userId: string;
@@ -52,7 +53,10 @@ export default function Rank() {
           setValue={setName}
           placeholder="Required"
         />
-        <SolidStackButton label="Next Screen" onPress={() => {}} />
+        <SolidStackButton
+          label="Next Screen"
+          onPress={() => router.push("/Dm")}
+        />
         <SolidDropDownTile
           label="State"
           isLast

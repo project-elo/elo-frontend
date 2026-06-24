@@ -6,7 +6,7 @@ import {
   useWindowDimensions,
   Pressable,
 } from "react-native";
-import { MessagePreviewType } from "@/src/app/Matches";
+import { MessagePreviewType } from "@/src/app/(tabs)/Matches";
 import { formatTimestamp } from "@/src/utils/utils";
 import SolidButton from "../solidUI/SolidButton";
 

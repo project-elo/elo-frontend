@@ -1,6 +1,6 @@
 import { View, StyleSheet } from "react-native";
-import MessagePreviewTile from "../components/messages/MessagePreviewTile";
-import TabContainer from "../components/tabs/TabContainer";
+import MessagePreviewTile from "../../components/messages/MessagePreviewTile";
+import TabContainer from "../../components/tabs/TabContainer";
 
 export type MessagePreviewType = {
   userId: string;
