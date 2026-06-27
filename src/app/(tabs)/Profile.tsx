@@ -14,12 +14,49 @@ import { colors, fontSizes } from "../../utils/styles";
 import SolidDropDownTile from "../../components/solidUI/SolidDropDown";
 import SolidStackButton from "../../components/solidUI/SolidStackButton";
 import { router } from "expo-router";
+import type { Option } from "@/src/types/componentTypes";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 export default function Profile() {
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [name, setName] = useState("");
   const [state, setState] = useState("");
-  const stateOptions = listToOptions(["VA", "CA", "North Dakota"]);
+
+  const options: Option[] = [
+    {
+      label: "Female",
+      value: "Female",
+      icon: (
+        <MaterialCommunityIcons
+          name="gender-female"
+          size={fontSizes.text}
+          color={colors.pink}
+        />
+      ),
+    },
+    {
+      label: "Male",
+      value: "Male",
+      icon: (
+        <MaterialCommunityIcons
+          name="gender-male"
+          size={fontSizes.text}
+          color={colors.blue}
+        />
+      ),
+    },
+    {
+      label: "Other",
+      value: "Other",
+      icon: (
+        <MaterialCommunityIcons
+          name="gender-non-binary"
+          size={fontSizes.text}
+          color={colors.gray}
+        />
+      ),
+    },
+  ];
 
   return (
     <TabContainer>
@@ -44,7 +81,7 @@ export default function Profile() {
         <SolidDropDownTile
           label="State"
           isLast
-          options={stateOptions}
+          options={options}
           value={state}
           setValue={setState}
         />

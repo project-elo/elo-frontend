@@ -20,6 +20,7 @@ export const colors = {
   red: "#ff3434",
   green: "#0cb900",
   blue: "#2da4ff",
+  pink: "#f2b1d5",
 };
 
 export const fontSizes = {

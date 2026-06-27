@@ -16,6 +16,7 @@ function MenuItem<T extends string | number>({
   isFirst,
   isLast,
   width,
+  icon,
 }: {
   opt: Option<T>;
   value: any;
@@ -24,6 +25,7 @@ function MenuItem<T extends string | number>({
   isFirst: boolean;
   isLast: boolean;
   width?: number;
+  icon?: React.ReactNode;
 }) {
   return (
     <SolidTile
@@ -38,7 +40,10 @@ function MenuItem<T extends string | number>({
         setOpen(false);
       }}
     >
-      <Text style={styles.text}>{opt.label}</Text>
+      <View style={styles.iconAndLabel}>
+        <View style={styles.icon}>{icon}</View>
+        <Text style={styles.text}>{opt.label}</Text>
+      </View>
       {opt.value === value && (
         <Entypo style={[styles.text, { color: colors.theme }]} name="check" />
       )}
@@ -78,6 +83,7 @@ export function SolidDropDown<T extends string | number>({
             key={opt.value}
             opt={opt}
             value={value}
+            icon={opt.icon}
             setValue={setValue}
             setOpen={setOpen}
             isFirst={i === 0}
@@ -144,9 +150,16 @@ const styles = StyleSheet.create({
   text: {
     fontSize: fontSizes.text,
   },
+  icon: {
+    justifyContent: "center",
+  },
   menuItem: {
     paddingVertical: 8,
     paddingHorizontal: 12,
+  },
+  iconAndLabel: {
+    flexDirection: "row",
+    gap: 12,
   },
   popover: {
     backgroundColor: "transparent",
