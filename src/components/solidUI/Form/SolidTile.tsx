@@ -1,4 +1,11 @@
-import { View, Pressable, Text, StyleSheet } from "react-native";
+import {
+  View,
+  Pressable,
+  Text,
+  StyleSheet,
+  StyleProp,
+  ViewStyle,
+} from "react-native";
 import React, { useState } from "react";
 
 import {
@@ -28,6 +35,8 @@ const SolidTile = React.forwardRef<
     label?: string;
     onPress?: () => void;
     pressable?: boolean;
+    minHeight?: number;
+    contentStyle?: StyleProp<ViewStyle>;
   }
 >(function SolidTile(
   {
@@ -38,6 +47,8 @@ const SolidTile = React.forwardRef<
     label,
     onPress,
     pressable,
+    minHeight = 40,
+    contentStyle,
   },
   ref,
 ) {
@@ -85,7 +96,8 @@ const SolidTile = React.forwardRef<
           borderTopRightRadius: isFirst ? styleConsts.radius : 0,
           borderTopLeftRadius: isFirst ? styleConsts.radius : 0,
           boxShadow: `${styleConsts.depth}px ${styleConsts.depth}px 0 ${colors.shadow}`,
-          flex: 1,
+          width,
+          flex: width === undefined ? 1 : undefined,
         },
         menuItemStyle,
       ]}
@@ -107,11 +119,11 @@ const SolidTile = React.forwardRef<
             borderBottomRightRadius: isLast ? styleConsts.radius : 0,
             borderTopRightRadius: isFirst ? styleConsts.radius : 0,
             borderTopLeftRadius: isFirst ? styleConsts.radius : 0,
-            minHeight: 40,
+            minHeight,
           },
         ]}
       >
-        <View style={styles.container}>
+        <View style={[styles.container, contentStyle]}>
           {label && <Text style={styles.text}>{label}</Text>}
           {children}
         </View>

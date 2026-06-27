@@ -1,27 +1,12 @@
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import Entypo from "@expo/vector-icons/Entypo";
-import {
-  colors,
-  fontSizes,
-  styleConsts,
-  shadowEquivalent,
-} from "@/src/utils/styles";
+import { colors, fontSizes } from "@/src/utils/styles";
 import Popover, { Rect } from "react-native-popover-view";
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withTiming,
-  Easing,
-} from "react-native-reanimated";
-import Svg, { Polygon, Rect as SvgRect } from "react-native-svg";
 import { sleep } from "@/src/utils/utils";
-import * as Haptics from "expo-haptics";
 import { Option } from "@/src/types/componentTypes";
 import { useRef, useState } from "react";
 import SolidTile from "./Form/SolidTile";
 import Ionicons from "@expo/vector-icons/Ionicons";
-
-const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 function MenuItem<T extends string | number>({
   opt,
@@ -30,6 +15,7 @@ function MenuItem<T extends string | number>({
   setOpen,
   isFirst,
   isLast,
+  width,
 }: {
   opt: Option<T>;
   value: any;
@@ -37,85 +23,26 @@ function MenuItem<T extends string | number>({
   setOpen: (v: boolean) => void;
   isFirst: boolean;
   isLast: boolean;
+  width?: number;
 }) {
-  const p = useSharedValue(0);
-
-  const menuItemStyle = useAnimatedStyle(() => {
-    return {
-      transform: [
-        { translateX: p.value * styleConsts.depth * 0.5 },
-        { translateY: p.value * styleConsts.depth * 0.5 },
-      ],
-    };
-  });
-
-  const bgColor = useAnimatedStyle(() => {
-    return {
-      backgroundColor: shadowEquivalent(
-        colors.white,
-        p.value * styleConsts.darkenFace,
-      ),
-    };
-  });
-
-  const press = (v: number) =>
-    (p.value = withTiming(v, {
-      duration: styleConsts.pressDuration * 0.5,
-      easing: Easing.inOut(Easing.ease),
-    }));
-
   return (
-    <AnimatedPressable
-      style={[
-        {
-          backgroundColor: "transparent",
-          marginTop: isFirst ? 0 : -styleConsts.depth * 0.5,
-          borderBottomLeftRadius: isLast ? styleConsts.radius : 0,
-          borderBottomRightRadius: isLast ? styleConsts.radius : 0,
-          borderTopRightRadius: isFirst ? styleConsts.radius : 0,
-          borderTopLeftRadius: isFirst ? styleConsts.radius : 0,
-          boxShadow: `${2}px ${2}px 0 ${colors.shadow}`,
-        },
-        menuItemStyle,
-      ]}
-      onPressIn={() => {
-        press(1);
-        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
-      }}
-      onPressOut={() => press(0)}
+    <SolidTile
+      isFirst={isFirst}
+      isLast={isLast}
+      minHeight={0}
+      contentStyle={styles.menuItem}
+      width={width}
       onPress={async () => {
         setValue(opt.value);
         await sleep(150);
         setOpen(false);
       }}
     >
-      <Animated.View
-        style={[
-          styles.menuItem,
-          bgColor,
-          {
-            borderBottomLeftRadius: isLast ? styleConsts.radius : 0,
-            borderBottomRightRadius: isLast ? styleConsts.radius : 0,
-            borderTopRightRadius: isFirst ? styleConsts.radius : 0,
-            borderTopLeftRadius: isFirst ? styleConsts.radius : 0,
-          },
-        ]}
-      >
-        <Text style={styles.text}>{opt.label}</Text>
-        {opt.value === value && (
-          <Entypo style={[styles.text, { color: colors.theme }]} name="check" />
-        )}
-      </Animated.View>
-      {!isLast && (
-        <Svg width={200} height={2} style={{ backgroundColor: "transparent" }}>
-          <SvgRect width={200} height={2} fill="transparent" />
-          <Polygon
-            points={`0,0 200,0 200, ${styleConsts.depth} ${styleConsts.depth}, ${styleConsts.depth} `}
-            fill={colors.shadow}
-          />
-        </Svg>
+      <Text style={styles.text}>{opt.label}</Text>
+      {opt.value === value && (
+        <Entypo style={[styles.text, { color: colors.theme }]} name="check" />
       )}
-    </AnimatedPressable>
+    </SolidTile>
   );
 }
 
@@ -155,6 +82,7 @@ export function SolidDropDown<T extends string | number>({
             setOpen={setOpen}
             isFirst={i === 0}
             isLast={i === options.length - 1}
+            width={from?.width}
           />
         ))}
       </View>
@@ -217,8 +145,6 @@ const styles = StyleSheet.create({
     fontSize: fontSizes.text,
   },
   menuItem: {
-    justifyContent: "space-between",
-    flexDirection: "row",
     paddingVertical: 8,
     paddingHorizontal: 12,
   },
