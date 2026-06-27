@@ -11,8 +11,9 @@ import Animated, {
 import { useState, useEffect } from "react";
 import { colors, styleConsts, shadowEquivalent } from "@/src/utils/styles";
 import { formatSliderLabel } from "@/src/utils/utils";
+import SolidTile from "./Form/SolidTile";
 
-const THUMB_SIZE = 18;
+const THUMB_SIZE = 28;
 const PRESS_DEPTH = 1;
 const TRACK_HEIGHT = 40;
 
@@ -25,6 +26,8 @@ export default function SolidSlider({
   max,
   minGap = 3,
   unit = "",
+  isFirst = false,
+  isLast = false,
 }: {
   value: number;
   onChange: (v: number) => void;
@@ -34,6 +37,8 @@ export default function SolidSlider({
   max: number;
   minGap?: number;
   unit?: string;
+  isFirst?: boolean;
+  isLast?: boolean;
 }) {
   const isRange = value2 !== undefined && onChange2 !== undefined;
   const [width, setWidth] = useState(0);
@@ -144,9 +149,11 @@ export default function SolidSlider({
     position: "absolute" as const,
     width: THUMB_SIZE,
     height: THUMB_SIZE,
-    borderRadius: 5,
+    borderRadius: 20,
     top: (TRACK_HEIGHT - THUMB_SIZE) / 2,
-    boxShadow: `${styleConsts.depth}px ${styleConsts.depth}px 0 ${shadowEquivalent(colors.white, styleConsts.shadowOpacity)}`,
+    borderColor: colors.shadow,
+    borderWidth: 0.2,
+    boxShadow: `${styleConsts.depth / 2}px ${styleConsts.depth / 2}px 0 ${colors.shadow}`,
   };
 
   useEffect(() => {
@@ -155,41 +162,43 @@ export default function SolidSlider({
   }, [width]);
 
   return (
-    <View onLayout={(e) => setWidth(e.nativeEvent.layout.width - THUMB_SIZE)}>
-      <Text>{label}</Text>
-      <GestureDetector gesture={gesture}>
-        <View
-          style={{
-            height: TRACK_HEIGHT,
-            justifyContent: "center",
-            marginHorizontal: THUMB_SIZE / 2,
-          }}
-        >
+    <SolidTile isFirst={isFirst} isLast={isLast}>
+      <View
+        style={{ flex: 1 }}
+        onLayout={(e) => setWidth(e.nativeEvent.layout.width - THUMB_SIZE)}
+      >
+        <Text>{label}</Text>
+        <GestureDetector gesture={gesture}>
           <View
             style={{
-              height: 4,
-              backgroundColor: shadowEquivalent(
-                colors.offWhite,
-                styleConsts.shadowOpacity,
-              ),
-              borderRadius: 2,
+              height: TRACK_HEIGHT,
+              justifyContent: "center",
+              marginHorizontal: THUMB_SIZE / 2,
             }}
-          />
-          <Animated.View
-            style={[
-              fillStyle,
-              {
-                position: "absolute",
+          >
+            <View
+              style={{
                 height: 4,
-                backgroundColor: colors.theme,
+                backgroundColor: colors.lighterGray,
                 borderRadius: 2,
-              },
-            ]}
-          />
-          <Animated.View style={[thumbBase, thumbStyle]} />
-          {isRange && <Animated.View style={[thumbBase, thumb2Style]} />}
-        </View>
-      </GestureDetector>
-    </View>
+              }}
+            />
+            <Animated.View
+              style={[
+                fillStyle,
+                {
+                  position: "absolute",
+                  height: 4,
+                  backgroundColor: colors.theme,
+                  borderRadius: 2,
+                },
+              ]}
+            />
+            <Animated.View style={[thumbBase, thumbStyle]} />
+            {isRange && <Animated.View style={[thumbBase, thumb2Style]} />}
+          </View>
+        </GestureDetector>
+      </View>
+    </SolidTile>
   );
 }

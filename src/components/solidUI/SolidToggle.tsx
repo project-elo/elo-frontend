@@ -43,7 +43,6 @@ export default function SolidToggle({
 
   const thumbStyle = useAnimatedStyle(() => ({
     transform: [{ translateX: t.value * range }],
-    boxShadow: `${styleConsts.depth - t.value}px ${styleConsts.depth - t.value}px 0 ${shadowEquivalent(colors.offWhite, styleConsts.shadowOpacity)}`,
   }));
 
   return (
@@ -61,11 +60,23 @@ export default function SolidToggle({
           backgroundColor: offColor,
           borderRadius: height / 2,
           padding: styleConsts.depth,
-          boxShadow: `inset ${styleConsts.depth}px ${styleConsts.depth}px 0 rgba(0,0,0,${styleConsts.shadowOpacity})`,
           overflow: "hidden",
         },
       ]}
     >
+      <View
+        pointerEvents="none"
+        style={{
+          position: "absolute",
+          left: 0,
+          top: 0,
+          right: 0,
+          bottom: 0,
+          borderRadius: height / 2,
+          boxShadow: `inset ${styleConsts.depth * 0.5}px ${styleConsts.depth * 0.5}px 0 rgba(0,0,0,${styleConsts.shadowOpacity})`,
+          zIndex: 0,
+        }}
+      />
       <Animated.View
         style={[
           {
@@ -76,6 +87,7 @@ export default function SolidToggle({
             backgroundColor: onColor,
             borderRadius: height / 2,
             boxShadow: ` inset ${styleConsts.depth * 0.5}px ${styleConsts.depth * 0.5}px 0 rgba(0,0,0,${styleConsts.shadowOpacity})`,
+            zIndex: 1,
           },
           fillStyle,
         ]}
@@ -87,6 +99,8 @@ export default function SolidToggle({
             height: thumbSize,
             borderRadius: thumbSize / 2,
             backgroundColor: colors.white,
+            zIndex: 2,
+            boxShadow: ` ${styleConsts.depth * 0.5}px ${styleConsts.depth * 0.5}px 0 rgba(0,0,0,${styleConsts.shadowOpacity})`,
           },
           thumbStyle,
         ]}

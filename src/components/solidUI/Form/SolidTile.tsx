@@ -104,7 +104,7 @@ const SolidTile = React.forwardRef<
       onPressIn={() => {
         if (pressable) {
           press(1);
-          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
         }
       }}
       onPressOut={() => press(0)}

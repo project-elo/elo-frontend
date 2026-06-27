@@ -21,6 +21,7 @@ export default function Profile() {
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [name, setName] = useState("");
   const [state, setState] = useState("");
+  const [height, setHeight] = useState(50);
 
   const options: Option[] = [
     {
@@ -80,11 +81,24 @@ export default function Profile() {
         />
         <SolidDropDownTile
           label="State"
-          isLast
           options={options}
           value={state}
           setValue={setState}
         />
+        <SolidSlider
+          value={height}
+          onChange={setHeight}
+          min={50}
+          max={200}
+          unit="feet"
+        />
+        <SolidTile isLast label="Automatic">
+          <SolidToggle
+            key={0}
+            value={notificationsEnabled}
+            onChange={setNotificationsEnabled}
+          />
+        </SolidTile>
       </SolidContainer>
     </TabContainer>
   );
