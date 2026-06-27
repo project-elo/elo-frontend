@@ -4,6 +4,7 @@ import Color from "color";
 export const colors = {
   theme: "#94cee4",
   themeLight: "#ebf9ff",
+  shadow: "#d9d9d9",
 
   google: "#f8fafe",
   apple: "#f3f2f7",

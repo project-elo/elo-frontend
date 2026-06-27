@@ -79,7 +79,7 @@ export default function MessagePreviewTile({
           borderBottomRightRadius: isLast ? styleConsts.radius : 0,
           borderTopRightRadius: isFirst ? styleConsts.radius : 0,
           borderTopLeftRadius: isFirst ? styleConsts.radius : 0,
-          boxShadow: `${2}px ${2}px 0 ${shadowEquivalent(colors.white)}`,
+          boxShadow: `${2}px ${2}px 0 ${colors.shadow}`,
         },
         menuItemStyle,
       ]}
@@ -124,7 +124,7 @@ export default function MessagePreviewTile({
           <Rect width={2000} height={2} fill="transparent" />
           <Polygon
             points={`0,0 2000,0 2000, ${styleConsts.depth} ${styleConsts.depth}, ${styleConsts.depth} `}
-            fill={shadowEquivalent(colors.white)}
+            fill={colors.shadow}
           />
         </Svg>
       )}

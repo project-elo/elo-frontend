@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { View, Text, StyleSheet, TextInput } from "react-native";
-import { colors, fontSizes } from "@/src/utils/styles";
+import { colors, fontSizes, shadowEquivalent } from "@/src/utils/styles";
 import { KeyboardTypeOptions } from "react-native";
 
 import SolidTile from "./Form/SolidTile";
@@ -25,7 +25,7 @@ export default function SolidStackButton({
       onPress={onPress}
     >
       <View style={styles.icon}>
-        <Ionicons name="chevron-forward" size={24} color={colors.gray} />
+        <Ionicons name="chevron-forward" size={24} color={colors.shadow} />
       </View>
     </SolidTile>
   );

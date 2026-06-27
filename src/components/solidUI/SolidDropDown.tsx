@@ -74,7 +74,7 @@ function MenuItem<T extends string | number>({
           borderBottomRightRadius: isLast ? styleConsts.radius : 0,
           borderTopRightRadius: isFirst ? styleConsts.radius : 0,
           borderTopLeftRadius: isFirst ? styleConsts.radius : 0,
-          boxShadow: `${2}px ${2}px 0 ${shadowEquivalent(colors.white)}`,
+          boxShadow: `${2}px ${2}px 0 ${colors.shadow}`,
         },
         menuItemStyle,
       ]}
@@ -111,7 +111,7 @@ function MenuItem<T extends string | number>({
           <SvgRect width={200} height={2} fill="transparent" />
           <Polygon
             points={`0,0 200,0 200, ${styleConsts.depth} ${styleConsts.depth}, ${styleConsts.depth} `}
-            fill={shadowEquivalent(colors.white)}
+            fill={colors.shadow}
           />
         </Svg>
       )}
@@ -197,7 +197,7 @@ export default function SolidDropDownTile<T extends string | number>({
       >
         <View ref={tileRef} style={styles.currOption}>
           <Text style={styles.text}>{selectedOption?.label ?? "Select"}</Text>
-          <Ionicons name="chevron-expand" size={24} color={colors.gray} />
+          <Ionicons name="chevron-expand" size={24} color={colors.shadow} />
         </View>
       </SolidTile>
       <SolidDropDown

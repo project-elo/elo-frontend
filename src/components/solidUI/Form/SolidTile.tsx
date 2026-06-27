@@ -84,7 +84,7 @@ const SolidTile = React.forwardRef<
           borderBottomRightRadius: isLast ? styleConsts.radius : 0,
           borderTopRightRadius: isFirst ? styleConsts.radius : 0,
           borderTopLeftRadius: isFirst ? styleConsts.radius : 0,
-          boxShadow: `${styleConsts.depth}px ${styleConsts.depth}px 0 ${shadowEquivalent(colors.white)}`,
+          boxShadow: `${styleConsts.depth}px ${styleConsts.depth}px 0 ${colors.shadow}`,
           flex: 1,
         },
         menuItemStyle,
@@ -129,7 +129,7 @@ const SolidTile = React.forwardRef<
           />
           <Polygon
             points={`0,0 ${currWidth},0 ${currWidth},${styleConsts.depth} ${styleConsts.depth},${styleConsts.depth}`}
-            fill={shadowEquivalent(colors.white)}
+            fill={colors.shadow}
           />
         </Svg>
       )}
