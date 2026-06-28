@@ -59,8 +59,16 @@ export default function Profile() {
     },
   ];
 
+  const pages = listToOptions(["Edit", "View"]);
+  const [page, setPage] = useState("Edit");
+
   return (
     <TabContainer>
+      <SolidToggleGroup
+        options={pages}
+        value={page}
+        setValue={(v) => setPage(v as string)}
+      />
       <SolidContainer>
         <SolidTile isFirst label="Automatic">
           <SolidToggle
@@ -89,7 +97,7 @@ export default function Profile() {
           value={height}
           onChange={setHeight}
           min={50}
-          max={200}
+          max={82}
           unit="feet"
         />
         <SolidTile isLast label="Automatic">

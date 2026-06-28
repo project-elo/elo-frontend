@@ -42,6 +42,8 @@ export default function SolidInput({
           onChangeText={setValue}
           keyboardType={keyboardType ? keyboardType : "default"}
           placeholderTextColor={colors.gray}
+          cursorColor={colors.theme}
+          selectionColor={colors.theme}
         />
       </SolidTile>
     </>

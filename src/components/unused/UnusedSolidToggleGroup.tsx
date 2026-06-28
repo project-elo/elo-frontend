@@ -5,9 +5,9 @@ import {
   colors,
   shadowEquivalent,
 } from "@/src/utils/styles";
-import SolidButton from "./SolidButton";
+import SolidButton from "../solidUI/SolidButton";
 import { Option } from "@/src/types/componentTypes";
-import SolidTile from "./Form/SolidTile";
+import SolidTile from "../solidUI/Form/SolidTile";
 
 export default function SolidToggleGroup<T extends string | number>({
   options,
