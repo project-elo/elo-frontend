@@ -21,14 +21,16 @@ function TabBarButton({ onPress, route, icon }: TabBarButtonProps) {
     <SolidButton
       style={{ alignSelf: "center" }}
       isToggle
+      height={50}
       width={60}
       toggleValue={isActive}
       onPress={() => onPress?.(undefined as any)}
       borderWidth={1}
-      child={icon(isActive)}
       backgroundColor={colors.white}
       pressedBackgroundColor={colors.apple}
-    />
+    >
+      {icon(isActive)}
+    </SolidButton>
   );
 }
 

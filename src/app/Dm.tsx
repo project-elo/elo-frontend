@@ -7,11 +7,9 @@ export default function Dm() {
   return (
     <TabContainer>
       <Text>DM Screen</Text>
-      <SolidButton
-        width={100}
-        child={<Text>Close</Text>}
-        onPress={() => router.back()}
-      />
+      <SolidButton width={100} onPress={() => router.back()}>
+        <Text>Close</Text>
+      </SolidButton>
     </TabContainer>
   );
 }

@@ -47,7 +47,7 @@ const SolidTile = React.forwardRef<
     label,
     onPress,
     pressable,
-    minHeight = 40,
+    minHeight = styleConsts.tileHeight,
     contentStyle,
   },
   ref,

@@ -18,7 +18,7 @@ export default function SolidButton({
     backgroundColor,
     styleConsts.darkenFace,
   ),
-  height = 50,
+  height = styleConsts.tileHeight,
   width = 50,
   borderTopLeftRadius = styleConsts.radius,
   borderTopRightRadius = styleConsts.radius,
@@ -26,7 +26,7 @@ export default function SolidButton({
   borderBottomRightRadius = styleConsts.radius,
   padding = 4,
   onPress,
-  child,
+  children,
   isToggle = false,
   toggleValue,
   style,
@@ -44,7 +44,7 @@ export default function SolidButton({
   borderBottomRightRadius?: number;
   padding?: number;
   onPress: () => void;
-  child?: ReactNode;
+  children?: ReactNode;
   isToggle?: boolean;
   toggleValue?: boolean;
   style?: StyleProp<ViewStyle>;
@@ -127,7 +127,7 @@ export default function SolidButton({
         onPress();
       }}
     >
-      {child}
+      {children}
     </AnimatedPressable>
   );
 }

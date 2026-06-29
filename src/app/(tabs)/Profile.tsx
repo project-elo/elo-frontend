@@ -5,7 +5,7 @@ import SolidContainer from "../../components/solidUI/Form/SolidContainer";
 import SolidTile from "../../components/solidUI/Form/SolidTile";
 import SolidToggle from "../../components/solidUI/SolidToggle";
 import { useRef, useState } from "react";
-import SolidToggleGroup from "../../components/solidUI/SolidToggleGroup";
+import SolidToggleGroup from "../../components/unused/UnusedButtonSolidToggleGroup";
 import { listToOptions } from "../../utils/utils";
 import SolidSlider from "../../components/solidUI/SolidSlider";
 import SolidInput from "../../components/solidUI/SolidInput";
@@ -16,6 +16,10 @@ import SolidStackButton from "../../components/solidUI/SolidStackButton";
 import { router } from "expo-router";
 import type { Option } from "@/src/types/componentTypes";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import SliderToggle from "@/src/components/solidUI/SliderToggle";
+import { StyleSheet } from "react-native";
+import SolidButton from "@/src/components/solidUI/SolidButton";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function Profile() {
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
@@ -64,11 +68,18 @@ export default function Profile() {
 
   return (
     <TabContainer>
-      <SolidToggleGroup
-        options={pages}
-        value={page}
-        setValue={(v) => setPage(v as string)}
-      />
+      <View style={styles.header}>
+        <SliderToggle
+          options={pages}
+          value={page}
+          setValue={(v) => {
+            setPage(v as string);
+          }}
+        />
+        <SolidButton onPress={() => {}}>
+          <Ionicons name="settings-outline" size={24} color="black" />
+        </SolidButton>
+      </View>
       <SolidContainer>
         <SolidTile isFirst label="Automatic">
           <SolidToggle
@@ -111,3 +122,10 @@ export default function Profile() {
     </TabContainer>
   );
 }
+
+const styles = StyleSheet.create({
+  header: {
+    justifyContent: "space-between",
+    flexDirection: "row",
+  },
+});
