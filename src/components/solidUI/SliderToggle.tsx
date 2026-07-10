@@ -70,7 +70,8 @@ export default function SliderToggle<T extends string | number>({
           right: 0,
           bottom: 0,
           borderRadius: styleConsts.radius,
-          backgroundColor: colors.apple,
+          //boxShadow: `inset ${styleConsts.depth}px ${styleConsts.depth}px 0 rgba(0,0,0,${styleConsts.shadowOpacity})`,
+          backgroundColor: colors.appleDark,
           zIndex: 0,
         }}
       />

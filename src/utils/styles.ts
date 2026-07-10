@@ -8,6 +8,7 @@ export const colors = {
 
   google: "#f8fafe",
   apple: "#f3f2f7",
+  appleDark: "#e8e7ed",
 
   white: "#ffffff",
   offWhite: "#efefef",

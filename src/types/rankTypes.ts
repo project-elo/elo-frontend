@@ -13,3 +13,11 @@ export type RecentAction = {
   pendingGain?: number;
   pendingLoss?: number;
 };
+
+export type LeaderboardEntry = {
+  position: number;
+  name: string;
+  rank: string;
+  elo: number;
+  isCurrentUser?: boolean;
+};
