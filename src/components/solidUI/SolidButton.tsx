@@ -59,10 +59,12 @@ export default function SolidButton({
     const scaled = p.value * maxPress;
     const shadow = -depth + scaled * depth * 2;
     return {
-      width: width - scaled * depth,
-      height: height - scaled * depth,
+      width: width + depth - scaled * depth,
+      height: height + depth - scaled * depth,
+
       marginTop: -depth + scaled * depth,
       marginLeft: -depth + scaled * depth,
+
       paddingTop: padding + scaled * depth,
       paddingLeft: padding + scaled * depth,
       paddingBottom: padding + depth - scaled * depth,
