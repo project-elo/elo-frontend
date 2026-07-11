@@ -4,6 +4,7 @@ import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withSpring,
+  type SharedValue,
 } from "react-native-reanimated";
 import { colors, styleConsts, fontSizes } from "@/src/utils/styles";
 import * as Haptics from "expo-haptics";
@@ -83,26 +84,54 @@ export default function SliderToggle<T extends string | number>({
         onLayout={(e) => (rowWidth.value = e.nativeEvent.layout.width)}
       >
         {options.map((opt, i) => (
-          <Pressable
+          <ToggleOption
             key={i}
+            index={i}
+            t={t}
+            label={opt.label}
             onPress={() => {
               setValue(opt.value);
               Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
             }}
-            style={styles.option}
-          >
-            <Text
-              style={styles.text}
-              adjustsFontSizeToFit
-              numberOfLines={1}
-              minimumFontScale={0.6}
-            >
-              {opt.label}
-            </Text>
-          </Pressable>
+          />
         ))}
       </View>
     </View>
+  );
+}
+
+function ToggleOption({
+  index,
+  t,
+  label,
+  onPress,
+}: {
+  index: number;
+  t: SharedValue<number>;
+  label: string;
+  onPress: () => void;
+}) {
+  const liftStyle = useAnimatedStyle(() => {
+    const k = 1 - Math.min(Math.abs(t.value - index), 1);
+    return {
+      transform: [
+        { translateX: -styleConsts.depth * k },
+        { translateY: -styleConsts.depth * k },
+      ],
+    };
+  });
+
+  return (
+    <Pressable style={styles.option} onPress={onPress}>
+      <Animated.Text
+        style={[styles.text, liftStyle]}
+        adjustsFontSizeToFit
+        numberOfLines={1}
+        minimumFontScale={0.6}
+      >
+        {label}
+      </Animated.Text>
+    </Pressable>
   );
 }
 
