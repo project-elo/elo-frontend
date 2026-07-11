@@ -13,16 +13,18 @@ export default function Rank() {
   const [page, setPage] = useState("Performance");
 
   return (
-    <TabContainer>
-      <View style={styles.header}>
-        <SliderToggle
-          options={pages}
-          value={page}
-          setValue={(v) => setPage(v as string)}
-          fullWidth
-        />
-      </View>
-
+    <TabContainer
+      header={
+        <View style={styles.header}>
+          <SliderToggle
+            options={pages}
+            value={page}
+            setValue={(v) => setPage(v as string)}
+            fullWidth
+          />
+        </View>
+      }
+    >
       {page === "Performance" ? <RankPerformance /> : <RankLeaderboards />}
     </TabContainer>
   );
@@ -32,6 +34,5 @@ const styles = StyleSheet.create({
   header: {
     justifyContent: "space-between",
     flexDirection: "row",
-    marginBottom: 20,
   },
 });

@@ -10,7 +10,7 @@ import { listToOptions } from "../../utils/utils";
 import SolidSlider from "../../components/solidUI/SolidSlider";
 import SolidInput from "../../components/solidUI/SolidInput";
 import { Rect } from "react-native-popover-view";
-import { colors, fontSizes } from "../../utils/styles";
+import { colors, fontSizes, styleConsts } from "../../utils/styles";
 import SolidDropDownTile from "../../components/solidUI/SolidDropDown";
 import SolidStackButton from "../../components/solidUI/SolidStackButton";
 import { router } from "expo-router";
@@ -67,19 +67,27 @@ export default function Profile() {
   const [page, setPage] = useState("Edit");
 
   return (
-    <TabContainer>
-      <View style={styles.header}>
-        <SliderToggle
-          options={pages}
-          value={page}
-          setValue={(v) => {
-            setPage(v as string);
-          }}
-        />
-        <SolidButton onPress={() => {}}>
-          <Ionicons name="settings-outline" size={24} color="black" />
-        </SolidButton>
-      </View>
+    <TabContainer
+      header={
+        <View style={styles.header}>
+          <SliderToggle
+            options={pages}
+            value={page}
+            fullWidth
+            setValue={(v) => {
+              setPage(v as string);
+            }}
+          />
+          <SolidButton
+            onPress={() => {}}
+            width={styleConsts.tileHeight}
+            height={styleConsts.tileHeight}
+          >
+            <Ionicons name="settings-outline" size={24} color={colors.gray} />
+          </SolidButton>
+        </View>
+      }
+    >
       <SolidContainer>
         <SolidTile isFirst label="Automatic">
           <SolidToggle
@@ -127,5 +135,6 @@ const styles = StyleSheet.create({
   header: {
     justifyContent: "space-between",
     flexDirection: "row",
+    gap: 15,
   },
 });

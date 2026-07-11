@@ -55,7 +55,7 @@ export default function SliderToggle<T extends string | number>({
   return (
     <View
       style={{
-        width: fullWidth ? "100%" : optionWidth * options.length,
+        flex: 1,
         height,
         borderRadius: styleConsts.radius,
         backgroundColor: colors.appleDark,
@@ -73,7 +73,7 @@ export default function SliderToggle<T extends string | number>({
             borderRadius: styleConsts.radius,
             backgroundColor: colors.white,
             zIndex: 1,
-            boxShadow: `${depth}px ${depth}px 0 rgba(0,0,0,${styleConsts.shadowOpacity})`,
+            boxShadow: `${depth}px ${depth}px 0 ${colors.shadow}`,
           },
           thumbStyle,
         ]}
