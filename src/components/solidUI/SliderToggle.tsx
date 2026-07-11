@@ -5,12 +5,7 @@ import Animated, {
   useAnimatedStyle,
   withSpring,
 } from "react-native-reanimated";
-import {
-  colors,
-  styleConsts,
-  fontSizes,
-  shadowEquivalent,
-} from "@/src/utils/styles";
+import { colors, styleConsts, fontSizes } from "@/src/utils/styles";
 import * as Haptics from "expo-haptics";
 import { Option } from "@/src/types/componentTypes";
 
@@ -20,24 +15,25 @@ export default function SliderToggle<T extends string | number>({
   setValue,
   optionWidth = 80,
   height = styleConsts.tileHeight,
+  fullWidth = false,
 }: {
   options: Option<T>[];
   value: T;
   setValue: (v: T) => void;
   optionWidth?: number;
   height?: number;
+  fullWidth?: boolean;
 }) {
   const speed = 150;
+  const depth = styleConsts.depth;
 
   const selectedIndex = Math.max(
     0,
     options.findIndex((o) => o.value === value),
   );
 
-  const trackWidth = optionWidth * options.length;
-  const thumbHeight = height - styleConsts.depth * 2;
-
   const t = useSharedValue(selectedIndex);
+  const rowWidth = useSharedValue(fullWidth ? 0 : optionWidth * options.length);
 
   useEffect(() => {
     t.value = withSpring(selectedIndex, {
@@ -47,78 +43,64 @@ export default function SliderToggle<T extends string | number>({
     });
   }, [selectedIndex, t]);
 
-  const thumbStyle = useAnimatedStyle(() => ({
-    transform: [{ translateX: t.value * optionWidth }],
-  }));
+  const thumbStyle = useAnimatedStyle(() => {
+    const slot = rowWidth.value / options.length;
+    return {
+      width: slot,
+      transform: [{ translateX: t.value * slot }],
+    };
+  });
 
   return (
     <View
       style={{
-        width: trackWidth,
+        width: fullWidth ? "100%" : optionWidth * options.length,
         height,
         borderRadius: styleConsts.radius,
-        padding: styleConsts.depth,
-        overflow: "hidden",
+        backgroundColor: colors.appleDark,
+        //boxShadow: `inset ${depth}px ${depth}px 0 rgba(0,0,0,${styleConsts.shadowOpacity})`,
       }}
     >
-      <View
-        pointerEvents="none"
-        style={{
-          position: "absolute",
-          left: 0,
-          top: 0,
-          right: 0,
-          bottom: 0,
-          borderRadius: styleConsts.radius,
-          //boxShadow: `inset ${styleConsts.depth}px ${styleConsts.depth}px 0 rgba(0,0,0,${styleConsts.shadowOpacity})`,
-          backgroundColor: colors.appleDark,
-          zIndex: 0,
-        }}
-      />
-
       <Animated.View
         pointerEvents="none"
         style={[
           {
+            top: -2,
+            left: -2,
             position: "absolute",
-            top: styleConsts.depth,
-            left: styleConsts.depth,
-            width: optionWidth - styleConsts.depth * 2,
-            height: thumbHeight,
+            height,
             borderRadius: styleConsts.radius,
             backgroundColor: colors.white,
             zIndex: 1,
-            boxShadow: `${styleConsts.depth}px ${styleConsts.depth}px 0 rgba(0,0,0,${styleConsts.shadowOpacity})`,
+            boxShadow: `${depth}px ${depth}px 0 rgba(0,0,0,${styleConsts.shadowOpacity})`,
           },
           thumbStyle,
         ]}
       />
 
-      <View style={styles.row}>
-        {options.map((opt, i) => {
-          const isSelected = i === selectedIndex;
-          return (
-            <Pressable
-              key={i}
-              onPress={() => {
-                setValue(opt.value);
-                setTimeout(() => {
-                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-                }, speed * 0.66);
-              }}
-              style={[styles.option, { width: optionWidth }]}
+      <View
+        style={styles.row}
+        onLayout={(e) => (rowWidth.value = e.nativeEvent.layout.width)}
+      >
+        {options.map((opt, i) => (
+          <Pressable
+            key={i}
+            onPress={() => {
+              setValue(opt.value);
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+            }}
+            style={styles.option}
+          >
+            <Text
+              style={styles.text}
+              adjustsFontSizeToFit
+              numberOfLines={1}
+              minimumFontScale={0.6}
             >
-              <Text
-                style={styles.text}
-                adjustsFontSizeToFit
-                numberOfLines={1}
-                minimumFontScale={0.6}
-              >
-                {opt.label}
-              </Text>
-            </Pressable>
-          );
-        })}
+              {opt.label}
+            </Text>
+          </Pressable>
+        ))}
       </View>
     </View>
   );
@@ -131,6 +113,7 @@ const styles = StyleSheet.create({
     zIndex: 2,
   },
   option: {
+    flex: 1,
     alignItems: "center",
     justifyContent: "center",
   },

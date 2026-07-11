@@ -19,7 +19,7 @@ export default function Rank() {
           options={pages}
           value={page}
           setValue={(v) => setPage(v as string)}
-          optionWidth={110}
+          fullWidth
         />
       </View>
 
