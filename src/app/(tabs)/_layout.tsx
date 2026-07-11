@@ -45,6 +45,7 @@ export default function Layout() {
           tabBarStyle: {
             paddingTop: 10,
             paddingBottom: 10,
+            paddingHorizontal: 10,
             height: 60 + insets.bottom,
           },
         }}

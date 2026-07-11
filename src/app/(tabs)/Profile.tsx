@@ -135,6 +135,6 @@ const styles = StyleSheet.create({
   header: {
     justifyContent: "space-between",
     flexDirection: "row",
-    gap: 15,
+    gap: 30,
   },
 });
