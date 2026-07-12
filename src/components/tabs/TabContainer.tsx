@@ -35,6 +35,6 @@ const styles = StyleSheet.create({
     borderColor: colors.lighterGray,
     marginLeft: -1,
   },
-  header: { paddingHorizontal: 20 },
+  header: { paddingHorizontal: 20, paddingBottom: 10 },
   body: { padding: 20, flexGrow: 1 },
 });

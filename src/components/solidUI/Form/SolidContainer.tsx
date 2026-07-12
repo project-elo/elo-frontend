@@ -18,7 +18,7 @@ export default function SolidContainer({
 }
 const styles = StyleSheet.create({
   outer: {
-    marginBottom: 20,
+    marginBottom: 30,
   },
   title: {
     color: colors.gray,
@@ -27,7 +27,6 @@ const styles = StyleSheet.create({
   },
   container: {
     borderRadius: styleConsts.radius,
-    marginTop: 10,
     overflow: "hidden",
     paddingRight: styleConsts.depth,
     paddingBottom: styleConsts.depth,
