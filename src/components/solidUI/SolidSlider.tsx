@@ -164,7 +164,7 @@ export default function SolidSlider({
   return (
     <SolidTile isFirst={isFirst} isLast={isLast}>
       <View
-        style={{ flex: 1 }}
+        style={{ flex: 1, gap: 10 }}
         onLayout={(e) => setWidth(e.nativeEvent.layout.width - THUMB_SIZE)}
       >
         <Text>{label}</Text>
